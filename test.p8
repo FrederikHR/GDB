@@ -5,6 +5,10 @@ __lua__
 function hello()
 	print("hello")
 end
+
+function github_funksjon()
+	print("omg it wurkz")
+end
 -->8
 -- lol
 __gfx__
