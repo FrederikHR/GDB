@@ -9,6 +9,10 @@ end
 function github_funksjon()
 	print("omg it wurkz")
 end
+
+function blackhat()
+	print("we're in")
+end
 -->8
 -- lol
 __gfx__
