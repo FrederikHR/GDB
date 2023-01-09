@@ -3,18 +3,25 @@ version 39
 __lua__
 function _init()
 	--run to start/reset the game
-	print("press start to 
 end
 
 function _draw()
 	cls()
+	draw_start_screen()
 end
 
 function _update()
-	-- 
+	
 end
 -->8
--- lol
+--draw
+
+function draw_start_screen()
+ print("press start to play", 25, 50)
+end
+
+-->8
+--update
 __gfx__
 00000000000000009090990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000eeeeeeee9990900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
