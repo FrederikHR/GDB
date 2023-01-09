@@ -1,21 +1,17 @@
 pico-8 cartridge // http://www.pico-8.com
 version 39
 __lua__
--- ser du dette, tor-arne?
-function hello()
-	print("hello")
+function _init()
+	--run to start/reset the game
+	print("press start to 
 end
 
-function github_funksjon()
-	print("omg it wurkz")
+function _draw()
+	cls()
 end
 
-function blackhat()
-	print("we're in")
-end
-
-function deez()
-	print("nuts")
+function _update()
+	-- 
 end
 -->8
 -- lol
