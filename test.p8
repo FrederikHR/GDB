@@ -32,7 +32,7 @@ end
 --draw
 
 function draw_start_screen()
- print("press start to play", 32, 60, 7)
+ print("press ❎ to play", 32, 60, 7)
 end
 
 function draw_game_screen()
