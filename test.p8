@@ -13,6 +13,10 @@ end
 function blackhat()
 	print("we're in")
 end
+
+function deez()
+	print("nuts")
+end
 -->8
 -- lol
 __gfx__
