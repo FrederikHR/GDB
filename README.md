@@ -12,6 +12,12 @@ GDB lager spill
 - [ ] Food as resource
 
 Friction-time
-- Visual feedback showing activation
-- Cooldown? Or toggle on/off?
-- 
+- [ ] Visual feedback showing activation
+- [ ] Cooldown? Or toggle on/off?
+
+Vine
+- [ ] Attack function. Acts like a whip or something more interesting(?). 
+- [ ] Grapple-mechanic to move around
+- [ ] Passive mechanic?
+
+
