@@ -10,3 +10,8 @@ GDB lager spill
 - [ ] Vine
 - [ ] Enemy awareness
 - [ ] Food as resource
+
+Friction-time
+- Visual feedback showing activation
+- Cooldown? Or toggle on/off?
+- 
