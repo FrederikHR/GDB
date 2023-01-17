@@ -100,12 +100,12 @@ function draw_player()
 end
 
 function move_player()
-	if btn(0) then
+	if btn(0) and not p.friction_time then
 	 p.x-=1
 	 p.left=true
 	 p.play="walk"
 	
-	elseif btn(1) then
+	elseif btn(1) and not p.friction_time then
 	 p.x+=1
 	 p.left=false
 	 p.play="walk"
