@@ -24,8 +24,11 @@ function menu_draw()
 	print("menu!",px,py) --menu draw code
 	print("press❎ to start",px,py+6)
 end
+
 -->8
 --game loop
+
+
 panims={
 	idlev={fr=15,18,19},
 	walkv={fr=5,4,5,6},
@@ -54,7 +57,7 @@ end
 
 function game_update()
 	
-	if (btnp(❎)) pause_init() --pause
+	--if (btnp(❎)) pause_init() --pause
 	if (btnp(🅾️)) gameover_init() --game over
 	update_player()
 	--if (v.active) update_vine()
@@ -63,7 +66,7 @@ end
 function game_draw()
 	cls()
 	map(0, 0, 0, 0)
-	print("level 1",20,20) --game draw code
+	print("level 1",50,20, 15) --game draw code
 	draw_player()
 end
 
@@ -79,6 +82,8 @@ function make_player()
 	p.left=false
 	p.vine=true
 	p.anims=panims
+	p.friction_time = false
+	p.timer = time()
 end
 
 function update_player()
@@ -88,18 +93,45 @@ end
 
 function draw_player()
 	spr(abs(p.spr),p.x,p.y,p.sw,p.sh,p.left!=(p.spr<0))
+	if p.friction_time then
+		print("friction time!", p.x-20, p.y-20, 10)
+	end
+	
 end
 
 function move_player()
-	
 	if btn(0) then
 	 p.x-=1
 	 p.left=true
 	 p.play="walk"
+	
 	elseif btn(1) then
 	 p.x+=1
 	 p.left=false
 	 p.play="walk"
+	end
+
+	if p.friction_time then 
+	--[[ friction time lasts for
+		1/2 a second, or 15 frames
+	--]]
+		
+		if abs(p.timer - time()) < 0.5 then
+			if p.left then
+				p.x -= 2
+			else
+				p.x += 2
+			end
+		else
+			p.friction_time = false
+		end
+	end
+	 
+	if btn(❎) and not p.friction_time then
+		p.friction_time = true
+		p.timer = time()
+		play_sound(sounds.friction_time)
+		
 	elseif btn(3) then
 		p.play="crouch"
 		if btn(5) then
@@ -212,21 +244,6 @@ function gameover_draw()
 	
 end
 -->8
--- player mechanics
-
-function friction_time()
-	--[[
-	when toggled,
-		glide in the direction
-		that was walked towards
-		in the last frames
-		
-		
-	
-	--]]
-end
-
--->8
 -- sounds and music
 
 patterns= {
@@ -235,12 +252,12 @@ patterns= {
 
 sounds = {
 	start = 0,
-	game_over = 2
+	game_over = 2,
+	friction_time = 6
 }
 
 function play_music(pattern)
 	-- -1 means no music
-	
 	music(pattern)
 end
 
@@ -336,7 +353,7 @@ __sfx__
 00141f02120000b1300a1000b1300e1300b1300b1300b1001713015130121301210012130121001213000000000001013010100101301010010130151001013012130171000e130000000e1300e1000e13000000
 1c1622000a0500b0500c0501a050100001f0500e0000d000100000a0500c000090500e0500e000090500e0500f0501405010000100000f050100001d050150501300013000130501405015050120001200011000
 0816000000140001400014000140001400014000140001400c1400814007140071400714004140041500413001100001300013001100001300013001100001300013001100001300013001100001300013000130
-001200001800016000180001700018000290001c000210002900018000180001800012000170001a0001500019200270002500013200240002b000240000e200210000b200092000820006200042000220001200
+08040000230200c02028020120202c02017020310301b030350301f040380401800017000130000f0000e000328000e0000f000120001200015000170001b00021000250000c8002d8002c8002a8002e80027800
 __music__
 03 01034344
 03 41034344
