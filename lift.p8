@@ -125,7 +125,7 @@ function move_player()
 	--]]
 		
 		if abs(p.timer - time()) < 0.5 then
-			if p.left then
+			if p.flp then
 				p.x -= 2
 			else
 				p.x += 2
