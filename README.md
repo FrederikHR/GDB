@@ -20,4 +20,6 @@ Vine
 - [ ] Grapple-mechanic to move around
 - [ ] Passive mechanic?
 
-
+TO DO week 3: 
+- [ ] Implement friction-time
+- [ ] Create one or two levels
