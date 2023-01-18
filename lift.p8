@@ -58,8 +58,6 @@ function game_init()
 end
 
 function game_update()
-	
-	if (btnp(❎)) pause_init() --pause
 	--if (btnp(🅾️)) gameover_init() --game over
 	update_player()
 	--if (v.active) update_vine()
@@ -164,7 +162,7 @@ function move_player()
 	--check collision up and down
 	if p.dy>0 and collide_map(p,"down",0) then
 		p.dy=0
-		p.y-=(p.y+p.sh)%8
+		p.y-=(p.y+p.sh*8)%8
 	elseif p.dy<0 and collide_map(p,"up",1) then
 		p.dy=0
 	end
@@ -236,22 +234,7 @@ end
 
 
 -->8
---pause menu
-function pause_init()
-	_update=pause_update
-	_draw=pause_draw
-	scene="pause"
-	play_music(1)
-end
 
-function pause_update()
-	if (btnp(🅾️)) game_init()
-end
-
-function pause_draw()
-	cls()
-	print("pause!",px,py)
-end
 -->8
 --game over screen
 
