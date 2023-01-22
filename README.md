@@ -23,3 +23,12 @@ Vine
 TO DO week 3: 
 - [x] Implement friction-time
 - [x] Create one or two levels
+- bonus stuff that got done (yay!)
+  - [x] Collision checks
+  - [x] Jumping  
+
+TO DO week 4
+- [ ] Implement vine mechanics
+- [ ] Create more levels. 
+- [ ] Implement transition between levels
+- [ ] Recreate Lift-sprites in 16-bit format 
