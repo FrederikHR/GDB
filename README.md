@@ -21,5 +21,5 @@ Vine
 - [ ] Passive mechanic?
 
 TO DO week 3: 
-- [ ] Implement friction-time
-- [ ] Create one or two levels
+- [x] Implement friction-time
+- [x] Create one or two levels
