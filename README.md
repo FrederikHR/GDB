@@ -21,5 +21,14 @@ Vine
 - [ ] Passive mechanic?
 
 TO DO week 3: 
-- [ ] Implement friction-time
-- [ ] Create one or two levels
+- [x] Implement friction-time
+- [x] Create one or two levels
+- bonus stuff that got done (yay!)
+  - [x] Collision checks
+  - [x] Jumping  
+
+TO DO week 4
+- [ ] Implement vine mechanics
+- [ ] Create more levels. 
+- [ ] Implement transition between levels
+- [ ] Recreate Lift-sprites in 16-bit format 
