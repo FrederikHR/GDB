@@ -5,7 +5,7 @@ __lua__
 --by me
 
 --main menu
-px,py=10,54
+px,py=64,54
 function _init() menu_init() end
 
 function menu_init()
@@ -21,8 +21,8 @@ end
 
 function menu_draw()
 	cls()
-	print("menu!",px,py) --menu draw code
-	print("press❎ to start",px,py+6)
+	--print("menu!",30,30) --menu draw code
+	print("press ❎ to start",35,64)
 end
 
 -->8
@@ -62,10 +62,10 @@ function game_init()
 	mx, my = 0, 0
 	
 	box = {}
-	box.x = 32
-	box.y = 32
-	box.w = box.y*3
-	box.h = box.x*3
+	box.x = 25
+	box.y = 40
+	box.w = box.x*3
+	box.h = box.y*2
 end
 
 function game_update()
@@ -82,9 +82,7 @@ function game_draw()
 	
 	camera(cx,cy)
 	map(0, 0)
-	camera(0,0)
 	draw_player()
-	--camera(cx, cy)
 	rect(box.x, box.y,
 						box.w, box.h, 11)
 end
@@ -132,8 +130,8 @@ function move_player()
 	
 	
 	-- camera
-	--change_room_camera(p.x, p.y)
-	scroll_camera(p.x, p.y)
+	--change_room_camera()
+	scroll_camera()
 	
 	--add gravity
 	p.dy+=gravity
@@ -382,7 +380,7 @@ function play_sound(sound)
 end
 -->8
 --camera
-function change_room_camera(px, py)
+function change_room_camera()
 	
 	if px > 127 then cx = 128
 	else cx = 0
@@ -390,7 +388,7 @@ function change_room_camera(px, py)
 	
 end
 
-function scroll_camera(px, py)
+function scroll_camera()
 	
 	--basic scrolling
 	--cx = px - 64
@@ -399,32 +397,34 @@ function scroll_camera(px, py)
 	--[[slighty less basic 
 	scrolling	
 	--]]
-	--[[
-	if px > 60 and px < 248-60 then 
-		cx = px-64 end
+
+	if p.x <= box.x then
+		cx-= -p.dx-1
+		box.x=p.x
+		box.w=box.x + 50
+		p.x+=1
 		
-	if py < 60 then cy = py-64  end
-	--]]
-	if p.x < box.x then
-		p.x = box.x +3
-		cx -=1	
-	
-	elseif p.x > box.w-8 then
-		p.x = box.w-10
-		
-		cx += 1
-		
+	elseif p.x >= box.w-8 then
+		cx+=p.dx-1
+		box.w=p.x+8
+		box.x=box.w - 50
+		p.x-=1
 	end
 	
+	
 	if p.y < box.y then
-		p.y = box.y
+		p.y=box.y
+		cy-=1
+		box.y-=1
+		box.h-=1
 	end
 	
 	if p.y > box.h then
-		p.y = box.h
+		p.y=box.h
+		cy+=1
+		box.y+=1
+		box.h+=1
 	end
-	
-
 end
 __gfx__
 00000000000110000001100000011000000110000001100000011000000000000000000000000000000000000000000000000000000000000000000000000000
