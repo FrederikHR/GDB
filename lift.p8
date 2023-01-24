@@ -64,8 +64,8 @@ function game_init()
 	box = {}
 	box.x = 25
 	box.y = 40
-	box.w = box.x*3
-	box.h = box.y*2
+	box.w = 70
+	box.h = 32
 end
 
 function game_update()
@@ -84,7 +84,7 @@ function game_draw()
 	map(0, 0)
 	draw_player()
 	rect(box.x, box.y,
-						box.w, box.h, 11)
+						box.x+box.w, box.y+box.h, 11)
 end
 
 --player functions
@@ -399,31 +399,25 @@ function scroll_camera()
 	--]]
 
 	if p.x <= box.x then
-		cx-= -p.dx-1
+		cx -= box.x - p.x
 		box.x=p.x
-		box.w=box.x + 50
-		p.x+=1
 		
-	elseif p.x >= box.w-8 then
-		cx+=p.dx-1
-		box.w=p.x+8
-		box.x=box.w - 50
-		p.x-=1
+	elseif p.x+p.sw*8 >= box.x+box.w then
+		local diff = (p.x+p.sw*8) - (box.x + box.w)
+		cx += diff
+		box.x += diff
 	end
 	
 	
 	if p.y < box.y then
-		p.y=box.y
-		cy-=1
-		box.y-=1
-		box.h-=1
+		cy -= box.y - p.y
+		box.y -= box.y - p.y
 	end
 	
-	if p.y > box.h then
-		p.y=box.h
-		cy+=1
-		box.y+=1
-		box.h+=1
+	if p.y+p.sh*8 > box.y + box.h then
+		local diffy = (p.y+p.sh*8) - (box.y+box.h)
+		cy += diffy
+		box.y += diffy
 	end
 end
 __gfx__
