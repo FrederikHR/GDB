@@ -123,7 +123,16 @@ function move_player()
 	 p.dx+=p.acc
 	 p.flp=false
 	 p.play="walk"
+	elseif btn(3) then
+		p.play="crouch"
+		if btn(5) then
+		 p.vine=false
+		 make_vine(p)
+		end
+	else
+		p.play="idle"
 	end
+
 
 	if p.friction_time then 
 	--[[ friction time lasts for
@@ -145,15 +154,6 @@ function move_player()
 		p.friction_time = true
 		p.timer = time()
 		play_sound(sounds.friction_time)
-		
-	elseif btn(3) then
-		p.play="crouch"
-		if btn(5) then
-		 p.vine=false
-		 make_vine(p)
-		end
-	else
-		p.play="idle"
 	end
 	
 	
