@@ -68,6 +68,7 @@ function game_draw()
 	map(0, 0, 0, 0)
 	print("level 1",50,20, 15) --game draw code
 	draw_player()
+	if (not p.vine) draw_vine() 
 end
 
 --player functions
@@ -125,9 +126,13 @@ function move_player()
 	 p.play="walk"
 	elseif btn(3) then
 		p.play="crouch"
-		if btn(5) then
+		if btnp(5) and p.vine then
 		 p.vine=false
 		 make_vine(p)
+		 v.timer = time()
+		elseif btnp(5) and (not p.vine) and collide_sprite(p,"center",v) and (time() - v.timer) > 0.5 then
+		 p.vine=true
+		 v.active=false
 		end
 	else
 		p.play="idle"
@@ -150,7 +155,7 @@ function move_player()
 		end
 	end
 	 
-	if btn(❎) and not p.friction_time then
+	if btn(❎) and not p.friction_time and not btn(3) then
 		p.friction_time = true
 		p.timer = time()
 		play_sound(sounds.friction_time)
@@ -160,7 +165,6 @@ function move_player()
 	--handle vine
 	if (p.vine and p.play[-1]!="v") then
 	 p.play=p.play.."v"
-	 print(p.play)
 	end
 	--if btn(2) then p.y-=1 end
 	--if btn(3) then p.y-=1 end
@@ -226,21 +230,23 @@ function make_vine(p)
 	v = {}
 	v.x=p.x
 	v.y=p.y
-	v.spr=32
+	v.spr=48
 	v.play="v_idle"
 	v.sw=1
 	v.sh=1
-	v.active=false
+	v.flp=false
+	v.active=true
 end
 
 function update_vine()
 
 --delete vine if not active
-	del(v)
+	if (not v.active) del(v)
 
 end
 
 function draw_vine()
+		spr(abs(v.spr),v.x,v.y,v.sw,v.sh,v.flp!=(v.spr<0))
 end
 
 
@@ -298,6 +304,7 @@ end
 -->8
 --other functions
 
+--todo: can combine collision functions if needed
 
 --collision
 function collide_map(obj,aim,flag)
@@ -320,6 +327,9 @@ function collide_map(obj,aim,flag)
 	elseif aim=="down" then
 		x1=x+2      y1=y+h
 		x2=x+w-2    y2=y+h
+ elseif aim=="center" then
+		x1=x-2      y1=y-2
+		x2=x+w+2    y2=y+h+2
 	end
 	
 	--pixels to tiles
@@ -332,6 +342,45 @@ function collide_map(obj,aim,flag)
 	or fget(mget(x2,y2),flag) then
 		return true
 	end
+	return false
+end
+
+function collide_sprite(obj,aim,obj2)
+	--obj = table, needs x,y,w,h
+	local x=obj.x    local y=obj.y
+	local w=obj.sw*8 local h=obj.sh*8
+	
+	local x1=0 local y1=0
+	local x2=0 local y2=0
+	
+	if aim=="left" then
+		x1=x-1    y1=y
+		x2=x      y2=y+h-1
+	elseif aim=="right" then
+		x1=x+w-1    y1=y
+		x2=x+w      y2=y+h-1
+	elseif aim=="up" then
+		x1=x+2    y1=y-1
+		x2=x+w-3  y2=y
+	elseif aim=="down" then
+		x1=x+2      y1=y+h
+		x2=x+w-2    y2=y+h
+ elseif aim=="center" then
+		x1=x-2      y1=y-2
+		x2=x+w+2    y2=y+h+2
+	end
+	
+	--pixels to tiles
+	--x1/=8 y1/=8
+	--x2/=8 y2/=8
+	if not(obj2.x > (x1+(x2-x1)))
+	or not(obj2.y > (y1+(y2-y1)))
+	or not((obj2.x+obj2.sw*8) < x1)
+	or not((obj2.y+obj2.sh*8) < y1) then
+		return true
+	end
+	
+	
 	return false
 end
 -->8
