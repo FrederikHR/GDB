@@ -29,6 +29,7 @@ TO DO week 3:
 
 TO DO week 4
 - [ ] Implement vine mechanics
+- * Vine drop at certain map tiles = some functionality (e.g. stretching up to next floor (climbable) or stretching across gap) 
 - [ ] Create more levels. 
 - [ ] Implement transition between levels
 - [ ] Recreate Lift-sprites in 16-bit format 
