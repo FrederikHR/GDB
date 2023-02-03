@@ -324,6 +324,8 @@ function update_enemy(e)
 	e.dx *= friction
 	if dir > 0 then
 		e.flp = true
+	else
+		e.flp = false
 	end
 	if pdist(e.x,e.y) < 16 then
 		e.play = "atk"
