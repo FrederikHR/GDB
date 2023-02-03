@@ -524,7 +524,7 @@ function change_room()
 	local current_gravity = gravity
 
 	if not p.flp then
-		scroll_speed = 4
+		scroll_speed = 5
 		player_push = 20
 	else
 		scroll_speed = -scroll_speed
@@ -532,7 +532,7 @@ function change_room()
 	end
 	
 	
-	for i=0, 30 do -- for 10 frames 
+	for i=0, 20 do -- for 30 frames 
 		
 		cx += scroll_speed
 		box.x += scroll_speed
