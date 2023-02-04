@@ -53,6 +53,11 @@ end
 -->8
 --player
 
+panims={
+	idle={fr=15,18,19},
+	thrust={fr=15,4,5}
+}
+
 function make_player()
 	p = {}
 	p.spr = 1
