@@ -28,9 +28,16 @@ function game_init()
 	-- camera offsets
 	cx, cy = 0, 0
 	mx, my = 0, 0
+	
+	
+	box = {}
+	box.x = 25
+	box.y = 40
+	box.w = 70
+	box.h = 32
 end
 -->8
---draw 
+--draw and camera
 
 function menu_draw()
 	cls()
@@ -44,27 +51,104 @@ function game_draw()
 	map(0, 0)
 	draw_player()
 end
+
+function spr_r(s,x,y,a,w,h)
+ sw=(w or 1)*8
+ sh=(h or 1)*8
+ sx=(s%8)*8
+ sy=flr(s/8)*8
+ x0=flr(0.5*sw)
+ y0=flr(0.5*sh)
+ a=a/360
+ sa=sin(a)
+ ca=cos(a)
+ for ix=0,sw-1 do
+  for iy=0,sh-1 do
+   dx=ix-x0
+   dy=iy-y0
+   xx=flr(dx*ca-dy*sa+x0)
+   yy=flr(dx*sa+dy*ca+y0)
+   if (xx>=0 and xx<sw and yy>=0 and yy<=sh) then
+    pset(x+ix,y+iy,sget(sx+xx,sy+yy))
+   end
+  end
+ end
+end
+
+function scroll_camera()
+
+	--basic scrolling
+	--cx = px - 64
+	--cy = py - 64
+
+	--[[slighty less basic 
+	scrolling	
+	--]]
+
+	if p.x <= box.x then
+		cx -= box.x - p.x
+		box.x=p.x
+
+	elseif p.x+p.sw*8 >= box.x+box.w then
+		local diff = (p.x+p.sw*8) - (box.x + box.w)
+		cx += diff
+		box.x += diff
+	end
+
+
+	if p.y < box.y then
+		cy -= box.y - p.y
+		box.y -= box.y - p.y
+	end
+
+	if p.y+p.sh*8 > box.y + box.h then
+		local diffy = (p.y+p.sh*8) - (box.y+box.h)
+		cy += diffy
+		box.y += diffy
+	end
+end
+
+function animate(p)
+	if p.state != p.play then
+		p.state = p.play
+		p.animindex=1
+		p.time=0
+	elseif #p.anims[p.state] > 1 then
+		p.time+=1
+		if p.time > p.anims[p.state].fr then
+			p.time=0
+			p.animindex = (p.animindex % #p.anims[p.state]) + 1
+			if p.animindex==1 and p.anims[p.state].next then
+				p.play=p.anims[p.state].next
+				p.state=p.play
+			end
+		end
+	end
+	p.spr = p.anims[p.state][p.animindex]
+end
 -->8
 --update
 
 
 function game_update()
+	update_player()
 end
 -->8
 --player
 
 panims={
-	idle={fr=15,18,19},
-	thrust={fr=15,4,5}
+	idle={fr=15,38,38},
+	thrust={fr=15,38,38}
 }
 
 friction=0.3
 
 function make_player()
 	p = {}
-	p.spr = 2
+	p.spr = 6
 	p.x=50
 	p.y=50
+	p.a=0
 	p.dx=0
 	p.dy=0
 	p.max_dx=2
@@ -91,7 +175,7 @@ end
 function move_player()
 	-- camera
 	--change_room_camera()
-	scroll_camera()
+	--scroll_camera()
 
 	
 	--add gravity
