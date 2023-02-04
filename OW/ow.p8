@@ -19,17 +19,6 @@ function menu_update()
  if (btnp(❎)) game_init() --play the game
 end
 
-function make_player()
-	p = {}
-	p.spr = 1
-	p.x=50
-	p.y=50
-	p.dx=0
-	p.dy=0
-	p.max_dx=2
-	p.max_dy=3
-end
-
 function game_init()
 	game_over = false
 	_update=game_update
@@ -55,15 +44,35 @@ function game_draw()
 	map(0, 0)
 	draw_player()
 end
-
-function draw_player()
-	spr(abs(p.spr),p.x,p.y)
-end
 -->8
 --update
 
 
 function game_update()
+end
+-->8
+--player
+
+function make_player()
+	p = {}
+	p.spr = 1
+	p.x=50
+	p.y=50
+	p.dx=0
+	p.dy=0
+	p.max_dx=2
+	p.max_dy=3
+	p.acc=0.5
+	p.boost=4
+	p.play="idle"
+	p.sw=1
+	p.sh=1
+	p.flp=false
+	p.anims=panims
+end
+
+function draw_player()
+	spr(abs(p.spr),p.x,p.y,p.sw,p.sh,p.flp!=(p.spr<0))
 end
 __gfx__
 00000000009999000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
