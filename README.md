@@ -3,10 +3,12 @@ GDB lager spill
 
 ## Ideer
 
-### Ny idé
+### OW - Outer Wilds-esque game
+Fly from planet to planet
 
-
-
+- [ ] planets
+- [ ] spaceship
+- [ ] walk on planets?
 
 
 ## On Hold
