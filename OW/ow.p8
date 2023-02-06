@@ -55,8 +55,8 @@ end
 function spr_r(s,x,y,a,w,h)
  sw=(w or 1)*8
  sh=(h or 1)*8
- sx=(s%8)*8
- sy=flr(s/8)*8
+ sx=(s%16)*8
+ sy=flr(s/16)*8
  x0=flr(0.5*sw)
  y0=flr(0.5*sh)
  a=a/360
@@ -145,7 +145,7 @@ friction=0.3
 
 function make_player()
 	p = {}
-	p.spr = 6
+	p.spr=38
 	p.x=50
 	p.y=50
 	p.a=0
@@ -192,7 +192,7 @@ function move_player()
 	end 
 	if btn(⬆️) then
 		p.play="thrust"
-		at = -p.a/360
+		at = -(p.a-90)/360
 		p.dx+=p.acc*cos(at)
 		p.dy+=p.acc*sin(at)
 	else
