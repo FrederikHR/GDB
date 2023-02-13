@@ -52,6 +52,11 @@ function game_draw()
 	draw_stars()
 	draw_planets()
 	draw_player()
+	print(p.x,p.x-10,p.y+30,7)
+	print(p.y,p.x-10,p.y+40,7)
+	for ipl,pl in pairs(planets) do
+		print(pdist(pl.x,pl.y)^2,p.x+10*(tonum(ipl[2])),p.y+10*(tonum(ipl[2])),7)
+	end
 end
 
 function spr_r(s,x,y,a,w,h)
@@ -148,7 +153,7 @@ panims={
 	thrust={fr=15,38,38}
 }
 
-friction=0.3
+friction=1
 
 function make_player()
 	p = {}
@@ -181,15 +186,19 @@ end
 
 function move_player()	
 	--add gravity
-	--p.dy+=gravity()
-	p.dx*=friction
-	p.dy*=friction
+	local gx=0.
+	local gy=0.
+	gx,gy=sgravity()
+	p.dx+=gx
+ p.dy+=gy
+	--p.dx*=friction
+	--p.dy*=friction
 	
 	if btn(⬅️) then
-	 p.a-=5
+	 p.a-=10
 
 	elseif btn(➡️) then
-		p.a+=5
+		p.a+=10
 	
 	end 
 	if btn(⬆️) then
@@ -229,6 +238,10 @@ function move_player()
 		p.dx=0
 	end
 	
+	--limit speeds
+	if (p.dx>5) p.dx=5
+	if (p.dy>5) p.dy=5
+	
 	--add diffs
 	p.x+=p.dx
 	p.y+=p.dy
@@ -238,8 +251,62 @@ end
 
 function gravity()
  --calculate gravity on ship
-	return 0.5
+ gravc=0.005
+	local magx=0.
+	local magy=0.
+	for _,pl in pairs(planets) do
+		local pdist=pdist(pl.x,pl.y)/64
+		--if (pdist>200) then goto cont end
+		local p2=pdist^2
+		if (p2<0) return 32767.9999
+		p2=p2
+		local mag=gravc/p2
+		magx+=mag*(pl.x-p.x)
+		magy+=mag*(pl.y-p.y)
+		--::cont::
+	end
+	if (magx>10) magx=10
+	if (magy>10) magy=10
+	return magx,magy
 end
+
+
+function sgravity()
+ --calculate simple gravity on ship
+ gravc=0.005
+	local pd=-1
+	local pdx=0
+	local pdy=0
+	local magx=0
+	local magy=0
+	--find closest planet
+	for _,pl in pairs(planets) do
+		if (pd==-1) then
+		 pd=pdist(pl.x,pl.y)
+		 pdx=pl.x
+		 pdy=pl.y
+		end
+		if (pdist(pl.x,pl.y)<pd) then
+			pd=pdist(pl.x,pl.y)
+			pdx=pl.x
+			pdy=pl.y
+		end
+	end
+	
+	local p2=pd--^2
+	if (p2<0) return 32767.9999
+	local mag=gravc/(p2)
+	magx+=mag*(pdx-p.x)
+	magy+=mag*(pdy-p.y)
+
+	if (magx>10) magx=10
+	if (magy>10) magy=10
+	if (magx<-10) magx=-10
+	if (magy<-10) magy=-10
+
+	return magx,magy
+end
+
 
 function collide_map(obj,aim,flag)
 	--obj = table, needs x,y,w,h
@@ -319,7 +386,14 @@ function collide_sprite(obj,aim,obj2)
 end
 
 function pdist(x,y)
-	return sqrt(abs(x-p.x)^2 + abs(y-p.y)^2)
+	local dx=(x-p.x)/64
+	local dy=(y-p.y)/64
+	
+	local dsq=dx*dx+dy*dy
+	
+	if (dsq<0) return 32767.9999
+	
+	return sqrt(dsq)
 end
 
 function pdir(x)
@@ -361,10 +435,12 @@ end
 function generate_star(x0,y0)
 	local x=rnd(128)+x0
 	local y=rnd(128)+y0
-	local c=rnd(100)
+	local c=rnd(8)
 	
-	if (c<50) return
-	pset(x,y,7)
+	if (c>4) return
+	c+=5
+	if (c==8) c-=1
+	pset(x,y,c)
 end
 __gfx__
 0000000000999900006aa0000000000000000000d0000000000000a11a000000000000a11a000000000000000000000000000000000000000000000000000000
