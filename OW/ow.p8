@@ -49,10 +49,15 @@ function game_draw()
 	cls()
 	camera(cx,cy)
 	map(0, 0)
-	draw_stars()
-	draw_planets()
-	draw_player()
-	draw_pind()
+	if p.space then
+		draw_stars()
+		draw_planets()
+		draw_player()
+		draw_pind()
+	else
+		--do on-planet stuff
+		print("aaaa")
+	end
 end
 
 function spr_r(s,x,y,a,w,h)
@@ -167,6 +172,7 @@ function make_player()
 	p.sw=2
 	p.sh=2
 	p.flp=false
+	p.space=true
 	p.anims=panims
 end
 
