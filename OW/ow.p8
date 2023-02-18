@@ -190,7 +190,7 @@ function move_player()
 	--add gravity
 	local gx=0.
 	local gy=0.
-	gx,gy=sgravity()
+	gx,gy=gravity()
 	p.dx+=gx
  p.dy+=gy
 	--p.dx*=friction
@@ -252,28 +252,6 @@ end
 --other functions
 
 function gravity()
- --calculate gravity on ship
- gravc=0.005
-	local magx=0.
-	local magy=0.
-	for _,pl in pairs(planets) do
-		local pdist=pdist(pl.x,pl.y)/64
-		--if (pdist>200) then goto cont end
-		local p2=pdist^2
-		if (p2<0) return 32767.9999
-		p2=p2
-		local mag=gravc/p2
-		magx+=mag*(pl.x-p.x)
-		magy+=mag*(pl.y-p.y)
-		--::cont::
-	end
-	if (magx>10) magx=10
-	if (magy>10) magy=10
-	return magx,magy
-end
-
-
-function sgravity()
  --calculate simple gravity on ship
  gravc=0.005
 	local pd=-1
@@ -305,6 +283,11 @@ function sgravity()
 	if (magy>10) magy=10
 	if (magx<-10) magx=-10
 	if (magy<-10) magy=-10
+
+	if pd>1 then
+			magx=0
+			magy=0
+	end
 
 	return magx,magy
 end
@@ -401,7 +384,9 @@ end
 -- planets
 planets = {
 	p1={spr=64,x=200,y=70,sz=2,c=5},
-	p2={spr=66,x=-100,y=30,sz=2,c=11}
+	p2={spr=66,x=-100,y=30,sz=2,c=11},
+	p3={spr=68,x=200,y=100,sz=2,c=12},
+	p4={spr=70,x=-200,y=-50,sz=2,c=6}
 }
 
 
@@ -412,6 +397,7 @@ function draw_planets()
 end
 
 function draw_pind()
+	--planet indicators
 	local indd=16
 	for _,pl in pairs(planets) do
 		local pdx=p.x-pl.x
@@ -420,7 +406,7 @@ function draw_pind()
 			local dir=atan2(pdx,pdy)
 			local dirx=-indd*cos(dir)
 			local diry=-indd*sin(dir)
-			circfill(p.x+p.sw*8/2+dirx,p.y+p.sh*8/2+diry,4,pl.c)
+			circfill(p.x+p.sw*8/2+dirx,p.y+p.sh*8/2+diry,2,pl.c)
 		end
 	end
 end
