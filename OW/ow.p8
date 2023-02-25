@@ -26,6 +26,9 @@ function game_init()
 	_update=game_update
 	_draw=game_draw
 	scene="game" 
+	landing=false
+	ltimer=-11
+	prompt=false
 	
 	-- camera offsets
 	cx, cy = 0, 0
@@ -57,9 +60,12 @@ function game_draw()
 		draw_player()
 		draw_pind()
 		draw_astronaut()
+		if prompt then
+			draw_prompt()
+		end
 	else
 		--do on-planet stuff
-		print("aaaa")
+		draw_player()
 	end
 end
 
@@ -142,16 +148,31 @@ function animate(p)
 	p.spr = p.anims[p.state][p.animindex]
 end
 
+function draw_prompt()
+	local psx=cx+10
+	local psy=cy+84
+	local psx1=psx+80
+	local psy1=psy+12
+
+	rectfill(psx,psy,psx1,psy1,5)
+	print("press 🅾️ to land",psx+1,psy+1,7)
+	print("press ❎ to continue",psx+1,psy+7,7)
+end
+
 -->8
 --update
 
 
 function game_update()
 	if p.space then
-		update_player()
-		scroll_camera()
-		update_astronaut()
-		--land()
+		if not landing or ltimer>10 then
+			update_player()
+			scroll_camera()
+			update_astronaut()
+			land()
+		elseif (ltimer<10) then
+			update_player()
+		end
 	else
 		update_player()
 		scroll_camera(true)
@@ -177,7 +198,7 @@ function make_player()
 	p.dy=0
 	p.max_dx=2
 	p.max_dy=3
-	p.acc=.15
+	p.acc=.2
 	p.boost=4
 	p.play="idle"
 	p.sw=2
@@ -185,6 +206,7 @@ function make_player()
 	p.flp=false
 	p.space=true
 	p.anims=panims
+	p.clopl=0
 end
 
 function draw_player()
@@ -202,6 +224,10 @@ function update_player()
 end
 
 function move_player()
+	--landing procedure
+	if (landproc()) return
+	
+	--all other movement
 	--add gravity
 	if p.space then
 		local gx=0.
@@ -247,7 +273,7 @@ function move_player()
 	
 	--jumping
 	if (not p.space) then
-	 jump()
+	 --jump()
 	
 		--check collision up and down
 		if p.dy>0 and collide_map(p,"down",0) then
@@ -284,17 +310,45 @@ function move_player()
 end
 
 function land()
-	--if pcoll() then
-	--end
-	print("aaaaa")
+	--handle logic and prompt
+	--for landing
+	for _,pl in pairs(planets) do
+		if pcoll(pl.x,pl.y) then
+			p.clopl=pl
+			if (time()-ltimer>10) and not prompt then
+		 	ltimer=time()
+		 	prompt=true
+		 	landing=true
+			end
+		end
+	end
 end
 
+function landproc()
+	if prompt then
+		p.dx=0
+		p.dy=0
+		if btn(❎) then
+	 	prompt=false
+	 	landing=false
+	 	return true
+		elseif btn(🅾️) then
+			--do all the stuff
+			p.space=false
+			p.spr=99
+			p.x=p.clopl.sx
+			p.y=p.clopl.sy
+			
+			return true
+		end
+	end
+end
 -->8
 --other functions
 
 function gravity()
  --calculate simple gravity on ship
- gravc=0.005
+ gravc=0.003
 	local pd=-1
 	local pdx=0
 	local pdy=0
@@ -325,7 +379,7 @@ function gravity()
 	if (magx<-10) magx=-10
 	if (magy<-10) magy=-10
 
-	if pd>1 then
+	if pd>1.5 then
 			magx=0
 			magy=0
 	end
@@ -422,17 +476,42 @@ function pdist(x,y)
 end
 
 function pcoll(x,y)
-	if pdist(x,y) < 5 then
-		print("aaaa",p.x,p.y,7)
+	if pdist(x,y) < 0.18 then
+		return true
 	end
+	return false
 end
 -->8
 -- planets
 planets = {
-	p1={spr=64,x=200,y=70,sz=2,c=5},
-	p2={spr=66,x=-100,y=30,sz=2,c=11},
-	p3={spr=68,x=200,y=100,sz=2,c=12},
-	p4={spr=70,x=-200,y=-50,sz=2,c=6}
+	p1={spr=64,
+	    x=200,
+	    y=70,
+	    sz=2,
+	    c=5,
+	    sx=512,
+	    sy=61*8},
+	p2={spr=66,
+					x=-100,
+					y=30,
+					sz=2,
+					c=11,
+	    sx=512,
+	    sy=61*8},
+	p3={spr=68,
+					x=200,
+					y=100,
+					sz=2,
+					c=12,
+	    sx=512,
+	    sy=61*8},
+	p4={spr=70,
+					x=-200,
+					y=-50,
+					sz=2,
+					c=6,
+	    sx=512,
+	    sy=61*8}
 }
 
 
