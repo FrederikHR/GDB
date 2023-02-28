@@ -525,12 +525,12 @@ end
 -->8
 --astronaut
 aanims={
-	idle={fr=5,99,101,103,105},
-	walk={fr=5,32,34,36,38,40,42},
+	idle={fr=4.5,99,101,103,105},
+	walk={fr=1,32,34,36,38,40,42},
 	jump={}
 }
 
-friction=0.85
+friction=0
 
 function make_astronaut()
 	a = {}
@@ -538,7 +538,7 @@ function make_astronaut()
 	a.y = 70
 	a.spr = 32
 	a.size = 2
-	a.acc=0.5
+	a.acc=2.5
 	a.sw=2
 	a.sh=2
 	a.dx=0
@@ -564,15 +564,17 @@ end
 
 function move_astronaut()
 	a.dx*=friction
-	if btn(⬅️) then
+	if btn(⬅️) and not(btn(➡️)) then
 	 a.dx-=a.acc
 	 a.flp=true
 	 a.play="walk"
-	elseif btn(➡️) then
+	 
+	elseif btn(➡️) and not(btn(⬅️)) then
 		a.dx+=a.acc
 		a.flp=false
 		a.play="walk"
-	else
+	elseif (btn(➡️) and btn(⬅️)) or (not btn(➡️) and not btn(⬅️)) then	
+		a.dx=0
 		a.play="idle"
 	end
 		
