@@ -65,7 +65,7 @@ function game_draw()
 		end
 	else
 		--do on-planet stuff
-		draw_player()
+		draw_astronaut()
 	end
 end
 
@@ -92,7 +92,7 @@ function spr_r(s,x,y,a,w,h)
  end
 end
 
-function scroll_camera(s)
+function scroll_camera(p,s)
 
 	--basic scrolling
 	--cx = px - 64
@@ -102,6 +102,7 @@ function scroll_camera(s)
 	scrolling	
 	--]]
 	if s then
+
 		cx=p.x-50+p.sw/2
 		cy=p.y-50+p.sh/2
 	else
@@ -129,23 +130,23 @@ function scroll_camera(s)
 	end
 end
 
-function animate(p)
-	if p.state != p.play then
-		p.state = p.play
-		p.animindex=1
-		p.time=0
-	elseif #p.anims[p.state] > 1 then
-		p.time+=1
-		if p.time > p.anims[p.state].fr then
-			p.time=0
-			p.animindex = (p.animindex % #p.anims[p.state]) + 1
-			if p.animindex==1 and p.anims[p.state].next then
-				p.play=p.anims[p.state].next
-				p.state=p.play
+function animate(an)
+	if an.state != an.play then
+		an.state = an.play
+		an.animindex=1
+		an.time=0
+	elseif #an.anims[an.state] > 1 then
+		an.time+=1
+		if an.time > an.anims[an.state].fr then
+			an.time=0
+			an.animindex = (an.animindex % #an.anims[an.state]) + 1
+			if an.animindex==1 and an.anims[an.state].next then
+				an.play=an.anims[an.state].next
+				an.state=an.play
 			end
 		end
 	end
-	p.spr = p.anims[p.state][p.animindex]
+	an.spr = an.anims[an.state][an.animindex]
 end
 
 function draw_prompt()
@@ -167,15 +168,14 @@ function game_update()
 	if p.space then
 		if not landing or ltimer>10 then
 			update_player()
-			scroll_camera()
-			update_astronaut()
+			scroll_camera(p,false)
 			land()
 		elseif (ltimer<10) then
 			update_player()
 		end
 	else
-		update_player()
-		scroll_camera(true)
+		update_astronaut()
+		scroll_camera(a,true)
 	end
 end
 -->8
@@ -185,8 +185,6 @@ panims={
 	idle={fr=15,38,38},
 	thrust={fr=4}
 }
-
-friction=1
 
 function make_player()
 	p = {}
@@ -217,8 +215,9 @@ end
 function update_player()
 	if p.space then
 		move_player()
+		--animate(p)
 	else
-	move_player()
+		return
 	--animate(p)
 	end
 end
@@ -236,9 +235,8 @@ function move_player()
 		p.dx+=gx
  	p.dy+=gy
  else
- 	p.dy+=0.5
-	--p.dx*=friction
-	--p.dy*=friction
+ 	--astronaut functions reign
+ 	return
 	end
 	
 	if p.space then
@@ -248,7 +246,7 @@ function move_player()
 			p.a+=10
 		end 
 		if btn(⬆️) then
-			p.play="thrust"
+			--p.play="thrust"
 			at = -(p.a-90)/360
 			p.dx+=p.acc*cos(at)
 			p.dy+=p.acc*sin(at)
@@ -256,48 +254,8 @@ function move_player()
 			p.play="idle"
 		end
 	else
-		if btn(⬅️) then
-	 	p.a-=10
-		elseif btn(➡️) then
-			p.a+=10
-		end 
-		if btn(⬆️) then
-			p.play="thrust"
-			at = -(p.a-90)/360
-			p.dx+=p.acc*cos(at)
-			p.dy+=p.acc*sin(at)
-		else
-			p.play="idle"
-		end
-	end
-	
-	--jumping
-	if (not p.space) then
-	 --jump()
-	
-		--check collision up and down
-		if p.dy>0 and collide_map(p,"down",0) then
-			p.dy=0
-			p.y-=((p.y+p.sh*8+1)%8)-1
-		
-			--[[
-			these two variables
-			are set to false when player
-			hits the ground
-			--]]
-		p.fall = false
-		p.jump = false
-		
-		elseif p.dy<0 and collide_map(p,"up",1) then
-			p.dy=0
-		end
-	
-		--check collision left and right
-		if p.dx<0 and collide_map(p,"left",1) then
-			p.dx=0
-		elseif p.dx>0 and collide_map(p,"right",1) then
-			p.dx=0
-		end
+		--astronaut functions reign
+		return
 	end
 	
 	--limit speeds
@@ -335,9 +293,8 @@ function landproc()
 		elseif btn(🅾️) then
 			--do all the stuff
 			p.space=false
-			p.spr=99
-			p.x=p.clopl.sx
-			p.y=p.clopl.sy
+			a.x=p.clopl.sx
+			a.y=p.clopl.sy
 			
 			return true
 		end
@@ -490,28 +447,28 @@ planets = {
 	    sz=2,
 	    c=5,
 	    sx=512,
-	    sy=61*8},
+	    sy=60*8},
 	p2={spr=66,
 					x=-100,
 					y=30,
 					sz=2,
 					c=11,
 	    sx=512,
-	    sy=61*8},
+	    sy=60*8},
 	p3={spr=68,
 					x=200,
 					y=100,
 					sz=2,
 					c=12,
 	    sx=512,
-	    sy=61*8},
+	    sy=60*8},
 	p4={spr=70,
 					x=-200,
 					y=-50,
 					sz=2,
 					c=6,
 	    sx=512,
-	    sy=61*8}
+	    sy=60*8}
 }
 
 
@@ -568,10 +525,12 @@ end
 -->8
 --astronaut
 aanims={
-	idle={},
-	walk={},
+	idle={fr=5,99,101,103,105},
+	walk={fr=5,32,34,36,38,40,42},
 	jump={}
 }
+
+friction=0.85
 
 function make_astronaut()
 	a = {}
@@ -579,39 +538,78 @@ function make_astronaut()
 	a.y = 70
 	a.spr = 32
 	a.size = 2
+	a.acc=0.5
+	a.sw=2
+	a.sh=2
+	a.dx=0
+	a.dy=0
+	a.max_dx=0
+	a.max_dy=0
+	a.play="idle"
+	a.flp=false
+	a.anims=aanims
 	a.anim_time = 0
 	a.anim_descend = true
+	a.jump=false
 	
 end
 function draw_astronaut()
-	spr(a.spr, a.x, a.y, a.size, a.size)
+	spr(abs(a.spr), a.x, a.y, a.size, a.size,a.flp!=(a.spr<0))
 end
 
 function update_astronaut()
+	move_astronaut()
+	animate(a)
+end
+
+function move_astronaut()
+	a.dx*=friction
+	if btn(⬅️) then
+	 a.dx-=a.acc
+	 a.flp=true
+	 a.play="walk"
+	elseif btn(➡️) then
+		a.dx+=a.acc
+		a.flp=false
+		a.play="walk"
+	else
+		a.play="idle"
+	end
+		
+	--jumping
+	--jump()
 	
-	if time() - a.anim_time > .08 then
-		if a.anim_descend then
-			a.spr += 2
-			a.anim_time = time()
-			if a.spr == 42 then
-				a.spr = 32
-			end
-		end
+	--check collision up and down
+	if a.dy>0 and collide_map(a,"down",0) then
+		a.dy=0
+		a.y-=((a.y+a.sh*8+1)%8)-1
+	
+		--[[
+		these two variables
+		are set to false when player
+		hits the ground
+		--]]
+	a.fall = false
+	a.jump = false
 		
-		--[[if not a.anim_descend then
-			a.spr -= 2
-			a.anim_time = time()
-		end
-		
-		if a.spr == 44 then
-			a.anim_descend = false
-		end
-		if a.spr == 32 then
-			a.anim_descend = true
-		end--]]
+	elseif a.dy<0 and collide_map(a,"up",1) then
+		a.dy=0
 	end
 	
+	--check collision left and right
+	if a.dx<0 and collide_map(a,"left",1) then
+		a.dx=0
+	elseif a.dx>0 and collide_map(a,"right",1) then
+		a.dx=0
+	end
 	
+	--limit speeds
+	if (a.dx>5) a.dx=5
+	if (a.dy>5) a.dy=5
+	
+	--add diffs
+	a.x+=a.dx
+	a.y+=a.dy
 end
 __gfx__
 00000000009999000000000000000000000000000000000067777776333333335555555500000000000000000000000000000000000660000000000000000000
