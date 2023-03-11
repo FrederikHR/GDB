@@ -27,7 +27,8 @@ function game_init()
 	_draw=game_draw
 	scene="game" 
 	landing=false
-	ltimer=-11
+	within=false
+	launch=false
 	prompt=false
 	prompt_wait=10 -- to do:fix 
 	
@@ -66,6 +67,9 @@ function game_draw()
 	else
 		--do on-planet stuff
 		draw_astronaut()
+		if a.prompt then
+			draw_prompt()
+		end
 	end
 end
 
@@ -92,7 +96,7 @@ function spr_r(s,x,y,a,w,h)
  end
 end
 
-function scroll_camera(p,s)
+function scroll_camera(pa,s)
 
 	--basic scrolling
 	--cx = px - 64
@@ -103,27 +107,27 @@ function scroll_camera(p,s)
 	--]]
 	if s then
 
-		cx=p.x-50+p.sw/2
-		cy=p.y-50+p.sh/2
+		cx=pa.x-50+pa.sw/2
+		cy=pa.y-50+pa.sh/2
 	else
-		if p.x <= box.x then
-			cx -= box.x - p.x
-			box.x=p.x
+		if pa.x <= box.x then
+			cx -= box.x - pa.x
+			box.x=pa.x
 
-		elseif p.x+p.sw*8 >= box.x+box.w then
-			local diff = (p.x+p.sw*8) - (box.x + box.w)
+		elseif pa.x+pa.sw*8 >= box.x+box.w then
+			local diff = (pa.x+pa.sw*8) - (box.x + box.w)
 			cx += diff
 			box.x += diff
 		end
 
 
-		if p.y < box.y then
-			cy -= box.y - p.y
-			box.y -= box.y - p.y
+		if pa.y < box.y then
+			cy -= box.y - pa.y
+			box.y -= box.y - pa.y
 		end
 
-		if p.y+p.sh*8 > box.y + box.h then
-			local diffy = (p.y+p.sh*8) - (box.y+box.h)
+		if pa.y+pa.sh*8 > box.y + box.h then
+			local diffy = (pa.y+pa.sh*8) - (box.y+box.h)
 			cy += diffy
 			box.y += diffy
 		end
@@ -154,9 +158,13 @@ function draw_prompt()
 	local psy=cy+84
 	local psx1=psx+80
 	local psy1=psy+12
-
+	
 	rectfill(psx,psy,psx1,psy1,5)
-	print("press 🅾️ to land",psx+1,psy+1,7)
+	if p.space then
+		print("press 🅾️ to land",psx+1,psy+1,7)
+	else
+		print("press 🅾️ to take off",psx+1,psy+1,7)
+	end	
 	print("press ❎ to continue",psx+1,psy+7,7)
 end
 
@@ -166,12 +174,14 @@ end
 
 function game_update()
 	if p.space then
-		if not landing or ltimer>10 then
+		if not landing and not launch then
 			update_player()
 			scroll_camera(p,false)
 			land()
-		elseif (ltimer<prompt_wait) then
+		elseif launch then
+			scroll_camera(p,true)
 			update_player()
+			launch=false
 		end
 	else
 		update_astronaut()
@@ -275,14 +285,21 @@ end
 function land()
 	--handle logic and prompt
 	--for landing
+	c=0
 	for _,pl in pairs(planets) do
+		c+=1
 		if pcoll(pl.x,pl.y) then
+			c-=1
 			p.clopl=pl
-			if (time()-ltimer>prompt_wait) and not prompt then
-		 	ltimer=time()
+			if within==false then
+				within=true
 		 	prompt=true
-		 	landing=true
+		 	--landing=true
 			end
+		elseif c==3 then
+			--ship is outside sphere of influence 
+			within=false
+			prompt=false
 		end
 	end
 end
@@ -294,14 +311,23 @@ function landproc()
 		if btn(❎) then
 	 	prompt=false
 	 	landing=false
+	 	within=true
 	 	return true
 		elseif btn(🅾️) then
 			--do all the stuff
 			p.space=false
+			p.prompt=false
+			prompt=false
+			landing=true
+			a.prompt=false
 			a.pl=p.clopl
 			a.x=p.clopl.sx
 			a.y=p.clopl.sy
-			
+			if p.clopl.sp then
+				a.ship={x=p.clopl.sx-64,y=p.clopl.sy-48,sz=64}
+			else
+				a.ship={x=p.clopl.sx+16,y=p.clopl.sy-48,sz=64}
+			end
 			return true
 		end
 	end
@@ -343,8 +369,13 @@ function gravity()
 	if (magy<-10) magy=-10
 
 	if pd>1.5 then
-			magx=0
-			magy=0
+		magx=0
+		magy=0
+	end
+	
+	if pd<=0.001 then
+		magx=0
+		magy=0
 	end
 
 	return magx,magy
@@ -417,14 +448,21 @@ function collide_sprite(obj,aim,obj2)
 	--pixels to tiles
 	--x1/=8 y1/=8
 	--x2/=8 y2/=8
-	if not(obj2.x > (x1+(x2-x1)))
-	or not(obj2.y > (y1+(y2-y1)))
-	or not((obj2.x+obj2.sz*8) < x1)
-	or not((obj2.y+obj2.sz*8) < y1) then
+	if not((obj2.x > x2)
+	or (obj2.y > y2)
+	or ((obj2.x+obj2.sz) < x1)
+	or ((obj2.y+obj2.sz) < y1)) then
 		return true
 	end
 	
 	return false
+end
+
+function collcheck(a,b)
+	print(a.x+a.sz,a.x-40,a.y)
+	print(b.x,a.x-20,a.y)
+	print(a.y+a.sz,a.x-40,a.y-10)
+	print(b.y,a.x-20,a.y-10)
 end
 
 function pdist(x,y)
@@ -544,6 +582,7 @@ function make_astronaut()
 	a.acc=2.5
 	a.sw=2
 	a.sh=2
+	a.sz=2
 	a.dx=0
 	a.dy=0
 	a.max_dx=0
@@ -557,6 +596,8 @@ function make_astronaut()
 	a.fall=false
 	a.jump_velocity=2.5
 	a.pl={}
+	a.prompt=false
+	a.within=false
 	
 end
 function draw_astronaut()
@@ -577,6 +618,7 @@ function update_astronaut()
 end
 
 function move_astronaut()
+	if (launchproc()) return
 	a.dx*=friction
 	a.dy+=a_gravity
 	
@@ -601,7 +643,12 @@ function move_astronaut()
 	end
 		
 	--jumping
-	jump()
+	if collide_sprite(a,"center",a.ship) then
+		if (btnp(❎) and not a.prompt) a.prompt=true
+	else
+		if (a.within) a.within=false
+		jump()
+	end
 	
 	--check collision up and down
 	if a.dy>0 and collide_map(a,"down",0) then
@@ -659,6 +706,35 @@ function jump()
 	if a.fall then
 		a.play = "fall"
 	end
+end
+
+function launchproc()
+	if a.prompt then
+		a.dx=0
+		a.dy=0
+		if btn(❎) and a.within==false then
+			a.within=true
+	 	a.prompt=false
+	 	return false
+		elseif btn(🅾️) then
+			--do all the stuff
+			p.space=true
+			launch=true
+			landing=false
+			prompt=false
+			a.within=false
+			return true
+		end
+	end
+end
+
+function reset_camera(obj)
+	p.x=-600
+	p.y=-600
+	cx=obj.x-50+obj.sw/2
+	cy=obj.y-50+obj.sh/2
+	box.x=25-590
+	box.y=40-590
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
