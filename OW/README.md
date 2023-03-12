@@ -1,9 +1,9 @@
 # OW - Outer Wilds-esque game
 Fly from planet to planet
 
-- [ ] planets
-- [ ] spaceship
-- [ ] walk on planets?
+- [x] planets
+- [x] spaceship
+- [x] walk on planets?
 
 ## Icy planet
 - [x] slidy ice blocks
