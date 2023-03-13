@@ -79,7 +79,7 @@ function game_draw()
 		draw_items()
 		
 		--debug
-		draw_bs()
+		--draw_bs()
 		
 		if a.prompt then
 			draw_prompt()
