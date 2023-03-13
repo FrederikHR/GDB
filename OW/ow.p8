@@ -709,7 +709,7 @@ function move_astronaut()
 	
 	--check collision up and down
 	local old_ady=a.dy
-	if a.dy>0 and collide_map(a,"down",0) then
+	if a.dy>0 and (collide_map(a,"down",0) and not collide_map(a,"downish",4)) then
 		a.dy=0
 		a.y-=((a.y+a.sh*8+1)%8)-1
 		
@@ -862,6 +862,10 @@ function update_blocks()
 		end
 		if b.s>=20 and b.spr==90 then
 			b.spr=106
+		elseif b.s>=40 and b.spr==106 then
+			b.spr=105
+		elseif b.s>=60 then
+			b.stand=false
 		end
 	end
 end
