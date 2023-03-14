@@ -11,8 +11,8 @@ Fly from planet to planet
 - [ ] geysirs
 
 ## Plant planet
-- [ ] enemies
+- [x] enemies
 
 ## Wind planet
 - [ ] wind gusts
-- [ ] lava? (due to rocky map sprites)
+- [x] lava? (due to rocky map sprites)
