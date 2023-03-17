@@ -576,8 +576,10 @@ planets = {
 
 
 function draw_planets()
+
 	for _,pl in pairs(planets) do
-		spr(pl.spr,pl.x,pl.y,pl.sz,pl.sz)
+		sx, sy = (pl.spr % 16) * 8, flr(pl.spr \ 16) * 8
+		sspr(sx,sy, 16, 16, pl.x, pl.y, 32,32, true)		
 	end
 end
 
@@ -668,7 +670,6 @@ function make_astronaut()
 end
 function draw_astronaut()
 	sp = 108
-	print(a.y, a.x, a.y)
 	sx, sy = (sp % 16) * 8, flr(sp \ 16) * 8
 	spr(abs(a.spr), a.x, a.y, a.size, a.size,a.flp!=(a.spr<0))
 	if not a.pl.sp then
