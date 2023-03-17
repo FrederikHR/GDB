@@ -698,7 +698,7 @@ end
 
 function move_astronaut()
 	if (launchproc()) return
-	if a.friction then
+	if a.friction or a.fall then
 		a.dx*=0.85
 	else
 		--non-slidy
@@ -707,14 +707,22 @@ function move_astronaut()
 	a.dy+=a_gravity
 	
 	if btn(⬅️) and not(btn(➡️)) then
-	 a.dx-=a.acc
+	 if not a.fall then
+	 	a.dx-=a.acc
+	 else
+	 	a.dx-=a.acc/3
+	 end
 	 a.flp=true
 	 if not a.fall and not a.jump then
 		 a.play="walk"
 	 end
 	 
 	elseif btn(➡️) and not(btn(⬅️)) then
-		a.dx+=a.acc
+		if not a.fall then
+	 	a.dx+=a.acc
+	 else
+	 	a.dx+=a.acc/3
+	 end
 		a.flp=false
 		if not a.fall and not a.jump then
 			a.play="walk"
@@ -904,6 +912,14 @@ function pickup()
 			a.items+=1
 		end
 	end
+end
+
+--======spring=======
+
+spring={cx=12,cy=12,sprung=false}
+
+function update_spring()
+	
 end
 
 --======blocks=======
