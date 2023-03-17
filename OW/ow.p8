@@ -15,9 +15,9 @@ function menu_init()
  make_player()
  make_astronaut()
  
- xs={23,33}
+ xs={{23,55},{33,55},{109,61}}
  for x in all(xs) do
- 	make_enemy(x*8,55*8)
+ 	make_enemy(x[1]*8,x[2]*8)
  end
 end
 
@@ -44,7 +44,6 @@ function game_init()
 	
 	-- camera offsets
 	cx, cy = 0, 0
-	mx, my = 0, 0
 	
 	
 	box = {}
@@ -121,7 +120,7 @@ function spr_r(s,x,y,a,w,h)
  end
 end
 
-function scroll_camera(pa,s)
+function scroll_camera(pa,s,fromspace)
 
 	--basic scrolling
 	--cx = px - 64
@@ -131,9 +130,13 @@ function scroll_camera(pa,s)
 	scrolling	
 	--]]
 	if s then
-
-		cx=pa.x-50+pa.sw/2
-		cy=pa.y-50+pa.sh/2
+		if fromspace then
+			cx=pa.x-60+pa.sw/2
+			cy=pa.y-65+pa.sh/2
+		else
+			cx=pa.x-50+pa.sw/2
+			cy=pa.y-50+pa.sh/2
+		end
 	else
 		if pa.x <= box.x then
 			cx -= box.x - pa.x
@@ -221,17 +224,17 @@ function game_update()
 	if p.space then
 		if not landing and not launch then
 			update_player()
-			scroll_camera(p,false)
+			scroll_camera(p,false,false)
 			land()
 		elseif launch then
-			scroll_camera(p,true)
+			scroll_camera(p,true,true)
 			update_player()
 			launch=false
 		end
 	else
 		update_astronaut()
 		update_blocks()
-		scroll_camera(a,true)
+		scroll_camera(a,true,false)
 		for _,e in pairs(enemies) do
 			update_enemy(e)
 		end
@@ -985,7 +988,17 @@ function make_enemy(x,y)
 end
 
 function draw_enemy(e)
- spr(abs(e.spr),e.x,e.y,e.sz,e.sz,e.flp!=(e.spr<0))
+	if e.x<64*8 then
+ 	spr(abs(e.spr),e.x,e.y,e.sz,e.sz,e.flp!=(e.spr<0))
+	else
+		if e.y>32*8 then
+			pal(8,12)
+			spr(abs(e.spr),e.x,e.y,e.sz,e.sz,e.flp!=(e.spr<0))
+			pal()
+		else
+			spr(abs(e.spr),e.x,e.y,e.sz,e.sz,e.flp!=(e.spr<0))
+		end
+	end
 end
 
 function update_enemy(e)
