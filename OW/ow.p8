@@ -643,8 +643,11 @@ aanims={
 	jump={fr=4.5,40, 42, 44, 46},
 	fall={fr=1, 46}
 }
-a_gravity=0.3
+a_gravity=0.5
 friction=0
+
+--jump velocity
+jv=2.65
 
 function make_astronaut()
 	a={}
@@ -667,7 +670,8 @@ function make_astronaut()
 	a.anim_descend = true
 	a.jump=false
 	a.fall=false
-	a.jump_velocity=2.5
+	a.jump_velocity=jv
+	a.grav=a_gravity
 	a.pl={}
 	a.prompt=false
 	a.within=false
@@ -791,7 +795,7 @@ function move_astronaut()
 	
 	--limit speeds
 	if (a.dx>3) a.dx=3
-	if (a.dy>3) a.dy=3
+	if (a.dy>5) a.dy=5
 	if (a.dx<-3) a.dx=-3
 	--if (a.dy<-3) a.dy=-3
 	
@@ -820,10 +824,11 @@ function jump()
 	-- start falling 
 	if a.jump and a.jump_velocity <= 1 then
 		a.fall = true
+		a.grav*=1.1
 	end
 	
 	if not a.jump then
-		a.jump_velocity = 2.5
+		a.jump_velocity = jv
 	end
 	if a.fall then
 		a.play = "fall"
