@@ -749,6 +749,7 @@ function move_astronaut()
 		end
 	end
 	
+	-- spring collision
 	if collide_map(a, "right", 7) then
 		 a.x-=30
 	end
