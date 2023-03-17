@@ -449,8 +449,8 @@ function collide_map(obj,aim,flag)
 		x1=x+3      y1=y+h
 		x2=x+w-2    y2=y+h+1
 	elseif aim=="downish" then
-		x1=x+2      y1=y+h
-		x2=x+w      y2=y+h+2
+		x1=x+4        y1=y+h
+		x2=x+w-2      y2=y+h+2
  elseif aim=="center" then
 		x1=x+2      y1=y
 		x2=x+w-2    y2=y+h-2
@@ -753,8 +753,8 @@ function move_astronaut()
 		--breaking blocks
 		if collide_map(a,"downish",3) then
 			_,bx1,by1,bx2,by2=collide_map(a,"downish",3)
-			bx1=round(bx1) by1=round(by1)
-			bx2=round(bx2) by2=round(by2)
+			bx1=round(bx1)-1 by1=round(by1)
+			bx2=round(bx2)-1 by2=round(by2)
 			if (bx2 >=bx1+2) bx2=bx2-1
 			find_block(bx1,by1,bx2,by2)
 		end
