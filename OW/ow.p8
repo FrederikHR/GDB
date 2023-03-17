@@ -87,9 +87,11 @@ function game_draw()
 		for _,e in pairs(enemies) do
 			draw_enemy(e)
 		end
+		draw_wind()
 		
 		--debug
 		--draw_bs()
+		--draw_bss()
 		
 		if a.prompt then
 			draw_prompt()
@@ -234,6 +236,8 @@ function game_update()
 	else
 		update_astronaut()
 		update_blocks()
+		update_wind()
+		make_particle(a.x,a.y)
 		scroll_camera(a,true,false)
 		for _,e in pairs(enemies) do
 			update_enemy(e)
@@ -375,6 +379,11 @@ function landproc()
 			a.pl=p.clopl
 			a.x=p.clopl.sx
 			a.y=p.clopl.sy
+			
+			if p.clopl.spr==68 then
+				make_wind(a.x,a.y)
+			end
+			
 			if p.clopl.sp then
 				a.ship={x=p.clopl.sx-64,y=p.clopl.sy-48,sz=64}
 			else
@@ -707,7 +716,7 @@ function move_astronaut()
 	a.dy+=a_gravity
 	
 	if btn(⬅️) and not(btn(➡️)) then
-	 if not a.fall or not a.friction then
+	 if not a.fall or a.friction then
 	 	a.dx-=a.acc
 	 else
 	 	a.dx-=a.acc/3
@@ -718,7 +727,7 @@ function move_astronaut()
 	 end
 	 
 	elseif btn(➡️) and not(btn(⬅️)) then
-		if not a.fall or not a.friction then
+		if not a.fall or a.friction then
 	 	a.dx+=a.acc
 	 else
 	 	a.dx+=a.acc/3
@@ -1056,27 +1065,47 @@ end
 
 --=====wind=====
 wps={}
+aspd=-5
 
 function make_wind(x,y)
-	for i=1,50 do
+	for i=1,100 do
 		w={}
 		srand(x+y+i)
-		w.x=rnd(x%128)
-		w.y=rnd(x%128)
-		w.dx=ceil(rnd()*2 - 1)
+		w.x=rnd(140) + x + 10
+		w.y=rnd(128) + y - 64
+		w.dx=aspd
+		add(wps,w)
 	end
-	add(wps,w)
 end
---[[
+
 function draw_wind()
-
+	for _,w in pairs(wps) do
+		pset(w.x,w.y,7)
+	end
 end
-
 
 function update_wind()
-
+	for _,w in pairs(wps) do
+		if w.x>a.x-70 and w.x<a.x+100 and w.y>a.y-70 and w.y<a.y+70 then
+			w.x+=w.dx
+			w.y+=0.01
+		else
+			del(wps,w)
+		end
+	end
 end
---]]
+
+function make_particle(x,y)
+	local i=0
+	while len(wps) < 100 do
+		w={}
+		srand(x+y+wps[1].x)
+		w.x=rnd(140) + x + 10
+		w.y=rnd(128) + y - 64
+		w.dx=aspd
+		add(wps,w)
+	end
+end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000005666600000000000566660000000000000000000000000000000000000000000000000000000000056666000000000000
