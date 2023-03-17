@@ -67,7 +67,7 @@ function game_draw()
 	camera(cx,cy)
 	map(0, 0)
 	if p.space then
-		draw_stars()
+		draw_stars(p)
 		draw_planets()
 		draw_player()
 		draw_pind()
@@ -79,6 +79,8 @@ function game_draw()
 		if (not blocks_found) find_blocks()
 	else
 		--do on-planet stuff
+		draw_stars(a)
+		map(0, 0)
 		draw_blocks()
 		draw_astronaut()
 		draw_hud()
@@ -601,7 +603,7 @@ function draw_pind()
 	end
 end
 
-function draw_stars()
+function draw_stars(p)
 	--screen=128x128
 	local csx=flr(p.x/128)
 	local csy=flr(p.y/128)
@@ -866,7 +868,7 @@ end
 
 items={
 	--key at vine
-	i1={s=112,x=2*8,y=58*8+2,
+	i1={s=112,x=2*8,y=51*8,
 	sz=1,takem=false},
 	--key at ice
 	i2={s=112,x=84*8,y=56*8,
