@@ -207,7 +207,8 @@ function draw_hud()
 	rectfill(isx,isy,isx1,isy1,0)
 	rectfill(hsx,hsy,hsx1,hsy1,0)
 	print(a.items.."/3",isx+1,isy+1,7)
-	print("♥\88"..a.lives,hsx+1,hsy+1,7)
+	print("♥",hsx+1,hsy+1, 8)
+	print("\88"..a.lives,hsx+10,hsy+1,7)
 end
 
 function draw_bs()
@@ -236,8 +237,10 @@ function game_update()
 	else
 		update_astronaut()
 		update_blocks()
-		update_wind()
-		make_particle(a.x,a.y)
+		if a.pl.spr==68 then
+			update_wind()
+			make_particle(a.x,a.y)
+		end
 		scroll_camera(a,true,false)
 		for _,e in pairs(enemies) do
 			update_enemy(e)
@@ -1107,6 +1110,31 @@ function make_particle(x,y)
 		add(wps,w)
 	end
 end
+-->8
+--todo--
+
+--[[
+	tor-arne
+		- wind physics (walking)
+	 -	kiwi
+	add music (encompasing + 
+												game over + win)											
+	win condition
+	 - screen and logic
+	game over
+		- screen and logic
+	
+	
+	
+	frederik
+	intro screen
+	level design lava
+	transitions
+	 - copy paste bubbles
+
+
+	
+--]]
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000005666600000000000566660000000000000000000000000000000000000000000000000000000000056666000000000000
