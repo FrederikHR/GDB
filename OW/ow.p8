@@ -729,7 +729,7 @@ function move_astronaut()
 		end
 	else
 		if not a.fall and not a.jump then		
-			if (not a.friction) a.dx=0
+			--if (not a.friction) a.dx=0
 			a.play="idle"
 		end
 	end
@@ -756,6 +756,9 @@ function move_astronaut()
 			end
 		end
 	end
+	
+	
+	
 	
 	--enemies
 	collide_enemies()
@@ -803,7 +806,7 @@ function move_astronaut()
 	
 	--limit speeds
 	if (a.dx>3) a.dx=3
-	if (a.dy>5) a.dy=5
+	--if (a.dy>5) a.dy=5
 	if (a.dx<-3) a.dx=-3
 	--if (a.dy<-3) a.dy=-3
 	
@@ -1049,6 +1052,26 @@ function collide_enemies()
 	end
 end
 
+
+
+--=====wind=====
+wps={}
+
+function make_wind(x,y)
+	for i=1,50 do
+	w={}
+	
+	add(wps,w)
+end
+
+--function draw_wind()
+
+--end
+
+
+--function update_wind()
+
+--end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000005666600000000000566660000000000000000000000000000000000000000000000000000000000056666000000000000
