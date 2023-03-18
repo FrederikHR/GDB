@@ -11,6 +11,7 @@ function _init() menu_init() end
 function menu_init()
 
 	camera(0,0)
+
 	
 	vine_sx,vine_sy=get_x_y(64)
 	vine_posx, vine_posy=80,80
@@ -125,9 +126,11 @@ function menu_draw()
 	spr(122, 28,60)
 	spr(122, 100,60)
 	print("press ❎ to start",35,120, 9)
+	
 	for _,p in pairs(menu_planets) do
 		sspr(p.sx,p.sy, 16,16,p.posx, p.posy,32,32)
 	end
+
 	if starting then
 		draw_starting_screen()
 	end
@@ -280,7 +283,18 @@ function draw_hud()
 	
 	rectfill(isx,isy,isx1,isy1,0)
 	rectfill(hsx,hsy,hsx1,hsy1,0)
-	print(a.items.."/3",isx+1,isy+1,7)
+	
+	--draw honey
+	for i=1,3 do
+		pal({[4]=5,[9]=6,[10]=7})
+		spr(122,isx+1+9*i,isy+1)
+		pal()
+	end
+	for i=1,a.items do
+		spr(122,isx+1+9*i,isy+1)
+	end
+		
+	--draw lives
 	print("♥",hsx+1,hsy+1, 8)
 	print("\88"..a.lives,hsx+10,hsy+1,7)
 end
@@ -353,7 +367,7 @@ end
 
 
 function update_planets_menu()
-	if not starting then
+		if not starting then
 		for _,p in pairs(menu_planets) do
 			if p.posy <= p.t_lim and p.top then
 				p.posy+=p.spd
@@ -473,7 +487,7 @@ function land()
 	c=0
 	for _,pl in pairs(planets) do
 		c+=1
-		if pcoll(pl.x,pl.y) then
+		if pcoll(pl.x+16,pl.y+16) then
 			c-=1
 			p.clopl=pl
 			if within==false then
@@ -534,17 +548,21 @@ function gravity()
 	local pdy=0
 	local magx=0
 	local magy=0
+	
+	--due to planet resize
+	local oft=8
+	
 	--find closest planet
 	for _,pl in pairs(planets) do
 		if (pd==-1) then
-		 pd=pdist(pl.x,pl.y)
-		 pdx=pl.x
-		 pdy=pl.y
+		 pd=pdist(pl.x+oft,pl.y+oft)
+		 pdx=pl.x+oft
+		 pdy=pl.y+oft
 		end
-		if (pdist(pl.x,pl.y)<pd) then
-			pd=pdist(pl.x,pl.y)
-			pdx=pl.x
-			pdy=pl.y
+		if (pdist(pl.x+oft,pl.y+oft)<pd) then
+			pd=pdist(pl.x+oft,pl.y+oft)
+			pdx=pl.x+oft
+			pdy=pl.y+oft
 		end
 	end
 	
@@ -672,7 +690,7 @@ function pdist(x,y)
 end
 
 function pcoll(x,y)
-	if pdist(x,y) < 0.18 then
+	if pdist(x,y) < 0.38 then
 		return true
 	end
 	return false
@@ -825,6 +843,10 @@ end
 function update_astronaut()
 	move_astronaut()
 	animate(a)
+	if a.pl.spr==64 and a.x<=46*8 then
+		--spawn kiwis
+		make_kiwi(false,a.x,a.y)
+	end
 end
 
 function move_astronaut()
@@ -1056,6 +1078,10 @@ function draw_items()
 		if not item.taken then
 			spr(item.s,item.x,item.y)
 		end
+		--if items.i3.taken then
+		--spawn xl kiwi
+	--	make_kiwi(true)
+	--end
 	end
 end
 
@@ -1209,6 +1235,51 @@ function collide_enemies()
 	end
 end
 
+kiwis={}
+xlkiwi={}
+
+function make_kiwi(xl,x,y)
+	if xl then
+		xlkiwi.x=0
+		xlkiwi.y=49
+		xlkiwi.sz=64
+		xlkiwi.spr=104
+	else
+		k={}
+		if x<=30 then
+			k.x=x+30
+			k.flp=true
+		else
+			k.x=x-30
+			k.flp=false
+		end
+		k.y=y-30
+		k.sz=8
+		k.spr=104
+		
+		add(kiwis,k)
+	end
+end
+
+function update_kiwi(xl)
+	if xl then
+		xlkiwi.x+=1
+	else
+		for k in all(kiwis) do
+			print("asdas")
+		end
+	end
+end
+
+function draw_kiwi(xl)
+	if xl then
+		print("awsd")
+	else
+		for k in all(kiwis) do
+			spr(k.spr,k.x,k.y,k.sz,k.sz,k.flp)
+		end
+	end
+end
 
 
 --=====wind=====
@@ -1260,7 +1331,6 @@ end
 --[[
 	tor-arne
 	 -	kiwi
-	 - honey hud
 
 	
 	frederik
@@ -1277,6 +1347,7 @@ end
 	 - screen and logic
 	game over
 		- screen and logic
+	- honey hud
 	
 --]]
 -->8
