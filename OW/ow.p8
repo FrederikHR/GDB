@@ -914,15 +914,6 @@ function move_astronaut()
 	
 	--pickup items
 	pickup()
-	
-	--win
-	if collide_map(a,"center",6) and a.items==3 then
-		wl=true
-		_update=end_update
-		_draw=end_menu
-		music(-1, 300)
-		--sfx(6)
-	end
 
 	if a.lives==0 then 
 		_update=end_update
@@ -951,6 +942,11 @@ function move_astronaut()
 	--enemies
 	collide_enemies()
 	collide_kiwis()
+	if xlkiwi.alive then
+		if collide_sprite(a,"center",xlkiwi) then
+			astro_death()
+		end
+	end
 	
 	--check collision up and down
 	local old_ady=a.dy
@@ -1045,12 +1041,22 @@ function launchproc()
 	 	return false
 		elseif btn(🅾️) then
 			--do all the stuff
-			p.space=true
-			launch=true
-			landing=false
-			prompt=false
-			a.within=false
-			return true
+			
+			--win
+			if a.items==3 then
+				wl=true
+				_update=end_update
+				_draw=end_menu
+				music(-1, 300)
+				--sfx(6)
+			else
+				p.space=true
+				launch=true
+				landing=false
+				prompt=false
+				a.within=false
+				return true
+			end
 		end
 	end
 end
@@ -1268,7 +1274,7 @@ function make_kiwi(xl,x,y)
 	if xl then
 		xlkiwi.x=a.x-80
 		xlkiwi.y=a.y-16
-		xlkiwi.sz=8
+		xlkiwi.sz=64
 		xlkiwi.spr=104
 		xlkiwi.spd=2
 		xlkiwi.alive=true
