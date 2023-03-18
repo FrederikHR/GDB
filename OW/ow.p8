@@ -477,7 +477,7 @@ function land()
 	c=0
 	for _,pl in pairs(planets) do
 		c+=1
-		if pcoll(pl.x,pl.y) then
+		if pcoll(pl.x+16,pl.y+16) then
 			c-=1
 			p.clopl=pl
 			if within==false then
@@ -538,17 +538,21 @@ function gravity()
 	local pdy=0
 	local magx=0
 	local magy=0
+	
+	--due to planet resize
+	local oft=8
+	
 	--find closest planet
 	for _,pl in pairs(planets) do
 		if (pd==-1) then
-		 pd=pdist(pl.x,pl.y)
-		 pdx=pl.x
-		 pdy=pl.y
+		 pd=pdist(pl.x+oft,pl.y+oft)
+		 pdx=pl.x+oft
+		 pdy=pl.y+oft
 		end
-		if (pdist(pl.x,pl.y)<pd) then
-			pd=pdist(pl.x,pl.y)
-			pdx=pl.x
-			pdy=pl.y
+		if (pdist(pl.x+oft,pl.y+oft)<pd) then
+			pd=pdist(pl.x+oft,pl.y+oft)
+			pdx=pl.x+oft
+			pdy=pl.y+oft
 		end
 	end
 	
@@ -676,7 +680,7 @@ function pdist(x,y)
 end
 
 function pcoll(x,y)
-	if pdist(x,y) < 0.18 then
+	if pdist(x,y) < 0.28 then
 		return true
 	end
 	return false
@@ -829,6 +833,10 @@ end
 function update_astronaut()
 	move_astronaut()
 	animate(a)
+	if a.pl.spr==64 and a.x<=46*8 then
+		--spawn kiwis
+		make_kiwi(false,a.x,a.y)
+	end
 end
 
 function move_astronaut()
@@ -1060,6 +1068,10 @@ function draw_items()
 		if not item.taken then
 			spr(item.s,item.x,item.y)
 		end
+		--if items.i3.taken then
+		--spawn xl kiwi
+	--	make_kiwi(true)
+	--end
 	end
 end
 
@@ -1213,6 +1225,51 @@ function collide_enemies()
 	end
 end
 
+kiwis={}
+xlkiwi={}
+
+function make_kiwi(xl,x,y)
+	if xl then
+		xlkiwi.x=0
+		xlkiwi.y=49
+		xlkiwi.sz=64
+		xlkiwi.spr=104
+	else
+		k={}
+		if x<=30 then
+			k.x=x+30
+			k.flp=true
+		else
+			k.x=x-30
+			k.flp=false
+		end
+		k.y=y-30
+		k.sz=8
+		k.spr=104
+		
+		add(kiwis,k)
+	end
+end
+
+function update_kiwi(xl)
+	if xl then
+		xlkiwi.x+=1
+	else
+		for k in all(kiwis) do
+			print("asdas")
+		end
+	end
+end
+
+function draw_kiwi(xl)
+	if xl then
+		print("awsd")
+	else
+		for k in all(kiwis) do
+			spr(k.spr,k.x,k.y,k.sz,k.sz,k.flp)
+		end
+	end
+end
 
 
 --=====wind=====
