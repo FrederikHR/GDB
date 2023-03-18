@@ -169,6 +169,9 @@ function game_draw()
 			draw_enemy(e)
 		end
 		draw_kiwi(false)
+		if xlkiwi.alive then
+			draw_kiwi(true)
+		end
 		draw_wind()
 		
 		--debug
@@ -368,6 +371,9 @@ function game_update()
 			update_enemy(e)
 		end
 		update_kiwi(false)
+		if xlkiwi.alive then
+			update_kiwi(true)
+		end
 	end
 end
 
@@ -944,6 +950,7 @@ function move_astronaut()
 	end
 	--enemies
 	collide_enemies()
+	collide_kiwis()
 	
 	--check collision up and down
 	local old_ady=a.dy
@@ -1087,10 +1094,10 @@ function draw_items()
 		if not item.taken then
 			spr(item.s,item.x,item.y)
 		end
-		--if items.i3.taken then
-		--spawn xl kiwi
-	--	make_kiwi(true)
-	--end
+		if items.i1.taken and not xlkiwi.alive then
+			--spawn xl kiwi
+			make_kiwi(true)
+		end
 	end
 end
 
@@ -1259,22 +1266,27 @@ xlkiwi={}
 
 function make_kiwi(xl,x,y)
 	if xl then
-		xlkiwi.x=0
-		xlkiwi.y=49
+		xlkiwi.x=a.x-80
+		xlkiwi.y=a.y-16
 		xlkiwi.sz=8
 		xlkiwi.spr=104
+		xlkiwi.spd=2
+		xlkiwi.alive=true
 	else
 		k={}
 		if x<=30 or not a.flp then
-			k.x=x+30
+			k.x=x+30+rnd(10)-5
 			k.flp=true
 		else
-			k.x=x-30
+			k.x=x-30+rnd(10)-5
 			k.flp=false
 		end
-		k.y=y-30
+		k.y=y-40
 		k.sz=1
 		k.spr=104
+		k.set=false
+		k.dir=0
+		k.spd=3.5
 		
 		add(kiwis,k)
 	end
@@ -1282,18 +1294,21 @@ end
 
 function update_kiwi(xl)
 	if xl then
-		xlkiwi.x+=1
+		xlkiwi.x+=xlkiwi.spd
 	else
 		for k in all(kiwis) do
 			if outside(k.x,k.y) then
 				del(kiwis,k)
 				goto cont
 			end
-			local dx=k.x-a.x
-			local dy=k.y-a.y
-			local dir=atan2(dx,dy)
-			
-			k.y+=2
+			if not k.set then
+				k.set=true
+				local dx=a.x-k.x
+				local dy=a.y-k.y
+				k.dir=atan2(dx,dy)
+			end
+				k.x+=k.spd*cos(k.dir)
+				k.y+=k.spd*sin(k.dir)
 			
 			::cont::
 		end
@@ -1302,10 +1317,20 @@ end
 
 function draw_kiwi(xl)
 	if xl then
-		print("awsd")
+		kx,ky=get_x_y(104)
+		sspr(kx,ky,8,8,xlkiwi.x, xlkiwi.y, 64,64)
 	else
 		for k in all(kiwis) do
 			spr(k.spr,k.x,k.y,k.sz,k.sz,k.flp)
+		end
+	end
+end
+
+function collide_kiwis()
+	--astro collides with enemies
+	for _,k in pairs(kiwis) do
+		if collide_sprite(a,"center",k) then
+			astro_death()
 		end
 	end
 end
