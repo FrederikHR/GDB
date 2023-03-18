@@ -19,7 +19,6 @@ function menu_init()
 	
 	menu_planets={
 		vine={x=vine_x,y=vine_y,posx=vine_posx,spd=.1}
-		
 	}
 	
 	--celeste code
@@ -274,7 +273,18 @@ function draw_hud()
 	
 	rectfill(isx,isy,isx1,isy1,0)
 	rectfill(hsx,hsy,hsx1,hsy1,0)
-	print(a.items.."/3",isx+1,isy+1,7)
+	
+	--draw honey
+	for i=1,3 do
+		pal({[4]=5,[9]=6,[10]=7})
+		spr(122,isx+1+9*i,isy+1)
+		pal()
+	end
+	for i=1,a.items do
+		spr(122,isx+1+9*i,isy+1)
+	end
+		
+	--draw lives
 	print("♥",hsx+1,hsy+1, 8)
 	print("\88"..a.lives,hsx+10,hsy+1,7)
 end
@@ -1254,7 +1264,6 @@ end
 --[[
 	tor-arne
 	 -	kiwi
-	 - honey hud
 
 	
 	frederik
@@ -1271,6 +1280,7 @@ end
 	 - screen and logic
 	game over
 		- screen and logic
+	- honey hud
 	
 --]]
 -->8
