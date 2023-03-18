@@ -9,9 +9,11 @@ __lua__
 function _init() menu_init() end
 
 function menu_init()
+	right=true -- used for menu planet
+
 	camera(0,0)
-	vine_x,vine_y=get_x_y(64)
-	vine_posx=80
+	vine_posx,vine_y=get_x_y(64)
+	--vine_posx=80
 	ice_x,ice_y=get_x_y(66)
 	wind_x,wind_y=get_x_y(68)
 	
@@ -346,12 +348,20 @@ end
 
 function update_planets_menu()
 	
-	if vine_posx <120 then
 	
-		vine_posx+=1
+	if vine_posx <=90 and right  then
+		vine_posx+=.1
 	else
-		vine_posx=120
+		right=false
 	end
+	if vine_posx >= 20 and not right then
+		vine_posx-=.1
+ else
+ right=true
+	end
+	
+	
+	
 end
 -->8
 --player
