@@ -9,7 +9,7 @@ __lua__
 function _init() menu_init() end
 
 function menu_init()
-
+	camera(0,0)
 	vine_x,vine_y=get_x_y(64)
 	vine_posx=80
 	ice_x,ice_y=get_x_y(66)
@@ -26,6 +26,7 @@ function menu_init()
  _update=menu_update
  _draw=menu_draw
  scene="menu"
+ wl=false
  make_player()
  make_astronaut()
  
@@ -83,6 +84,20 @@ function game_init()
 	box.y = 40
 	box.w = 70
 	box.h = 32
+end
+
+function end_menu()
+	cls()
+	if wl then
+		print("you win!",a.x,a.y,9)
+	else
+		print("you lose!",a.x,a.y,9)
+	end
+	print("press ❎ to restart",a.x-20,a.y+10,9)
+end
+
+function end_update()
+	if (btnp(❎)) menu_init() --play the game
 end
 -->8
 --draw and camera
@@ -652,14 +667,6 @@ function pcoll(x,y)
 	return false
 end
 
-function len(tab)
-	c=0
-	for _,_ in pairs(tab) do
-		c=c+1
-	end
-	return c
-end
-
 function round(x)
 	return flr(x+0.5)	
 end
@@ -819,6 +826,8 @@ function move_astronaut()
 	end
 	a.dy+=a_gravity
 	
+	if (a.pl.spr==68) a.dx-=0.5
+	
 	if btn(⬅️) and not(btn(➡️)) then
 	 if not a.fall or a.friction then
 	 	a.dx-=a.acc
@@ -857,6 +866,23 @@ function move_astronaut()
 	
 	--pickup items
 	pickup()
+	
+	--win
+	if collide_map(a,"center",6) and a.items==3 then
+		wl=true
+		_update=end_update
+		_draw=end_menu
+		music(-1, 300)
+		--sfx(6)
+	end
+
+	if a.lives==0 then 
+		_update=end_update
+		_draw=end_menu
+		music(-1, 300)
+		--sfx(7)
+	end
+	
 	
 	--environment
 	if collide_map(a,"center",5) then
@@ -1005,13 +1031,13 @@ end
 items={
 	--key at vine
 	i1={s=112,x=2*8,y=51*8,
-	sz=1,takem=false},
+	sz=1,taken=false},
 	--key at ice
 	i2={s=112,x=77*8,y=47*8,
-	sz=1,takem=false},
+	sz=1,taken=false},
 	--key at wind
 	i3={s=112,x=77*8,y=28*8,
-	sz=1,takem=false}
+	sz=1,taken=false}
 }
 
 function draw_items()
@@ -1077,6 +1103,12 @@ function find_blocks()
 				local b={spr=90,x=i*8,y=j*8,
 													cx=i,cy=j,
 													s=0,stand=false}
+				add(blocks,b)
+				mset(i,j,0)
+			elseif mget(i,j)==106 then
+				local b={spr=106,x=i*8,y=j*8,
+													cx=i,cy=j,
+													s=10,stand=false}
 				add(blocks,b)
 				mset(i,j,0)
 			end
@@ -1202,7 +1234,7 @@ end
 
 function make_particle(x,y)
 	local i=0
-	while len(wps) < 100 do
+	while #wps < 100 do
 		w={}
 		srand(x+y+wps[1].x)
 		w.x=rnd(140) + x + 10
