@@ -680,7 +680,7 @@ function pdist(x,y)
 end
 
 function pcoll(x,y)
-	if pdist(x,y) < 0.28 then
+	if pdist(x,y) < 0.38 then
 		return true
 	end
 	return false
