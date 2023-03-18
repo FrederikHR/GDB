@@ -1011,6 +1011,7 @@ function jump()
 		a.play="jump"
 		a.friction=false
 		a.stand=false
+		sfx(14)
 	end
 	
 	if a.jump and a.jump_velocity > 1 and not a.fall then
@@ -1115,6 +1116,7 @@ function pickup()
 		if not item.taken and collide_sprite(a,"center",item) then
 			item.taken=true
 			a.items+=1
+			sfx(13)
 		end
 	end
 end
