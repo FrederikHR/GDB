@@ -9,18 +9,26 @@ __lua__
 function _init() menu_init() end
 
 function menu_init()
-	right=true -- used for menu planet
 
 	camera(0,0)
-	vine_posx,vine_y=get_x_y(64)
-	--vine_posx=80
-	ice_x,ice_y=get_x_y(66)
-	wind_x,wind_y=get_x_y(68)
+	
+	vine_sx,vine_sy=get_x_y(64)
+	vine_posx, vine_posy=80,80
+	
+	ice_sx,ice_sy=get_x_y(66)
+	ice_posx, ice_posy=50, 20
+	
+	wind_sx,wind_sy=get_x_y(68)
+	wind_posx, wind_posy=20, 80
 	
 	menu_planets={
-		vine={x=vine_x,y=vine_y,posx=vine_posx,spd=.1}
-		
-	}
+		vine={sx=vine_sx,sy=vine_sy,
+		posx=vine_posx,posy=vine_posy,spd=.15,t_lim=85,d_lim=75,top=true },
+		ice={sx=ice_sx,sy=ice_sy,
+		posx=ice_posx,posy=ice_posy,spd=.12, t_lim=25,d_lim=15, top = false},
+		wind={sx=wind_sx,sy=wind_sy,
+		posx=wind_posx,posy=wind_posy,spd=.15, t_lim=83,d_lim=77, top = true}
+		}
 	
 	--celeste code
 	starting=false
@@ -117,11 +125,9 @@ function menu_draw()
 	spr(122, 28,60)
 	spr(122, 100,60)
 	print("press ❎ to start",35,120, 9)
-	
-	sspr(vine_x, vine_y,16,16,vine_posx,75, 32,32) 
-	sspr(ice_x, ice_y,16,16,47,20, 32,32) 
-	sspr(wind_x, wind_y,16,16,20,80, 32,32) 
-
+	for _,p in pairs(menu_planets) do
+		sspr(p.sx,p.sy, 16,16,p.posx, p.posy,32,32)
+	end
 	if starting then
 		draw_starting_screen()
 	end
@@ -347,21 +353,21 @@ end
 
 
 function update_planets_menu()
-	
-	
-	if vine_posx <=90 and right  then
-		vine_posx+=.1
-	else
-		right=false
-	end
-	if vine_posx >= 20 and not right then
-		vine_posx-=.1
- else
- right=true
-	end
-	
-	
-	
+	if not starting then
+		for _,p in pairs(menu_planets) do
+			if p.posy <= p.t_lim and p.top then
+				p.posy+=p.spd
+			
+			else
+				p.top=false
+			end
+			if p.posy >= p.d_lim and not p.top then
+				p.posy-=p.spd
+		 else
+		 	p.top=true
+			end
+		end
+end
 end
 -->8
 --player
