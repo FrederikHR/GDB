@@ -43,6 +43,7 @@ function menu_init()
  _draw=menu_draw
  scene="menu"
  wl=false
+ kiwi_t=time()
  make_player()
  make_astronaut()
  
@@ -167,6 +168,7 @@ function game_draw()
 		for _,e in pairs(enemies) do
 			draw_enemy(e)
 		end
+		draw_kiwi(false)
 		draw_wind()
 		
 		--debug
@@ -365,6 +367,7 @@ function game_update()
 		for _,e in pairs(enemies) do
 			update_enemy(e)
 		end
+		update_kiwi(false)
 	end
 end
 
@@ -846,9 +849,12 @@ end
 function update_astronaut()
 	move_astronaut()
 	animate(a)
-	if a.pl.spr==64 and a.x<=46*8 then
+	if a.pl.spr==64 and a.x<=46*8 and #kiwis<2 then
 		--spawn kiwis
-		make_kiwi(false,a.x,a.y)
+		if time()-kiwi_t > 2 or time()<1 then
+			make_kiwi(false,a.x,a.y)
+			kiwi_t=time()
+		end
 	end
 end
 
@@ -1117,11 +1123,16 @@ end
 
 function update_blocks()
 	for i,b in ipairs(blocks) do
-		if	b.stand then
+		if	b.stand or (b.s>0 and b.ospr==90) then
 			b.s=b.s+1
 		else
-			b.s=0
-			b.spr=90
+			if b.ospr==90 then
+				b.spr=90
+				b.s=0
+			else
+				b.spr=106
+				b.s=10
+			end
 			--return
 		end
 		if b.s>=10 and b.spr==90 then
@@ -1130,6 +1141,11 @@ function update_blocks()
 			b.spr=105
 		elseif b.s>=40 then
 			b.stand=false
+			if b.ospr==90 then
+				b.s=0
+			else
+				b.s=10
+			end
 		end
 	end
 end
@@ -1140,13 +1156,13 @@ function find_blocks()
 	for i=0,128 do
 		for j=0,64 do
 			if mget(i,j)==90 then
-				local b={spr=90,x=i*8,y=j*8,
+				local b={spr=90,ospr=90,x=i*8,y=j*8,
 													cx=i,cy=j,
 													s=0,stand=false}
 				add(blocks,b)
 				mset(i,j,0)
 			elseif mget(i,j)==106 then
-				local b={spr=106,x=i*8,y=j*8,
+				local b={spr=106,ospr=106,x=i*8,y=j*8,
 													cx=i,cy=j,
 													s=10,stand=false}
 				add(blocks,b)
@@ -1245,11 +1261,11 @@ function make_kiwi(xl,x,y)
 	if xl then
 		xlkiwi.x=0
 		xlkiwi.y=49
-		xlkiwi.sz=64
+		xlkiwi.sz=8
 		xlkiwi.spr=104
 	else
 		k={}
-		if x<=30 then
+		if x<=30 or not a.flp then
 			k.x=x+30
 			k.flp=true
 		else
@@ -1257,7 +1273,7 @@ function make_kiwi(xl,x,y)
 			k.flp=false
 		end
 		k.y=y-30
-		k.sz=8
+		k.sz=1
 		k.spr=104
 		
 		add(kiwis,k)
@@ -1269,7 +1285,17 @@ function update_kiwi(xl)
 		xlkiwi.x+=1
 	else
 		for k in all(kiwis) do
-			print("asdas")
+			if outside(k.x,k.y) then
+				del(kiwis,k)
+				goto cont
+			end
+			local dx=k.x-a.x
+			local dy=k.y-a.y
+			local dir=atan2(dx,dy)
+			
+			k.y+=2
+			
+			::cont::
 		end
 	end
 end
@@ -1282,6 +1308,10 @@ function draw_kiwi(xl)
 			spr(k.spr,k.x,k.y,k.sz,k.sz,k.flp)
 		end
 	end
+end
+
+function outside(x,y)
+	return x>a.x+64 or x<a.x-64 or y>a.y+64 or y<a.y-64
 end
 
 
