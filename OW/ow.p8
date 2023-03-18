@@ -15,6 +15,11 @@ function menu_init()
 	ice_x,ice_y=get_x_y(66)
 	wind_x,wind_y=get_x_y(68)
 	
+	menu_planets={
+		vine={x=vine_x,y=vine_y,posx=vine_posx,spd=.1}
+		
+	}
+	
 	--celeste code
 	starting=false
 	start_game_flash=0
@@ -272,15 +277,6 @@ function draw_hud()
 	print("\88"..a.lives,hsx+10,hsy+1,7)
 end
 
-function draw_bs()
-	for i,b in pairs(blocks) do
-		print(b.stand,cx+1,cy+1+i*12,7)
-		print(b.cx,cx+22,cy+1+i*12,7)
-		print(b.cy,cx+40,cy+1+i*12,7)
-		print(bx1.." "..bx2.." "..by1.." "..by2,cx+1,cy+80,7)
-	end
-end
-
 function draw_starting_screen()
 	pal()
 	
@@ -299,7 +295,6 @@ function draw_starting_screen()
 			c=0
 		end
 		--if c<10 then
-			
 			pal(1,c)
 			pal(2,c)
 			pal(3,c)
@@ -1248,24 +1243,24 @@ end
 
 --[[
 	tor-arne
-		- wind physics (walking)
 	 -	kiwi
+	 - honey hud
+
+	
+	frederik
+	level design lava
+	transitions
+	 - copy paste bubbles
+
+	done
+	intro screen
+	- wind physics (walking)
 	add music (encompasing + 
 												game over + win)											
 	win condition
 	 - screen and logic
 	game over
 		- screen and logic
-	
-	
-	
-	frederik
-	intro screen
-	level design lava
-	transitions
-	 - copy paste bubbles
-
-
 	
 --]]
 -->8
