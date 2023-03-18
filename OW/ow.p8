@@ -567,14 +567,6 @@ function pcoll(x,y)
 	return false
 end
 
-function len(tab)
-	c=0
-	for _,_ in pairs(tab) do
-		c=c+1
-	end
-	return c
-end
-
 function round(x)
 	return flr(x+0.5)	
 end
@@ -938,13 +930,13 @@ end
 items={
 	--key at vine
 	i1={s=112,x=2*8,y=51*8,
-	sz=1,takem=false},
+	sz=1,taken=false},
 	--key at ice
 	i2={s=112,x=77*8,y=47*8,
-	sz=1,takem=false},
+	sz=1,taken=false},
 	--key at wind
 	i3={s=112,x=77*8,y=28*8,
-	sz=1,takem=false}
+	sz=1,taken=false}
 }
 
 function draw_items()
@@ -962,6 +954,10 @@ function pickup()
 			a.items+=1
 		end
 	end
+	--if items.i3.taken then
+		--spawn xl kiwi
+	--	make_kiwi(true)
+	--end
 end
 
 --======spring=======
@@ -1035,7 +1031,7 @@ function find_block(bbx1,bby1,bbx2,bby2)
 	end
 end
 
---======enemies=======
+--======enemies and kiwis=======
 
 enemies={}
 
@@ -1099,6 +1095,19 @@ function collide_enemies()
 	end
 end
 
+kiwis={}
+
+--function make_kiwi(x,y)
+
+--end
+
+--function update_kiwi(xl)
+
+--end
+
+--function draw_kiwi(xl)
+
+--end
 
 
 --=====wind=====
@@ -1135,7 +1144,7 @@ end
 
 function make_particle(x,y)
 	local i=0
-	while len(wps) < 100 do
+	while #wps < 100 do
 		w={}
 		srand(x+y+wps[1].x)
 		w.x=rnd(140) + x + 10
