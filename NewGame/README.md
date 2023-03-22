@@ -2,8 +2,8 @@
 The new game, by GDB.
 ![picture of the sword](concept_art/sword-kopi.png "sword")
 
-Top down view
+Top down view<br />
 <img align="middle" src="concept_art/sword_island_top_down.gif" width="400" height="400" />
 
-Startscreen (?)
+Startscreen (?)<br />
 <img align="middle" src="concept_art/sword_islands_angle2.gif" width="400" height="400" />
