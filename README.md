@@ -2,8 +2,9 @@
 GDB lager spill
 
 ## Currently Working on
- - OW
+ - 
 
 ## Previous
+ - Honey Chaser
  - Lift (on-hold)
 
