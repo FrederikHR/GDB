@@ -7,3 +7,6 @@ Top down view<br />
 
 Startscreen (?)<br />
 <img align="middle" src="concept_art/sword_islands_angle2.gif" width="400" height="400" />
+
+mechanics (platforming)<br />
+<img align="middle" src="concept_art/game_mechanic_platforms_sword_faster.gif" width="400" height="400" />
