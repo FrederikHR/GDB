@@ -8,7 +8,7 @@ Travel in a spaceship<br />
 <img align="middle" src="off_planet.png" width="400" height="400" />
 
 Visit strange places<br />
-<img align="middle" src="on_planet.png" width="400" height="400" />
+<img align="middle" src="on_planet.png" width="600" height="400" />
 
 Fly from planet to planet
 
