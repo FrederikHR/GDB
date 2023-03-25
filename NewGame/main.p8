@@ -4,6 +4,8 @@ __lua__
 --#include draw
 --#include update
 #include scripts/scenes/menu.lua
+#include scripts/scenese/game.lua
+
 -->8
 --
 __gfx__
