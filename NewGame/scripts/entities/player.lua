@@ -1,6 +1,6 @@
 panims ={
     idle={fr=30,1},
-    walk={fr=10,1,2,3}
+    walk={fr=10,2,3,4}
 }
 
 p={}
@@ -14,6 +14,7 @@ function make_player()
     p.sz=1
     p.acc=2
     p.play="idle"
+    p.pressarrow=false
     p.flp=false
     p.attack=false
     p.aframe=0
@@ -36,20 +37,28 @@ function move_player()
         p.dx-=p.acc
         p.flp=true
         p.play="walk"
+        p.pressarrow=true
     end
     if btn(➡️) then
         p.dx+=p.acc
         p.flp=false
         p.play="walk"
+        p.pressarrow=true
     end
-    if btn(2) then
+    if btn(⬆️) then
         p.dy-=p.acc
         p.play="walk"
+        p.pressarrow=true
     end
-    if btn(3) then
+    if btn(⬇️) then
         p.dy+=p.acc
         p.play="walk"
+        p.pressarrow=true
     end
+
+    -- if no arrow presses, idle animation
+    if (p.pressarrow) p.play="idle"
+
     p.x+=p.dx
     p.y+=p.dy
 end
