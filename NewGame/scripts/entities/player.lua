@@ -66,11 +66,11 @@ end
 function player_attack()
 
     -- X
-    if btn(5) then
+    if btn(❎) then
         p.attack=true
     end
     -- O
-    if btn(4) then
+    if btn(🅾️) then
         p.attack=true
     end
 end
