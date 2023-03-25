@@ -1,12 +1,25 @@
 function generateItem (type,rarity,element)
     local item = {}
-    if (type)
-    item.type = rnd(itemTypes)
-    item.rarity = rnd(rarities)
-    if (item.rarity == "trash")
-        item.element = "none"
+
+    if (type == 0) then
+        item.type = rnd(itemTypes)
     else
-        item.element = rnd(elements)
+        item.type = itemTypes[type]
     end
+
+    if (rarity == 0) then
+        item.rarity = rnd(rarities)
+    else
+        item.rarity = rarities[rarity]
+    end
+
+    if (item.rarity == "trash") then
+        item.element = "none"
+    elseif (element == 0) then
+        item.element = rnd(elements)
+    else
+        item.element = elements[element]
+    end
+
     return item
 end
