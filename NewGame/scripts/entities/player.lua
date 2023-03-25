@@ -1,6 +1,7 @@
 panims ={
-    idle={fr=30,1},
-    walk={fr=10,2,3,4}
+    idle={fr=15,5,6},
+    walk={fr=10,1,2,3,4},
+    attack_1={fr=10,7,8,9,10}
 }
 
 p={}
@@ -71,6 +72,7 @@ function player_attack()
     -- X
     if btn(❎) then
         p.attack=true
+        p.play="attack_1"
     end
     -- O
     if btn(🅾️) then
