@@ -14,6 +14,7 @@ function make_player()
     p.sz=1
     p.acc=2
     p.play="idle"
+    p.anims=panims
     p.pressarrow=false
     p.flp=false
     p.attack=false
@@ -24,6 +25,7 @@ function update_player()
     if (p.attack) p.aframe+=1
     move_player()
     player_attack()
+    animate(p)
 end
 
 function draw_player()
@@ -57,7 +59,8 @@ function move_player()
     end
 
     -- if no arrow presses, idle animation
-    if (p.pressarrow) p.play="idle"
+    if (not p.pressarrow) p.play="idle"
+    p.pressarrow=false
 
     p.x+=p.dx
     p.y+=p.dy

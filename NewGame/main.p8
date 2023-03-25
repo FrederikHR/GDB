@@ -6,6 +6,7 @@ __lua__
 #include scripts/scenes/menu.lua
 #include scripts/scenes/game.lua
 #include scripts/entities/player.lua
+#include scripts/utils/utils.lua
 -->8
 --
 __gfx__
