@@ -6,6 +6,8 @@ __lua__
 #include scripts/scenes/menu.lua
 #include scripts/scenes/game.lua
 #include scripts/entities/player.lua
+#include scripts/gear/lib.lua
+#include scripts/gear/item.lua
 -->8
 --
 __gfx__
