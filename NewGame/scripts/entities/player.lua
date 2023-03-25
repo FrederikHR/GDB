@@ -1,5 +1,6 @@
 panims ={
-
+    idle={fr=30,1},
+    walk={fr=10,1,2,3}
 }
 
 p={}
@@ -14,14 +15,18 @@ function make_player()
     p.acc=2
     p.play="idle"
     p.flp=false
+    p.attack=false
+    p.aframe=0
 end
 
 function update_player()
+    if (p.attack) p.aframe+=1
     move_player()
+    player_attack()
 end
 
 function draw_player()
-    spr(abs(p.spr),p.x,p.y,p.sz,p.sz,p.flp!=(p.spr))
+    spr(abs(p.spr),p.x,p.y,p.sz,p.sz,p.flp)
 end
 
 function move_player()
@@ -47,4 +52,16 @@ function move_player()
     end
     p.x+=p.dx
     p.y+=p.dy
+end
+
+function player_attack()
+
+    -- X
+    if btn(5) then
+        p.attack=true
+    end
+    -- O
+    if btn(4) then
+        p.attack=true
+    end
 end
