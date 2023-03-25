@@ -18,3 +18,41 @@ function animate(an)
 	end
 	an.spr = an.anims[an.state][an.animindex]
 end
+
+--[[
+function damage_enemy(enemy,item,hand)
+	-- Base damage lookup
+	if (item.type == "wand" || item.type == "orb") then
+		local phys = 0
+		local mag = item_dmg[item.type] * item.rarity
+	elseif (item.type = "shield") then
+		local phys = item_dmg[item.type] * item.rarity
+		local mag = 0
+	else
+		local phys = item_dmg[item.type] * item.rarity
+		local mag = item.rarity - 1
+	end
+
+	-- Armor and resistance
+	phys -= enemy.armor
+	if (enemy.resist != "none" && enemy.resist == item.element) then
+		mag *= 0.5
+	end
+	local damage = phys + mag
+
+	-- Conditional modifiers
+	if (hand == 2)
+		damage *= offhand_mod[item.type]
+	end
+	if (enemy.dbf == "holy") then
+		damage *= 1.1
+	end
+
+	-- Damage and debuff application
+	enemy.HP -= damage
+	if (item.element != "none" && item.element != enemy.resist) then
+		enemy.dbf = item.element
+		enemy.dbft = 0 -- Timer reset
+	end
+end
+]]

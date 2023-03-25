@@ -1,4 +1,4 @@
-function generateItem (type,rarity,element)
+function generate_item (type,rarity,element)
     local item = {}
 
     if (type == 0) then
@@ -8,9 +8,9 @@ function generateItem (type,rarity,element)
     end
 
     if (rarity == 0) then
-        item.rarity = rnd(rarities)
+        item.rarity = rnd(5) + 1
     else
-        item.rarity = rarities[rarity]
+        item.rarity = rarity
     end
 
     if (item.rarity == "trash") then
@@ -22,4 +22,14 @@ function generateItem (type,rarity,element)
     end
 
     return item
+end
+
+function upgrade_item (item)
+    if (item.rarity != 5) then
+        item.rarity += 1
+    end
+
+    if (item.element == "none") then
+        item.element = rnd(elements)
+    end
 end
