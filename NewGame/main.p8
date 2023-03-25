@@ -4,7 +4,7 @@ __lua__
 --#include draw
 --#include update
 #include scripts/scenes/menu.lua
-#include scripts/scenese/game.lua
+#include scripts/scenes/game.lua
 
 -->8
 --
