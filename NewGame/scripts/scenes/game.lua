@@ -1,3 +1,7 @@
+game_state={
+    level=1
+}
+
 function game_init()
     camera(0,0)
     _update=game_update
@@ -6,6 +10,8 @@ end
 
 function game_draw()
     cls()
+    map(0,0)
+    mset(0,0,32)
     draw_player()
     for _,e in pairs(enemies) do
         draw_enemy(e)

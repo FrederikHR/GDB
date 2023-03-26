@@ -34,6 +34,7 @@ function make_player()
     p.pressarrow=false
     p.flp=false
     p.attack=false
+    p.interact=false
     p.aframe=0
     p.max_aframe=10
 end
@@ -48,9 +49,12 @@ function update_player()
         p.attack=false
     end
     move_player()
-    player_attack()
-    animate(p)
-    animate(atk)
+    player_interact()
+    if not p.interact then
+        player_attack()
+        animate(p)
+        animate(atk)
+    end
 end
 
 function draw_player()
@@ -110,16 +114,26 @@ function move_player()
     p.y+=p.dy
 end
 
+function player_interact()
+    -- if not already attacking
+    if p.aframe == 0 then
+        if collide_map(p,"center",0) and btn(❎) then
+            p.interact=true
+            inv_init()
+        end
+    end
+end
+
 function player_attack()
     -- if not already attacking
     if p.aframe == 0 then
-        if btn(❎) then
+        if btnp(❎) then
             p.attack=true
             --p.play="attack_1"
             p.play="attack_1"
             atk.play="slice"
         end
-        if btn(🅾️) then
+        if btnp(🅾️) then
             p.attack=true
         end
     end
@@ -136,5 +150,4 @@ end
 
 function draw_attack()
     spr(abs(atk.spr),atk.x,atk.y,atk.sz,atk.sz,p.flp)
-    print(collide_sprite(atk,"atk",enemies[1]),0,0)
 end
