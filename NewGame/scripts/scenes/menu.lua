@@ -4,6 +4,7 @@ menuitem(2,"inventory",function() inv_init() end)
 
 function menu_init()
     camera(0,0)
+    initfont()
     _update=menu_update
     _draw=menu_draw
     make_player()

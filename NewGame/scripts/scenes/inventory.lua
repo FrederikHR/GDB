@@ -16,12 +16,13 @@ function inv_init()
     camera(0,0)
     _update=inv_update
     _draw=inv_draw
+    --menuitem(2,"resume game",function() game_init() end)
 end
 
 function inv_draw()
     cls()
-    print("you are on the inventory screen!",0,64,7)
-    print("press 🅾️ to go exit",0,74,7)
+    --print("you are on the inventory screen!",0,64,7)
+    --print("press 🅾️ to go exit",0,74,7)
     draw_inv()
 end
 
@@ -39,6 +40,12 @@ function draw_inv()
 
     --highlight selected item
     rect(inv_pos[1]*SZ+OFFSET,inv_pos[2]*SZ,inv_pos[1]*SZ+SZ+OFFSET,inv_pos[2]*SZ+SZ,10)
+
+    --draw weapons in slots with stats
+    draw_slots()
+
+    --draw currently highlighted weapon with stats
+    draw_current_item()
 end
 
 function move_inv()
@@ -69,4 +76,28 @@ function inv_ob(dir)
         if (inv_pos[2]==max_inv_sz-1) return true
     end
     return false
+end
+
+function draw_slots()
+    local area1={0,64}
+    local col1=12
+    local area2={41,64}
+    local col2=8
+    print("slot 1",area1[1],area1[2],col1)
+    print("sword",area1[1],area1[2]+8,col1)
+    print("fire",area1[1],area1[2]+16,col1)
+    print("rare",area1[1],area1[2]+24,col1)
+
+    print("slot 2",area2[1],area2[2],col2)
+    print("shield",area2[1],area2[2]+8,col2)
+    print("none",area2[1],area2[2]+16,col2)
+    print("trash",area2[1],area2[2]+24,col2)
+end
+
+function draw_current_item()
+    local area={82,64}
+    local col=6
+    print("current",area[1],area[2],col)
+    print("mace",area[1],area[2]+8,col)
+    
 end
