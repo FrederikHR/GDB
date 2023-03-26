@@ -7,8 +7,14 @@ end
 function game_draw()
     cls()
     draw_player()
+    for _,e in pairs(enemies) do
+        draw_enemy(e)
+    end
 end
 
 function game_update()
     update_player()
+    for _,e in pairs(enemies) do
+        update_enemy(e)
+    end
 end

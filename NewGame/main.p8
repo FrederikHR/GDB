@@ -9,6 +9,7 @@ __lua__
 #include scripts/gear/lib.lua
 #include scripts/gear/item.lua
 #include scripts/utils/utils.lua
+#include scripts/entities/enemy.lua
 
 -->8
 --

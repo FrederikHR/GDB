@@ -19,6 +19,17 @@ function animate(an)
 	an.spr = an.anims[an.state][an.animindex]
 end
 
+function dist(a,b)
+	local dx=(b.x-a.x)/64
+	local dy=(b.y-a.y)/64
+	
+	local dsq=dx*dx+dy*dy
+	
+	if (dsq<0) return 32767.9999
+	
+	return sqrt(dsq)
+end
+
 --[[
 function damage_enemy(enemy,item,hand)
 	-- Base damage lookup
