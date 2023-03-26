@@ -6,7 +6,8 @@ panims ={
 
 atk_anims = {
     idle={fr=1,-1},
-    slice={fr=0.6, 21,22,23,24.25,26,27,28,29,30}
+    slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
+    --slice={fr=0.4, 37,38,39,40,41,42,43,44,45,46}
 }
 
 p={}
@@ -73,7 +74,7 @@ function move_player()
         p.flp=true
         p.play="walk"
         p.pressarrow=true
-        dir[1]=-1
+        dir[1]=-2
     end
     if btn(➡️) then
         p.dx+=p.acc
@@ -86,7 +87,7 @@ function move_player()
         p.dy-=p.acc
         p.play="walk"
         p.pressarrow=true
-        dir[2]=-1
+        dir[2]=-2
         updown=true
     end
     if btn(⬇️) then
@@ -133,6 +134,7 @@ function player_attack()
             --p.play="attack_1"
             p.play="attack_1"
             atk.play="slice"
+            sfx(0)
         end
         if btnp(🅾️) then
             p.attack=true
@@ -150,5 +152,9 @@ function atk_collide()
 end
 
 function draw_attack()
-    if (atk.spr != -1)  spr(abs(atk.spr),atk.x,atk.y,atk.sz,atk.sz,p.flp)
+   -- if (atk.spr != -1)  spr(abs(atk.spr),atk.x,atk.y,atk.sz,atk.sz,p.flp)
+
+   sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
+
+   if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,16,16,p.flp)
 end
