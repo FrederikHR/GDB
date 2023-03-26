@@ -10,7 +10,7 @@ inventory = {
 }
 
 inv_pos={0,0}
-max_inv_sz=5
+max_inv_sz=4
 
 function inv_init()
     camera(0,0)
@@ -20,8 +20,8 @@ end
 
 function inv_draw()
     cls()
-    print("you are on the inventory screen!",0,64)
-    print("press 🅾️ to go exit",0,74)
+    print("you are on the inventory screen!",0,64,7)
+    print("press 🅾️ to go exit",0,74,7)
     draw_inv()
 end
 
@@ -31,24 +31,25 @@ end
 
 function draw_inv()
     local SZ = 16
+    local OFFSET = 32
     for i,obj in ipairs(inventory) do
         local x,y = get_x_y(obj.spr)
-        sspr(x,y,8,8,((i-1)%4)*SZ+32,((i-1)\4)*SZ,SZ,SZ)
+        sspr(x,y,8,8,((i-1)%4)*SZ+OFFSET,((i-1)\4)*SZ,SZ,SZ)
     end
 
     --highlight selected item
-    --rect()
+    rect(inv_pos[1]*SZ+OFFSET,inv_pos[2]*SZ,inv_pos[1]*SZ+SZ+OFFSET,inv_pos[2]*SZ+SZ,10)
 end
 
 function move_inv()
     if btn(⬅️) then
-        inv_pos[1]-=1
+        if (not inv_ob("left")) inv_pos[1]-=1
     elseif btn(➡️) then
-        inv_pos[1]+=1
+        if (not inv_ob("right")) inv_pos[1]+=1
     elseif btn(⬆️) then
-        inv_pos[2]-=1
+        if (not inv_ob("up")) inv_pos[2]-=1
     elseif btn(⬇️) then
-        inv_pos[2]+=1
+        if (not inv_ob("down")) inv_pos[2]+=1
     elseif btnp(❎) then
         print("asdasd")
     elseif btnp(🅾️) then
@@ -61,11 +62,11 @@ function inv_ob(dir)
     if dir=="left" then
         if (inv_pos[1]==0) return true
     elseif dir=="right" then
-        if (inv_pos[1]==max_inv_sz) return true
+        if (inv_pos[1]==max_inv_sz-1) return true
     elseif dir=="up" then
         if (inv_pos[2]==0) return true
     elseif dir=="down" then
-        if (inv_pos[2]==max_inv_sz) return true
+        if (inv_pos[2]==max_inv_sz-1) return true
     end
     return false
 end
