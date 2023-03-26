@@ -42,13 +42,13 @@ function draw_inv()
 end
 
 function move_inv()
-    if btn(⬅️) then
+    if btnp(⬅️) then
         if (not inv_ob("left")) inv_pos[1]-=1
-    elseif btn(➡️) then
+    elseif btnp(➡️) then
         if (not inv_ob("right")) inv_pos[1]+=1
-    elseif btn(⬆️) then
+    elseif btnp(⬆️) then
         if (not inv_ob("up")) inv_pos[2]-=1
-    elseif btn(⬇️) then
+    elseif btnp(⬇️) then
         if (not inv_ob("down")) inv_pos[2]+=1
     elseif btnp(❎) then
         print("asdasd")
