@@ -10,8 +10,8 @@ end
 
 function game_draw()
     cls()
-    map(0,0)
-    mset(0,0,32)
+    --map(0,0)
+    --mset(0,0,32)
     draw_player()
     for _,e in pairs(enemies) do
         draw_enemy(e)

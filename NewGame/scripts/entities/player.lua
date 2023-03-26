@@ -115,6 +115,7 @@ function move_player()
 end
 
 function player_interact()
+    --NOT IN USE
     -- if not already attacking
     if p.aframe == 0 then
         if collide_map(p,"center",0) and btn(❎) then

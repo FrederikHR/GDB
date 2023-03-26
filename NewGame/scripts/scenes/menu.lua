@@ -1,5 +1,7 @@
 function _init() menu_init() end
 
+menuitem(2,"test",function() inv_init() end)
+
 function menu_init()
     camera(0,0)
     _update=menu_update
