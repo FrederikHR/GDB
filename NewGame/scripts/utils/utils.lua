@@ -30,6 +30,11 @@ function dist(a,b)
 	return sqrt(dsq)
 end
 
+function get_x_y(sp)
+	sx, sy = (sp % 16) * 8, flr(sp \ 16) * 8 
+	return sx, sy
+end
+
 --[[
 function damage_enemy(enemy,item,hand)
 	-- Base damage lookup

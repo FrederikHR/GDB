@@ -1,3 +1,14 @@
+inventory = {
+    {spr=192},{spr=193},
+    {spr=194},{spr=195},
+    {spr=196},{spr=197},
+    {spr=198},{spr=199},
+    {spr=200},{spr=201},
+    {spr=202},{spr=203},
+    {spr=204},{spr=205},
+    {spr=206},{spr=207}
+}
+
 inv_pos={0,0}
 max_inv_sz=5
 
@@ -9,13 +20,24 @@ end
 
 function inv_draw()
     cls()
-    print("you are on the inventory screen!")
-    print("press 🅾️ to go exit",0,10)
-    --draw_inv()
+    print("you are on the inventory screen!",0,64)
+    print("press 🅾️ to go exit",0,74)
+    draw_inv()
 end
 
 function inv_update()
     move_inv()
+end
+
+function draw_inv()
+    local SZ = 16
+    for i,obj in ipairs(inventory) do
+        local x,y = get_x_y(obj.spr)
+        sspr(x,y,8,8,((i-1)%4)*SZ+32,((i-1)\4)*SZ,SZ,SZ)
+    end
+
+    --highlight selected item
+    --rect()
 end
 
 function move_inv()
