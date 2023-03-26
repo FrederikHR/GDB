@@ -5,7 +5,7 @@ panims ={
 }
 
 atk_anims = {
-    idle={fr=1,16},
+    idle={fr=1,-1},
     slice={fr=0.6, 21,22,23,24.25,26,27,28,29,30}
 }
 
@@ -143,11 +143,11 @@ end
 function atk_collide()
     if p.aframe==p.max_aframe\2 then
         for _,e in pairs(enemies) do
-            if (collide_sprite(atk,"atk",e)) e.health-=1
+            if (collide_sprite(atk,"atk",e) and atk.spr != -1) e.health-=1
         end
     end
 end
 
 function draw_attack()
-    spr(abs(atk.spr),atk.x,atk.y,atk.sz,atk.sz,p.flp)
+    if (atk.spr != -1)  spr(abs(atk.spr),atk.x,atk.y,atk.sz,atk.sz,p.flp)
 end
