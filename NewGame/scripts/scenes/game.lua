@@ -10,6 +10,7 @@ function game_draw()
     for _,e in pairs(enemies) do
         draw_enemy(e)
     end
+    draw_attack()
 end
 
 function game_update()

@@ -6,10 +6,14 @@ __lua__
 #include scripts/scenes/menu.lua
 #include scripts/scenes/game.lua
 #include scripts/entities/player.lua
+#include scripts/entities/enemy.lua
 #include scripts/gear/lib.lua
 #include scripts/gear/item.lua
 #include scripts/utils/utils.lua
-#include scripts/entities/enemy.lua
+#include scripts/utils/collision.lua
+#include scripts/utils/logging.lua
+
+
 
 -->8
 --

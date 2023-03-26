@@ -16,7 +16,7 @@ function make_enemy(x,y,lvl)
     e.dx=0
     e.dy=0
     e.sz=1
-    e.acc=1
+    e.acc=0.2
 
     e.health=lvl*10
     e.max_health=lvl*10
@@ -38,16 +38,17 @@ end
 
 function draw_enemy(e)
     spr(abs(e.spr),e.x,e.y,e.sz,e.sz,e.flp)
-    print(dist(e,p),10,120)
+    print(e.health,e.x,e.y-4,7)
 end
 
 function move_enemy(e)
     e.dx=0
     e.dy=0
-    if dist(e,p)*64 < 20 then
+    if dist(e,p)*64 < 10 then
         local dir = atan2(p.x-e.x,p.y-e.y)
         e.dx += cos(dir)
         e.dy += sin(dir)
+        e.play="walk"
     else
         e.play="idle"
     end

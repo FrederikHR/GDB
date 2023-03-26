@@ -60,14 +60,14 @@ function collide_sprite(obj,aim,obj2)
 	elseif aim=="down" then
 		x1=x+2      y1=y+h
 		x2=x+w-2    y2=y+h
- elseif aim=="center" then
+    elseif aim=="center" then
 		x1=x+2      y1=y+2
 		x2=x+w-2    y2=y+h-2
+    elseif aim=="atk" then
+        x1=x        y1=y
+        x2=x+w      y2=y+h
 	end
-	
-	--pixels to tiles
-	--x1/=8 y1/=8
-	--x2/=8 y2/=8
+
 	if not((obj2.x > x2)
 	or (obj2.y > y2)
 	or ((obj2.x+obj2.sz) < x1)

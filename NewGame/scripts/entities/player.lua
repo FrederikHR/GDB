@@ -12,6 +12,9 @@ atk_anims = {
 p={}
 atk={
     spr=0,
+    x=0,
+    y=0,
+    sz=1,
     dir={1,0},
     play="idle",
     anims=atk_anims  
@@ -32,12 +35,13 @@ function make_player()
     p.flp=false
     p.attack=false
     p.aframe=0
+    p.max_aframe=10
 end
 
 function update_player()
     if (p.attack) p.aframe+=1
     --if attack is done, reset
-    if p.aframe==10 then
+    if p.aframe==p.max_aframe then
         atk.play="idle"
         p.play="idle"
         p.aframe=0
@@ -50,7 +54,6 @@ function update_player()
 end
 
 function draw_player()
-    spr(abs(atk.spr),p.x+atk.dir[1]*8,p.y+atk.dir[2]*8,p.sz,p.sz,p.flp)
     spr(abs(p.spr),p.x,p.y,p.sz,p.sz,p.flp)
 end
 
@@ -58,7 +61,8 @@ function move_player()
     p.dx=0
     p.dy=0
 
-    local dir={0,0}
+    local dir=atk.dir
+    local updown=false
 
     if btn(⬅️) then
         p.dx-=p.acc
@@ -79,19 +83,29 @@ function move_player()
         p.play="walk"
         p.pressarrow=true
         dir[2]=-1
+        updown=true
     end
     if btn(⬇️) then
         p.dy+=p.acc
         p.play="walk"
         p.pressarrow=true
         dir[2]=1
+        updown=true
     end
 
     -- if no arrow presses and no attack, idle animation
-    if (not p.pressarrow and not p.attack) p.play="idle"
+    if (not p.pressarrow and not p.attack) then
+        p.play="idle"
+    end
     p.pressarrow=false
 
+    -- update attack
+    if (not updown) dir[2]=0
     atk.dir=dir
+    atk.x=p.x+atk.dir[1]*8
+    atk.y=p.y+atk.dir[2]*8
+
+    --update position
     p.x+=p.dx
     p.y+=p.dy
 end
@@ -109,4 +123,18 @@ function player_attack()
             p.attack=true
         end
     end
+    atk_collide()
+end
+
+function atk_collide()
+    if p.aframe==p.max_aframe\2 then
+        for _,e in pairs(enemies) do
+            if (collide_sprite(atk,"atk",e)) e.health-=1
+        end
+    end
+end
+
+function draw_attack()
+    spr(abs(atk.spr),atk.x,atk.y,atk.sz,atk.sz,p.flp)
+    print(collide_sprite(atk,"atk",enemies[1]),0,0)
 end
