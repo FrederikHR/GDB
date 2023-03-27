@@ -27,6 +27,7 @@ function generate_item (type,rarity,element)
 
     item.sz=1
     item.taken=false
+    item.slot="none"
 
     return item
 end

@@ -1,6 +1,17 @@
 inventory = {}
 
-equipment={}
+equipment={
+    {
+        type="none",
+        rarity="none",
+        element="none"
+    },
+    {
+        type="none",
+        rarity="none",
+        element="none"
+    }
+}
 
 inv_pos={0,0}
 inv_prompt_pos=0
@@ -38,7 +49,10 @@ function draw_inv()
     end
     for i,obj in ipairs(inventory) do
         local x,y = get_x_y(obj.spr)
-        sspr(x,y,8,8,((i-1)%4)*SZ+OFFSET,((i-1)\4)*SZ,SZ,SZ)
+        local pos_x=((i-1)%4)*SZ+OFFSET
+        local pos_y=((i-1)\4)*SZ
+        sspr(x,y,8,8,pos_x,pos_y,SZ,SZ)
+        if (obj.taken) circ(pos_x+SZ\2,pos_y+SZ\2,SZ\2-1,obj.slot)
     end
 
     --highlight selected item
@@ -49,6 +63,8 @@ function draw_inv()
 
     --draw currently highlighted weapon with stats
     draw_current_item(inv_pos[1],inv_pos[2])
+
+    if (inv_prompt) draw_inv_prompt()
 
     print("❎ to select, 🅾️ to delete",0,112)
     print("pause to return to game",6,120)
@@ -68,21 +84,32 @@ function move_inv()
     elseif btnp(⬇️) then
         if (not inv_ob("down")) inv_pos[2]+=1
     elseif btnp(❎) then
-        print("asdasd")
+        inv_prompt=true
     elseif btnp(🅾️) then
-        print("asfdasf")
+        inv_prompt=false
     end
 end
 
 function move_inv_prompt()
+    local pos=inv_pos[2]*4+inv_pos[1]+1
     if btnp(⬅️) then
         inv_prompt_pos = (inv_prompt_pos - 1) % 2
     elseif btnp(➡️) then
         inv_prompt_pos = (inv_prompt_pos + 1) % 2
     elseif btnp(❎) then
-        print("asdasd")
+        equipment[1].taken=false
+        equipment[1].slot="none"
+        equipment[1]=inventory[pos]
+        inventory[pos].taken=true
+        inventory[pos].slot=12
+        inv_prompt=false
     elseif btnp(🅾️) then
-        print("asfdasf")
+        equipment[2].taken=false
+        equipment[2].slot="none"
+        equipment[2]=inventory[pos]
+        inventory[pos].taken=true
+        inventory[pos].slot=8
+        inv_prompt=false
     end
 end
 
@@ -105,14 +132,14 @@ function draw_slots()
     local area2={41,66}
     local col2=8
     print("slot 1",area1[1],area1[2],col1)
-    print("sword",area1[1],area1[2]+8,col1)
-    print("fire",area1[1],area1[2]+16,col1)
-    print("rare",area1[1],area1[2]+24,col1)
+    print(equipment[1].type,area1[1],area1[2]+8,col1)
+    print(equipment[1].element,area1[1],area1[2]+16,col1)
+    print(equipment[1].rarity,area1[1],area1[2]+24,col1)
 
     print("slot 2",area2[1],area2[2],col2)
-    print("shield",area2[1],area2[2]+8,col2)
-    print("none",area2[1],area2[2]+16,col2)
-    print("trash",area2[1],area2[2]+24,col2)
+    print(equipment[2].type,area2[1],area2[2]+8,col2)
+    print(equipment[2].element,area2[1],area2[2]+16,col2)
+    print(equipment[2].rarity,area2[1],area2[2]+24,col2)
 end
 
 function draw_current_item(x,y)
@@ -128,4 +155,9 @@ function draw_current_item(x,y)
         print("no item",area[1],area[2]+8,col)
         print("selected",area[1],area[2]+16,col)
     end
+end
+
+function draw_inv_prompt()
+    rectfill(20,40,100,46,5)
+    print("❎=slot 1, 🅾️=slot 2",21,41,7)
 end
