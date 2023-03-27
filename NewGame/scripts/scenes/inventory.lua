@@ -92,11 +92,12 @@ end
 
 function move_inv_prompt()
     local pos=inv_pos[2]*4+inv_pos[1]+1
-    if btnp(⬅️) then
-        inv_prompt_pos = (inv_prompt_pos - 1) % 2
-    elseif btnp(➡️) then
-        inv_prompt_pos = (inv_prompt_pos + 1) % 2
-    elseif btnp(❎) then
+    --The code below can be used to extend inventory management
+    --if btnp(⬅️) then
+    --    inv_prompt_pos = (inv_prompt_pos - 1) % 2
+    --elseif btnp(➡️) then
+    --    inv_prompt_pos = (inv_prompt_pos + 1) % 2
+    if btnp(❎) then
         equipment[1].taken=false
         equipment[1].slot="none"
         equipment[1]=inventory[pos]
