@@ -50,12 +50,10 @@ function update_player()
         p.attack=false
     end
     move_player()
-    player_interact()
-    if not p.interact then
-        player_attack()
-        animate(p)
-        animate(atk)
-    end
+    player_pickup()
+    player_attack()
+    animate(p)
+    animate(atk)
 end
 
 function draw_player()
@@ -115,14 +113,10 @@ function move_player()
     p.y+=p.dy
 end
 
-function player_interact()
-    --NOT IN USE
-    -- if not already attacking
-    if p.aframe == 0 then
-        if collide_map(p,"center",0) and btn(❎) then
-            p.interact=true
-            inv_init()
-        end
+function player_pickup()
+    if collide_sprite(p,"center",0) then
+        p.interact=true
+        inv_init()
     end
 end
 

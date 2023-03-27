@@ -10,24 +10,29 @@ inventory = {
 }
 
 inv_pos={0,0}
+inv_prompt_pos=0
+inv_prompt=false
 max_inv_sz=4
 
 function inv_init()
     camera(0,0)
     _update=inv_update
     _draw=inv_draw
-    --menuitem(2,"resume game",function() game_init() end)
+    menuitem(2,"resume game",function() game_init() end)
 end
 
 function inv_draw()
     cls()
-    --print("you are on the inventory screen!",0,64,7)
-    --print("press 🅾️ to go exit",0,74,7)
     draw_inv()
+    if (inv_prompt) draw_inv_prompt()
 end
 
 function inv_update()
-    move_inv()
+    if not inv_prompt then
+        move_inv()
+    else
+        move_inv_prompt()
+    end
 end
 
 function draw_inv()
@@ -46,6 +51,13 @@ function draw_inv()
 
     --draw currently highlighted weapon with stats
     draw_current_item()
+
+    print("❎ to select, 🅾️ to delete",0,112)
+    print("pause to return to game",6,120)
+end
+
+function draw_inv_prompt()
+    rectfill()
 end
 
 function move_inv()
@@ -60,8 +72,19 @@ function move_inv()
     elseif btnp(❎) then
         print("asdasd")
     elseif btnp(🅾️) then
-        p.interact=false
-        game_init()
+        print("asfdasf")
+    end
+end
+
+function move_inv_prompt()
+    if btnp(⬅️) then
+        inv_prompt_pos = (inv_prompt_pos - 1) % 2
+    elseif btnp(➡️) then
+        inv_prompt_pos = (inv_prompt_pos + 1) % 2
+    elseif btnp(❎) then
+        print("asdasd")
+    elseif btnp(🅾️) then
+        print("asfdasf")
     end
 end
 
@@ -79,9 +102,9 @@ function inv_ob(dir)
 end
 
 function draw_slots()
-    local area1={0,64}
+    local area1={0,65}
     local col1=12
-    local area2={41,64}
+    local area2={41,65}
     local col2=8
     print("slot 1",area1[1],area1[2],col1)
     print("sword",area1[1],area1[2]+8,col1)
@@ -95,7 +118,7 @@ function draw_slots()
 end
 
 function draw_current_item()
-    local area={82,64}
+    local area={82,65}
     local col=6
     print("current",area[1],area[2],col)
     print("mace",area[1],area[2]+8,col)
