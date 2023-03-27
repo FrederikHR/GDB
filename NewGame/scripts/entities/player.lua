@@ -34,7 +34,7 @@ function make_player()
     p.play="idle"
     p.anims=panims
     p.pressarrow=false
-    p.flp=false
+    p.left_swipe=false
     p.attack=false
     p.interact=false
     p.inv_full=false
@@ -141,6 +141,11 @@ function player_attack()
             p.play="attack_1"
             atk.play="slice"
             sfx(player_sfx.attack_sfx)
+            if p.left_swipe then
+                p.left_swipe=false
+            else
+                p.left_swipe=true
+            end
         end
         if btnp(🅾️) then
             p.attack=true
@@ -162,5 +167,5 @@ function draw_attack()
 
    sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
 
-   if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,16,16,p.flp)
+   if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,16,16,p.flp, p.left_swipe)
 end
