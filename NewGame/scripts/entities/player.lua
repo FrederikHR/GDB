@@ -9,6 +9,7 @@ atk_anims = {
     slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
     --slice={fr=0.4, 37,38,39,40,41,42,43,44,45,46}
 }
+player_sfx={attack_sfx = 1}
 
 p={}
 atk={
@@ -139,7 +140,7 @@ function player_attack()
             --p.play="attack_1"
             p.play="attack_1"
             atk.play="slice"
-            sfx(0)
+            sfx(player_sfx.attack_sfx)
         end
         if btnp(🅾️) then
             p.attack=true
