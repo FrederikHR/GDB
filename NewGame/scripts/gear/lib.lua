@@ -9,6 +9,17 @@ item_types = {
     "whip"
 }
 
+item_sprites = {
+    sword=210,
+    spear=214,
+    dagger=212,
+    wand=215,
+    mace=211,
+    orb=208,
+    shield=213,
+    whip=209
+}
+
 elements = {
     "cold",
     "fire",

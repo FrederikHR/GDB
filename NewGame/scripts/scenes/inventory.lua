@@ -1,13 +1,6 @@
-inventory = {
-    {spr=192},{spr=193},
-    {spr=194},{spr=195},
-    {spr=196},{spr=197},
-    {spr=198},{spr=199},
-    {spr=200},{spr=201},
-    {spr=202},{spr=203},
-    {spr=204},{spr=205},
-    {spr=206},{spr=207}
-}
+inventory = {}
+
+equipment={}
 
 inv_pos={0,0}
 inv_prompt_pos=0
@@ -38,6 +31,11 @@ end
 function draw_inv()
     local SZ = 16
     local OFFSET = 32
+    for i=1,16 do
+        local x1=((i-1)%4)*SZ+OFFSET
+        local x2=((i-1)\4)*SZ
+        rect(x1,x2,x1+SZ,x2+SZ,6)
+    end
     for i,obj in ipairs(inventory) do
         local x,y = get_x_y(obj.spr)
         sspr(x,y,8,8,((i-1)%4)*SZ+OFFSET,((i-1)\4)*SZ,SZ,SZ)
@@ -50,7 +48,7 @@ function draw_inv()
     draw_slots()
 
     --draw currently highlighted weapon with stats
-    draw_current_item()
+    draw_current_item(inv_pos[1],inv_pos[2])
 
     print("❎ to select, 🅾️ to delete",0,112)
     print("pause to return to game",6,120)
@@ -102,9 +100,9 @@ function inv_ob(dir)
 end
 
 function draw_slots()
-    local area1={0,65}
+    local area1={0,66}
     local col1=12
-    local area2={41,65}
+    local area2={41,66}
     local col2=8
     print("slot 1",area1[1],area1[2],col1)
     print("sword",area1[1],area1[2]+8,col1)
@@ -117,10 +115,17 @@ function draw_slots()
     print("trash",area2[1],area2[2]+24,col2)
 end
 
-function draw_current_item()
-    local area={82,65}
+function draw_current_item(x,y)
+    local pos=y*4+x+1
+    local area={82,66}
     local col=6
     print("current",area[1],area[2],col)
-    print("mace",area[1],area[2]+8,col)
-    
+    if inventory[pos] then
+        print(inventory[pos].type,area[1],area[2]+8,col)
+        print(inventory[pos].element,area[1],area[2]+16,col)
+        print(inventory[pos].rarity,area[1],area[2]+24,col)
+    else
+        print("no item",area[1],area[2]+8,col)
+        print("selected",area[1],area[2]+16,col)
+    end
 end

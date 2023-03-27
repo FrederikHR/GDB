@@ -70,8 +70,8 @@ function collide_sprite(obj,aim,obj2)
 
 	if not((obj2.x > x2)
 	or (obj2.y > y2)
-	or ((obj2.x+obj2.sz) < x1)
-	or ((obj2.y+obj2.sz) < y1)) then
+	or ((obj2.x+obj2.sz*8) < x1)
+	or ((obj2.y+obj2.sz*8) < y1)) then
 		return true
 	end
 	

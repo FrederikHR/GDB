@@ -36,6 +36,7 @@ function make_player()
     p.flp=false
     p.attack=false
     p.interact=false
+    p.inv_full=false
     p.aframe=0
     p.max_aframe=10
 end
@@ -114,9 +115,19 @@ function move_player()
 end
 
 function player_pickup()
-    if collide_sprite(p,"center",0) then
-        p.interact=true
-        inv_init()
+    local pickedup={}
+    for j,i in ipairs(current_items) do
+        if collide_sprite(p,"center",i) then
+            if #inventory<16 then
+                 add(inventory,i)
+                 add(pickedup,j)
+            else
+                p.inv_full=true
+            end
+        end
+    end
+    for i in all(pickedup) do
+        deli(current_items,i)
     end
 end
 

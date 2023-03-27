@@ -1,13 +1,17 @@
+current_items={}
+
 function generate_item (type,rarity,element)
     local item = {}
 
-    if (type == 0) then
-        item.type = rnd(itemTypes)
+    if (not type) then
+        item.type = rnd(item_types)
     else
-        item.type = itemTypes[type]
+        item.type = item_types[type]
     end
 
-    if (rarity == 0) then
+    item.spr=item_sprites[item.type]
+
+    if (not rarity) then
         item.rarity = rnd(5) + 1
     else
         item.rarity = rarity
@@ -15,13 +19,29 @@ function generate_item (type,rarity,element)
 
     if (item.rarity == "trash") then
         item.element = "none"
-    elseif (element == 0) then
+    elseif (not element) then
         item.element = rnd(elements)
     else
         item.element = elements[element]
     end
 
+    item.sz=1
+    item.taken=false
+
     return item
+end
+
+function spawn_item(x,y,type,rarity,element)
+    local item = generate_item(type,rarity,element)
+    item.x=x
+    item.y=y
+    add(current_items,item)
+end
+
+function draw_items_on_map()
+    for _,i in pairs(current_items) do
+        spr(32,i.x,i.y)
+    end
 end
 
 function upgrade_item (item)
