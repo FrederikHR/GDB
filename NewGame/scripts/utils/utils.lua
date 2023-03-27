@@ -57,6 +57,14 @@ function tosmall(str)
   return smallstr
 end
 
+function tblclone(org)
+    local t={}
+    for key, value in pairs(org) do
+        t[key] = value
+    end
+    return t
+end
+
 --[[
 function damage_enemy(enemy,item,hand)
 	-- Base damage lookup
