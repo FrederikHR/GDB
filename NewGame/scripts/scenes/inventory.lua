@@ -166,16 +166,19 @@ function draw_inv_prompt()
 end
 
 function delete_item(pos)
-    --check if in slot
-    if inventory[pos] != "none" then
+    if inventory[pos] != nil then
+        --check if in slot, and remove from slot
         if inventory[pos].slot==12 then
             reset_slot(1)
             inventory[pos].slot="none"
             inventory[pos].taken=false
-        else
+        elseif inventory[pos].slot==8 then
             reset_slot(2)
             inventory[pos].slot="none"
             inventory[pos].taken=false
+        else
+            --item not in slot, delete from inventory
+            deli(inventory,pos)
         end
     end
 end
