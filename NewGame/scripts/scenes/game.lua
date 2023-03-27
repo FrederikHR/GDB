@@ -3,6 +3,7 @@ game_state={
 }
 
 function game_init()
+    sfx(-1)
     menuitem(2,"inventory",function() inv_init() end)
     camera(0,0)
     _update=game_update
