@@ -33,6 +33,10 @@ function make_player()
     p.dir={1,0}
     p.play="idle"
     p.anims=panims
+    p.health=10
+    p.max_health=10
+    p.mana=10
+    p.max_mana=10
     p.pressarrow=false
     p.left_swipe=false
     p.attack=false
@@ -168,4 +172,12 @@ function draw_attack()
    sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
 
    if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,16,16,p.flp, p.left_swipe)
+end
+
+function current_player_health()
+    return p.health/p.max_health
+end
+
+function current_player_mana()
+    return p.mana/p.max_mana
 end

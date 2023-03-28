@@ -71,7 +71,7 @@ function damage_enemy(enemy,item,hand)
 	if (item.type == "wand" || item.type == "orb") then
 		local phys = 0
 		local mag = item_dmg[item.type] * item.rarity
-	elseif (item.type = "shield") then
+	elseif (item.type == "shield") then
 		local phys = item_dmg[item.type] * item.rarity
 		local mag = 0
 	else

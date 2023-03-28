@@ -2,7 +2,8 @@ function _init() menu_init() end
 
 function menu_init()
     intro_start_sfx = 0
-    camera(0,0)
+    cx,cy = 0,0
+    camera(cx,cy)
     initfont()
     _update=menu_update
     _draw=menu_draw
