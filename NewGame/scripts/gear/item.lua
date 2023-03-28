@@ -63,6 +63,8 @@ function draw_item(item,x,y,scaled,sz)
 end
 
 function change_pal(item)
+    pal(15,3)
+    pal(14,0)
     pal(item.pal,element_colors[item.element])
 end
 

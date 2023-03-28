@@ -36,7 +36,7 @@ end
 function draw_hud()
     local hbarx=30
     local mbarx=20
-    local wpos={cx+1,cy+118,cx+19,cy+126}
+    local wpos={cx+1,cy+117,cx+19,cy+126}
     local SZ=8
     --health
     rectfill(cx+1,cy+1,cx+hbarx,cy+3,5)
@@ -50,11 +50,11 @@ function draw_hud()
     rect(wpos[1],wpos[2],wpos[3],wpos[4],5)
     line(wpos[1]+SZ+1,wpos[2],wpos[1]+SZ+1,wpos[4])
     if equipment[1].spr !="none" then
-        draw_item(equipment[1],wpos[1]+1,wpos[2])
+        draw_item(equipment[1],wpos[1]+1,wpos[2]+1)
         --spr(equipment[1].spr,wpos[1],wpos[2])
     end
     if equipment[2].spr !="none" then
-        draw_item(equipment[2],wpos[1]+SZ+2,wpos[2])
+        draw_item(equipment[2],wpos[1]+SZ+2,wpos[2]+1)
         --spr(equipment[2].spr,wpos[1]+SZ,wpos[2])
     end
 

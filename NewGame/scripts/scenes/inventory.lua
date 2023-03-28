@@ -45,12 +45,12 @@ function draw_inv()
     for i=1,16 do
         local x1=((i-1)%4)*SZ+OFFSET
         local x2=((i-1)\4)*SZ
-        rect(x1,x2,x1+SZ,x2+SZ,6)
+        rect(x1,x2,x1+SZ+1,x2+SZ+1,6)
     end
     for i,obj in ipairs(inventory) do
         local x,y = get_x_y(obj.spr)
-        local pos_x=((i-1)%4)*SZ+OFFSET
-        local pos_y=((i-1)\4)*SZ
+        local pos_x=((i-1)%4)*SZ+OFFSET+1
+        local pos_y=((i-1)\4)*SZ+1
         draw_item(obj,pos_x,pos_y,true,SZ)
         --sspr(x,y,8,8,pos_x,pos_y,SZ,SZ)
         if (obj.taken) circ(pos_x+SZ\2,pos_y+SZ\2,SZ\2-1,obj.slot)
