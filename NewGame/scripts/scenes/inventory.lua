@@ -100,17 +100,17 @@ function move_inv_prompt()
     --    inv_prompt_pos = (inv_prompt_pos - 1) % 2
     --elseif btnp(➡️) then
     --    inv_prompt_pos = (inv_prompt_pos + 1) % 2
-    if btnp(❎) then
+    if btnp(🅾️) then
         reset_slot(1)
-        reset_item(12)
+        --reset_item(12)
         equipment[1]=tblclone(inventory[pos])
         equipment[1].pos=pos
         inventory[pos].taken=true
         inventory[pos].slot=12
         inv_prompt=false
-    elseif btnp(🅾️) then
+    elseif btnp(❎) then
         reset_slot(2)
-        reset_item(8)
+        --reset_item(8)
         equipment[2]=tblclone(inventory[pos])
         equipment[2].pos=pos
         inventory[pos].taken=true
@@ -165,7 +165,7 @@ end
 
 function draw_inv_prompt()
     rectfill(20,40,100,46,5)
-    print("❎=slot 1, 🅾️=slot 2",21,41,7)
+    print("🅾️=slot 1, ❎=slot 2",21,41,7)
 end
 
 function delete_item(pos)
@@ -173,12 +173,8 @@ function delete_item(pos)
         --check if in slot, and remove from slot
         if inventory[pos].slot==12 then
             reset_slot(1)
-            inventory[pos].slot="none"
-            inventory[pos].taken=false
         elseif inventory[pos].slot==8 then
             reset_slot(2)
-            inventory[pos].slot="none"
-            inventory[pos].taken=false
         else
             --item not in slot, delete from inventory
             deli(inventory,pos)
@@ -187,6 +183,11 @@ function delete_item(pos)
 end
 
 function reset_slot(pos)
+    if equipment[pos].pos != none then
+        inventory[equipment[pos].pos].slot="none"
+        inventory[equipment[pos].pos].taken=false
+    end
+    equipment[pos].spr=0
     equipment[pos].type="none"
     equipment[pos].rarity="none"
     equipment[pos].element="none"

@@ -27,7 +27,7 @@ item_pal = {
     wand=6,
     mace=5,
     orb=13,
-    shield=13,
+    shield=9,
     whip=4
 }
 

@@ -123,9 +123,9 @@ function player_pickup()
     local pickedup={}
     for j,i in ipairs(current_items) do
         if collide_sprite(p,"center",i) then
-            if #inventory<16 then
-                 add(inventory,i)
-                 add(pickedup,j)
+            if #inventory<16 then 
+                add(inventory,i)
+                add(pickedup,j)
             else
                 p.inv_full=true
             end

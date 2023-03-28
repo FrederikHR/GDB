@@ -8,7 +8,7 @@ function game_init()
     camera(0,0)
     _update=game_update
     _draw=game_draw
-    spawn_item(70,40)
+    spawn_item(70,40) --if you press <-/-> on inventory in pause menu, this happens again (not bug)
 end
 
 function game_draw()
@@ -49,14 +49,17 @@ function draw_hud()
     --weapons
     rect(wpos[1],wpos[2],wpos[3],wpos[4],5)
     line(wpos[1]+SZ+1,wpos[2],wpos[1]+SZ+1,wpos[4])
-    if equipment[1].spr !="none" then
+    if equipment[2].spr !="none" then
         draw_item(equipment[1],wpos[1]+1,wpos[2]+1)
         --spr(equipment[1].spr,wpos[1],wpos[2])
     end
-    if equipment[2].spr !="none" then
+    print("🅾️",wpos[1],wpos[2]+6,12)
+
+    if equipment[1].spr !="none" then
         draw_item(equipment[2],wpos[1]+SZ+2,wpos[2]+1)
         --spr(equipment[2].spr,wpos[1]+SZ,wpos[2])
     end
+    print("❎",wpos[1]+SZ+4,wpos[2]+6,8)
 
     --no pickup if inventory full
 end
