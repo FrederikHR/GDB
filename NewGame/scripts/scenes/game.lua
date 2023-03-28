@@ -28,3 +28,11 @@ function game_update()
         update_enemy(e)
     end
 end
+
+function draw_hud()
+    --health
+
+    --weapons
+
+    --no pickup if inventory full
+end
