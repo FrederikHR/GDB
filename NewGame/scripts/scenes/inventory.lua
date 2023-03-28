@@ -41,23 +41,23 @@ end
 
 function draw_inv()
     local SZ = 16
-    local OFFSET = 32
+    local OFFSET = 28
     for i=1,16 do
-        local x1=((i-1)%4)*SZ+OFFSET
-        local x2=((i-1)\4)*SZ
+        local x1=((i-1)%4)*(SZ+2)+OFFSET
+        local x2=((i-1)\4)*(SZ+2)
         rect(x1,x2,x1+SZ+1,x2+SZ+1,6)
     end
     for i,obj in ipairs(inventory) do
         local x,y = get_x_y(obj.spr)
-        local pos_x=((i-1)%4)*SZ+OFFSET+1
-        local pos_y=((i-1)\4)*SZ+1
+        local pos_x=((i-1)%4)*(SZ+2)+OFFSET+1
+        local pos_y=((i-1)\4)*(SZ+2)+1
         draw_item(obj,pos_x,pos_y,true,SZ)
         --sspr(x,y,8,8,pos_x,pos_y,SZ,SZ)
         if (obj.taken) circ(pos_x+SZ\2,pos_y+SZ\2,SZ\2-1,obj.slot)
     end
 
     --highlight selected item
-    rect(inv_pos[1]*SZ+OFFSET,inv_pos[2]*SZ,inv_pos[1]*SZ+SZ+OFFSET,inv_pos[2]*SZ+SZ,10)
+    rect(inv_pos[1]*(SZ+2)+OFFSET,inv_pos[2]*(SZ+2),inv_pos[1]*(SZ+2)+SZ+OFFSET+1,inv_pos[2]*(SZ+2)+SZ+1,10)
 
     --draw weapons in slots with stats
     draw_slots()
@@ -133,9 +133,9 @@ function inv_ob(dir)
 end
 
 function draw_slots()
-    local area1={0,66}
+    local area1={0,74}
     local col1=12
-    local area2={41,66}
+    local area2={41,74}
     local col2=8
     print("slot 1",area1[1],area1[2],col1)
     print(equipment[1].type,area1[1],area1[2]+8,col1)
@@ -150,7 +150,7 @@ end
 
 function draw_current_item(x,y)
     local pos=y*4+x+1
-    local area={82,66}
+    local area={82,74}
     local col=6
     print("current",area[1],area[2],col)
     if inventory[pos] then
