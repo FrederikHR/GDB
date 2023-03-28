@@ -12,7 +12,7 @@ function generate_item (type,rarity,element)
     item.spr=item_sprites[item.type]
 
     if (not rarity) then
-        item.rarity = rnd(5) + 1
+        item.rarity = rnd(rarities)
     else
         item.rarity = rarity
     end
@@ -63,7 +63,7 @@ function draw_item(item,x,y,scaled,sz)
 end
 
 function change_pal(item)
-    pal(15,3)
+    pal(15,rarity_colors[item.rarity])
     pal(14,0)
     pal(item.pal,element_colors[item.element])
 end

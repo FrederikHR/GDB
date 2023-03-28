@@ -56,8 +56,11 @@ rarities = {
 }
 
 rarity_colors = {
-    6,
-    2
+    trash=6,
+    ok=3,
+    fancy=9,
+    gud=2,
+    extra=7
 }
 
 item_dmg = {
