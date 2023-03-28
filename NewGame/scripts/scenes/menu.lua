@@ -20,6 +20,7 @@ function menu_draw()
         pal(7,8)
         print("starting!",0,64,8)
         flash(2)
+        pal()
     end
 end
 
@@ -47,4 +48,5 @@ function flash(frame)
     else
         pal(8,7)
     end
+    pal()
 end
