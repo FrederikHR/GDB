@@ -32,6 +32,9 @@ end
 function update_enemy(e)
     if (e.attack) e.aframe+=1
     move_enemy(e)
+    if e.health < e.max_health then
+        e.play = "damaged_"..e.play
+    end
     --enemy_attack(e)
     animate(e)
 end
@@ -51,10 +54,6 @@ function move_enemy(e)
         e.play="walk"
     else
         e.play="idle"
-    end
-
-    if e.health < e.max_health then
-        e.play = "damaged_"..e.play
     end
 
     e.x += e.dx

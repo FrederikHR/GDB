@@ -51,7 +51,8 @@ function draw_inv()
         local x,y = get_x_y(obj.spr)
         local pos_x=((i-1)%4)*SZ+OFFSET
         local pos_y=((i-1)\4)*SZ
-        sspr(x,y,8,8,pos_x,pos_y,SZ,SZ)
+        draw_item(obj,pos_x,pos_y,true,SZ)
+        --sspr(x,y,8,8,pos_x,pos_y,SZ,SZ)
         if (obj.taken) circ(pos_x+SZ\2,pos_y+SZ\2,SZ\2-1,obj.slot)
     end
 
@@ -103,6 +104,7 @@ function move_inv_prompt()
         reset_slot(1)
         reset_item(12)
         equipment[1]=tblclone(inventory[pos])
+        equipment[1].pos=pos
         inventory[pos].taken=true
         inventory[pos].slot=12
         inv_prompt=false
@@ -110,6 +112,7 @@ function move_inv_prompt()
         reset_slot(2)
         reset_item(8)
         equipment[2]=tblclone(inventory[pos])
+        equipment[2].pos=pos
         inventory[pos].taken=true
         inventory[pos].slot=8
         inv_prompt=false
@@ -189,6 +192,7 @@ function reset_slot(pos)
     equipment[pos].element="none"
     equipment[pos].taken=false
     equipment[pos].slot="none"
+    equipment[pos].pos="none"
 end
 
 function reset_item(slot)

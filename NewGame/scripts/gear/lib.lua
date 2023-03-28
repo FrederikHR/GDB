@@ -20,6 +20,17 @@ item_sprites = {
     whip=209
 }
 
+item_pal = {
+    sword=12,
+    spear=8,
+    dagger=1,
+    wand=6,
+    mace=5,
+    orb=13,
+    shield=13,
+    whip=4
+}
+
 elements = {
     "cold",
     "fire",
@@ -28,12 +39,25 @@ elements = {
     "poison"
 }
 
+element_colors = {
+    cold=7,
+    fire=9,
+    lightning=12,
+    holy=10,
+    poison=2
+}
+
 rarities = {
     "trash",
     "ok",
     "fancy",
     "gud",
     "extra"
+}
+
+rarity_colors = {
+    6,
+    2
 }
 
 item_dmg = {
