@@ -7,15 +7,8 @@ panims ={
 player_sfx={attack_sfx = 1}
 
 p={}
-atk={
-    spr=0,
-    x=0,
-    y=0,
-    sz=1,
-    dir={1,0},
-    play="idle",
-    anims=atk0_anims
-}
+patk1={}
+patk2={}
 
 function make_player()
     p.spr=1
@@ -35,26 +28,20 @@ function make_player()
     p.pressarrow=false
     p.left_swipe=false
     p.attack=false
+    p.attack2=false
     p.interact=false
     p.inv_full=false
-    p.aframe=0
-    p.max_aframe=10
+    update_atk(0)
 end
 
 function update_player()
-    if (p.attack) p.aframe+=1
-    --if attack is done, reset
-    if p.aframe==p.max_aframe then
-        atk.play="idle"
-        p.play="idle"
-        p.aframe=0
-        p.attack=false
-    end
+    atk_frames()
     move_player()
     player_pickup()
     player_attack()
     animate(p)
-    animate(atk)
+    animate(patk1)
+    animate(patk2)
 end
 
 function draw_player()
@@ -65,7 +52,8 @@ function move_player()
     p.dx=0
     p.dy=0
 
-    local dir=atk.dir
+    local dir1=patk1.dir
+    local dir2=patk2.dir
     local updown=false
 
     if btn(⬅️) then
@@ -73,41 +61,52 @@ function move_player()
         p.flp=true
         p.play="walk"
         p.pressarrow=true
-        dir[1]=-2
+        dir1[1]=-2
+        dir2[1]=-2
     end
     if btn(➡️) then
         p.dx+=p.acc
         p.flp=false
         p.play="walk"
         p.pressarrow=true
-        dir[1]=1
+        dir1[1]=1
+        dir2[1]=1
     end
     if btn(⬆️) then
         p.dy-=p.acc
         p.play="walk"
         p.pressarrow=true
-        dir[2]=-2
+        dir1[2]=-2
+        dir2[2]=-2
         updown=true
     end
     if btn(⬇️) then
         p.dy+=p.acc
         p.play="walk"
         p.pressarrow=true
-        dir[2]=1
+        dir1[2]=1
+        dir2[2]=1
         updown=true
     end
 
     -- if no arrow presses and no attack, idle animation
-    if (not p.pressarrow and not p.attack) then
+    if (not p.pressarrow and not p.attack and not p.attack2) then
         p.play="idle"
     end
     p.pressarrow=false
 
     -- update attack
-    if (not updown) dir[2]=0
-    atk.dir=dir
-    atk.x=p.x+atk.dir[1]*8
-    atk.y=p.y+atk.dir[2]*8
+    if p.attack then
+        if (not updown) dir1[2]=0
+        patk1.dir=dir1
+        patk1.x=p.x+patk1.dir[1]*8
+        patk1.y=p.y+patk1.dir[2]*8
+    elseif p.attack2 then
+        if (not updown) dir2[2]=0
+        patk2.dir=dir2
+        patk2.x=p.x+patk2.dir[1]*8
+        patk2.y=p.y+patk2.dir[2]*8
+    end
 
     --update position
     p.x+=p.dx
@@ -133,22 +132,21 @@ end
 
 function player_attack()
     -- if not already attacking
-    if p.aframe == 0 then
+    if patk1.aframe==0 and patk2.aframe==0 then
         if btnp(❎) then
             p.attack=true
             p.play="attack_1"
-            atk.play="punch"
+            patk1.play="punch"
             sfx(player_sfx.attack_sfx)
             if p.left_swipe then
                 p.left_swipe=false
             else
                 p.left_swipe=true
             end
-        end
-        if btnp(🅾️) then
-            p.attack=true
+        elseif btnp(🅾️) then
+            p.attack2=true
             p.play="attack_1"
-            atk.play="punch"
+            patk2.play="punch"
             sfx(player_sfx.attack_sfx)
             if p.left_swipe then
                 p.left_swipe=false
@@ -157,7 +155,7 @@ function player_attack()
             end
         end
     end
-    atk_collide()
+    --atk_collide()
 end
 
 function atk_collide()
@@ -169,11 +167,11 @@ function atk_collide()
 end
 
 function draw_attack()
-   -- if (atk.spr != -1)  spr(abs(atk.spr),atk.x,atk.y,atk.sz,atk.sz,p.flp)
+   sx1, sy1 = (patk1.spr % 16) * 8, flr(abs(patk1.spr) \ 16) * 8
+   sx2, sy2 = (patk2.spr % 16) * 8, flr(abs(patk2.spr) \ 16) * 8
 
-   sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
-
-   if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,16,16,p.flp, p.left_swipe)
+   if (patk1.spr != -1)  sspr(sx,sy,8,8, patk1.x,patk1.y,16,16,p.flp, p.left_swipe)
+   if (patk2.spr != -1)  sspr(sx,sy,8,8, patk2.x,patk2.y,16,16,p.flp, p.left_swipe)
 end
 
 function current_player_health()
@@ -182,4 +180,35 @@ end
 
 function current_player_mana()
     return p.mana/p.max_mana
+end
+
+function update_atk(item,slot)
+    if item==0 then
+        patk1=atk0
+        patk2=atk0
+    else
+        atk=item_atks[item]
+        if (slot==2) atk.anims=atk.anims2
+    end
+end
+
+function atk_frames()
+    if (p.attack) patk1.aframe+=1
+    if (p.attack2) patk2.aframe+=1
+
+    --if attack 1 is done, reset
+    if patk1.aframe==patk1.max_aframe then
+        patk1.play="idle"
+        p.play="idle"
+        patk1.aframe=0
+        p.attack=false
+    end
+
+    --if attack 2 is done, reset
+    if patk2.aframe==patk2.max_aframe then
+        patk2.play="idle"
+        p.play="idle"
+        patk2.aframe=0
+        p.attack2=false
+    end
 end
