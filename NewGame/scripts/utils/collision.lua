@@ -77,3 +77,24 @@ function collide_sprite(obj,aim,obj2)
 	
 	return false
 end
+
+function collide_atk(obj,obj2)
+	--obj = table, needs x,y,w,h
+	local x=obj.x    local y=obj.y
+	local w=obj.sw*8 local h=obj.sh*8
+	
+	local x1=0 local y1=0
+	local x2=0 local y2=0
+	
+    x1=x        y1=y
+    x2=x+w      y2=y+h
+
+	if not((obj2.x > x2)
+	or (obj2.y > y2)
+	or ((obj2.x+obj2.sz*8) < x1)
+	or ((obj2.y+obj2.sz*8) < y1)) then
+		return true
+	end
+	
+	return false
+end

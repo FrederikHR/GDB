@@ -99,13 +99,13 @@ function move_player()
     if p.attack then
         if (not updown) dir1[2]=0
         patk1.dir=dir1
-        patk1.x=p.x+patk1.dir[1]*8
-        patk1.y=p.y+patk1.dir[2]*8
+        patk1.x=p.x+patk1.dir[1]*patk1.sw
+        patk1.y=p.y+patk1.dir[2]*patk1.sh
     elseif p.attack2 then
         if (not updown) dir2[2]=0
         patk2.dir=dir2
-        patk2.x=p.x+patk2.dir[1]*8
-        patk2.y=p.y+patk2.dir[2]*8
+        patk2.x=p.x+patk2.dir[1]*patk2.sw
+        patk2.y=p.y+patk2.dir[2]*patk2.sh
     end
 
     --update position
@@ -170,8 +170,8 @@ function draw_attack()
    sx1, sy1 = (patk1.spr % 16) * 8, flr(abs(patk1.spr) \ 16) * 8
    sx2, sy2 = (patk2.spr % 16) * 8, flr(abs(patk2.spr) \ 16) * 8
 
-   if (patk1.spr != -1)  sspr(sx,sy,8,8, patk1.x,patk1.y,16,16,p.flp, p.left_swipe)
-   if (patk2.spr != -1)  sspr(sx,sy,8,8, patk2.x,patk2.y,16,16,p.flp, p.left_swipe)
+   if (patk1.spr != -1)  sspr(sx1,sy1,8,8, patk1.x,patk1.y,patk1.sw,patk1.sh,p.flp, p.left_swipe)
+   if (patk2.spr != -1)  sspr(sx2,sy2,8,8, patk2.x,patk2.y,patk2.sw,patk2.sh,p.flp, p.left_swipe)
 end
 
 function current_player_health()
@@ -185,7 +185,7 @@ end
 function update_atk(item,slot)
     if item==0 then
         patk1=atk0
-        patk2=atk0
+        patk2=tblclone(atk0)
     else
         atk=item_atks[item]
         if (slot==2) atk.anims=atk.anims2

@@ -23,6 +23,7 @@ function game_draw()
     end
     draw_attack()
     draw_hud()
+    print(patk1.spr,cx+10,cy+10)
 end
 
 function game_update()

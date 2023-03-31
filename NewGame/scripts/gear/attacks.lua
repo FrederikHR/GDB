@@ -11,11 +11,11 @@ atk0 = {
     max_aframe=10,
     anims={
         idle={fr=1,-1},
-        punch={fr=0.5,48,49},
+        punch={fr=15,48,49},
     },
     anims2={
         idle={fr=1,-1},
-        punch={fr=0.5,48,49},
+        punch={fr=15,48,49},
     }
 }
 
