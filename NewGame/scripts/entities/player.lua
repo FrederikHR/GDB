@@ -4,11 +4,6 @@ panims ={
     attack_1={fr=10,7,8,9,10},
 }
 
-atk_anims = {
-    idle={fr=1,-1},
-    slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
-    --slice={fr=0.4, 37,38,39,40,41,42,43,44,45,46}
-}
 player_sfx={attack_sfx = 1}
 
 p={}
@@ -19,7 +14,7 @@ atk={
     sz=1,
     dir={1,0},
     play="idle",
-    anims=atk_anims  
+    anims=atk0_anims
 }
 
 function make_player()
@@ -141,9 +136,8 @@ function player_attack()
     if p.aframe == 0 then
         if btnp(❎) then
             p.attack=true
-            --p.play="attack_1"
             p.play="attack_1"
-            atk.play="slice"
+            atk.play="punch"
             sfx(player_sfx.attack_sfx)
             if p.left_swipe then
                 p.left_swipe=false
@@ -153,6 +147,14 @@ function player_attack()
         end
         if btnp(🅾️) then
             p.attack=true
+            p.play="attack_1"
+            atk.play="punch"
+            sfx(player_sfx.attack_sfx)
+            if p.left_swipe then
+                p.left_swipe=false
+            else
+                p.left_swipe=true
+            end
         end
     end
     atk_collide()

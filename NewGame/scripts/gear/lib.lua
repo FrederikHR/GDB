@@ -63,6 +63,17 @@ rarity_colors = {
     extra=7
 }
 
+item_anims = {
+    sword=atk1_anims,
+    spear=atk2_anims,
+    dagger=atk3_anims,
+    wand=atk4_anims,
+    mace=atk5_anims,
+    orb=atk6_anims,
+    shield=atk7_anims,
+    whip=atk8_anims
+}
+
 item_dmg = {
     sword = 2,
     spear = 2,

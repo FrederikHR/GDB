@@ -29,6 +29,7 @@ function generate_item (type,rarity,element)
     item.sz=1
     item.taken=false
     item.slot="none"
+    --item.anims=atk1_anims--item_anims[item.type]
 
     return item
 end
