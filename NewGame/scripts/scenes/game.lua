@@ -3,12 +3,8 @@ game_state={
 }
 
 function game_init()
-    sfx(-1)
-    menuitem(2,"inventory",function() inv_init() end)
-    camera(0,0)
-    _update=game_update
-    _draw=game_draw
-    spawn_item(70,40) --if you press <-/-> on inventory in pause menu, this happens again (not bug)
+    --only called after starting game from menu
+    init_level(0)
 end
 
 function game_draw()
@@ -30,6 +26,7 @@ function game_update()
     scroll_camera(p,true)
     for _,e in pairs(enemies) do
         update_enemy(e)
+        kill_enemy(e)
     end
 end
 
@@ -62,4 +59,20 @@ function draw_hud()
     print("❎",wpos[1]+SZ+4,wpos[2]+6,8)
 
     --no pickup if inventory full
+end
+
+function init_level(l)
+    menuitem(2,"inventory",function() inv_init() end)
+    camera(0,0)
+    _update=game_update
+    _draw=game_draw
+
+    --TODO: make map
+    
+    --reset player position
+    p.x=64
+    p.y=64
+
+    --make enemies
+    make_enemy(90,90,1)
 end

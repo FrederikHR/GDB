@@ -13,7 +13,6 @@ function menu_init()
     _update=menu_update
     _draw=menu_draw
     make_player()
-    make_enemy(90,90,1)
 
     -- for drawing clouds and islands
     sp_1=37
