@@ -4,6 +4,7 @@ game_state={
 
 function game_init()
     --only called after starting game from menu
+    sfx(-1)
     init_level(0)
 end
 
