@@ -1,8 +1,8 @@
 function _init() menu_init() end
 
 function menu_init()
-    countdown=-1
-    fade_color=12
+    --countdown=-1
+    --fade_color=12
     intro_start_sfx = 0
     flashframe=0
     flash_color=8
@@ -16,41 +16,43 @@ function menu_init()
     make_enemy(90,90,1)
 
     -- for drawing clouds and islands
-    sp_1=37
-    sp_2=38
-    sp_3=39
-    sx_1, sy_1 = (sp_1 % 16) * 8, flr(sp_1 \ 16) * 8
-    sx_2, sy_2 = (sp_2 % 16) * 8, flr(sp_2 \ 16) * 8
-    sx_3, sy_3 = (sp_3 % 16) * 8, flr(sp_3 \ 16) * 8
+    cloud_island_1=37
+    cloud_island_2=38
+    cloud=39
+    cloud_island_1_x, cloud_island_1_y = get_sspr_x_y(cloud_island_1)
+    cloud_island_2_x, cloud_island_2_y = get_sspr_x_y(cloud_island_2)
+    cloud_x, cloud_y = get_sspr_x_y(cloud)
 end
 
 function menu_draw()
-    cls(fade_color)
-    sspr(sx_1,sy_1, 8,8,60,20,16,16)
-    sspr(sx_2,sy_2, 8,8,80,80,26,26)
-    sspr(sx_3,sy_3, 8,8,50,0,100,32)
-    sspr(sx_3,sy_3, 8,8,10,110,100,32)
-    
+    cls(12)
+    sspr(cloud_island_1_x,cloud_island_1_y, 8,8,60,20,16,16)
+    sspr(cloud_island_2_x,cloud_island_2_y, 8,8,80,80,26,26)
+    sspr(cloud_x,cloud_y, 8,8,50,0,100,32)
+    sspr(cloud_x,cloud_y, 8,8,10,110,100,32)
     print("press x to start!",30,64,flash_color)
     
 end
 
 function menu_update()
     flash()
-    if countdown<0 then
+  --[[   if countdown<0 then
         if (btnp(❎)) then
             countdown=60 --countdown/30 == 2 seconds
             sfx(intro_start_sfx)
         end
-    else
+    else ]]
+    if (btnp(❎)) then
         flash_speed=1
-        countdown-=1
-        fadeout()
-        if countdown<=0 then
-            game_init()
-            countdown=-1 -- reset countdown
-        end
+        sfx(intro_start_sfx)
+        --countdown-=1
+        fade_out()
+        --if countdown<=0 then
+        game_init()
     end
+       --     countdown=-1 -- reset countdown
+     --   end
+    --end
 end
 
 function flash()
@@ -64,7 +66,7 @@ function flash()
         end
     end
 end
-
+--[[ 
 function fadeout()
     if countdown > 0 then
         if (countdown) < 25 fade_color=14
@@ -77,6 +79,7 @@ function fadeout()
         
     end
 end
+ ]]
 
 
 
