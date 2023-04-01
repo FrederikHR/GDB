@@ -100,7 +100,8 @@ function move_inv()
         end
     elseif btnp(❎) and inventory[pos]!=nil then
         inv_prompt=true
-    elseif btnp(🅾️) then
+    elseif btnp(🅾️) and inventory[pos]!=nil then
+        sfx(21)
         delete_item(pos)
     end
 end
