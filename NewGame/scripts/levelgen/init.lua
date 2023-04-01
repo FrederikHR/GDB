@@ -1,5 +1,5 @@
 prl = {}
-function init_level()
+function init_levelgen()
 
     prl = perlin()
     prl:init()
