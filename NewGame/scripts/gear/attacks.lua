@@ -7,9 +7,9 @@ function do_atk(slot)
         end
     else
         if slot==1 then
-            patk1.play=move1
+            patk1.play=patk1.move1
         else
-            patk2.play=move2
+            patk2.play=patk2.move2
         end
     end
 
