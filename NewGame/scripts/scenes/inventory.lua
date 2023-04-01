@@ -193,7 +193,7 @@ function reset_slot(pos)
     equipment[pos].element="none"
     equipment[pos].taken=false
     equipment[pos].slot="none"
-    equipment[pos].pos="none"
+    equipment[pos].pos=none
 end
 
 function reset_item(slot)
