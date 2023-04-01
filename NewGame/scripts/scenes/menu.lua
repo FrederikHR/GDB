@@ -55,17 +55,6 @@ function menu_update()
     --end
 end
 
-function flash()
-    flashframe+=1
-    if flashframe>flash_speed then
-        flashframe=0
-        if (flash_color==8) then 
-            flash_color=9
-        else
-            flash_color=8
-        end
-    end
-end
 --[[ 
 function fadeout()
     if countdown > 0 then
