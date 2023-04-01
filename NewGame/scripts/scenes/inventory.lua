@@ -86,7 +86,7 @@ function move_inv()
         if (not inv_ob("up")) inv_pos[2]-=1
     elseif btnp(⬇️) then
         if (not inv_ob("down")) inv_pos[2]+=1
-    elseif btnp(❎) then
+    elseif btnp(❎) and inventory[pos]!=nil then
         inv_prompt=true
     elseif btnp(🅾️) then
         delete_item(pos)
