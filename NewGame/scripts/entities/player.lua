@@ -39,6 +39,7 @@ function update_player()
     move_player()
     player_pickup()
     player_attack()
+    update_attack()
     animate(p)
     animate(patk1)
     animate(patk2)
@@ -61,8 +62,8 @@ function move_player()
         p.flp=true
         p.play="walk"
         p.pressarrow=true
-        dir1[1]=-2
-        dir2[1]=-2
+        dir1[1]=-1
+        dir2[1]=-1
     end
     if btn(➡️) then
         p.dx+=p.acc
@@ -76,8 +77,8 @@ function move_player()
         p.dy-=p.acc
         p.play="walk"
         p.pressarrow=true
-        dir1[2]=-2
-        dir2[2]=-2
+        dir1[2]=-1
+        dir2[2]=-1
         updown=true
     end
     if btn(⬇️) then
@@ -95,17 +96,14 @@ function move_player()
     end
     p.pressarrow=false
 
-    -- update attack
-    if p.attack then
+    --update attack direction
+    if not p.attack then
         if (not updown) dir1[2]=0
         patk1.dir=dir1
-        patk1.x=p.x+patk1.dir[1]*patk1.sw
-        patk1.y=p.y+patk1.dir[2]*patk1.sh
-    elseif p.attack2 then
+    end
+    if not p.attack2 then
         if (not updown) dir2[2]=0
         patk2.dir=dir2
-        patk2.x=p.x+patk2.dir[1]*patk2.sw
-        patk2.y=p.y+patk2.dir[2]*patk2.sh
     end
 
     --update position
@@ -130,29 +128,30 @@ function player_pickup()
     end
 end
 
+function update_attack()
+    if p.attack then
+        --patk1.x=p.x+p.sz\2+8*cos(atan2(dir1[1],dir1[2]))
+        --patk1.y=p.y+p.sz\2+8*sin(atan2(dir1[1],dir1[2]))
+        patk1.x=p.x+p.sz\2+patk1.dir[1]*8
+        patk1.y=p.y+p.sz\2+patk1.dir[2]*8
+
+    elseif p.attack2 then
+        patk2.x=p.x+p.sz\2+patk2.dir[1]*8
+        patk2.y=p.y+p.sz\2+patk2.dir[2]*8
+    end
+end
+
 function player_attack()
     -- if not already attacking
     if patk1.aframe==0 and patk2.aframe==0 then
-        if btnp(❎) then
+        if btnp(🅾️) then
             p.attack=true
             p.play="attack_1"
-            patk1.play="punch"
-            sfx(player_sfx.attack_sfx)
-            if p.left_swipe then
-                p.left_swipe=false
-            else
-                p.left_swipe=true
-            end
-        elseif btnp(🅾️) then
+            do_atk(1)
+        elseif btnp(❎) then
             p.attack2=true
             p.play="attack_1"
-            patk2.play="punch"
-            sfx(player_sfx.attack_sfx)
-            if p.left_swipe then
-                p.left_swipe=false
-            else
-                p.left_swipe=true
-            end
+            do_atk(2)
         end
     end
     --atk_collide()
@@ -161,7 +160,7 @@ end
 function atk_collide()
     if p.aframe==p.max_aframe\2 then
         for _,e in pairs(enemies) do
-            if (collide_sprite(atk,"atk",e) and atk.spr != -1) e.health-=1
+            if (collide_atk(atk,e) and atk.spr != -1) e.health-=1
         end
     end
 end
@@ -184,11 +183,14 @@ end
 
 function update_atk(item,slot)
     if item==0 then
-        patk1=atk0
+        patk1=tblclone(atk0)
         patk2=tblclone(atk0)
     else
-        atk=item_atks[item]
-        if (slot==2) atk.anims=atk.anims2
+        if slot==1 then
+            patk1=tblclone(item_atks[item])
+        else
+            patk2=tblclone(item_atks[item])
+        end
     end
 end
 

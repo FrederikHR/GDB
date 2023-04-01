@@ -1,14 +1,12 @@
 pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
---#include draw
---#include update
 #include scripts/scenes/menu.lua
 #include scripts/scenes/game.lua
 #include scripts/scenes/inventory.lua
+#include scripts/gear/item.lua
 #include scripts/gear/attacks.lua
 #include scripts/gear/lib.lua
-#include scripts/gear/item.lua
 #include scripts/entities/player.lua
 #include scripts/entities/enemy.lua
 #include scripts/utils/utils.lua
