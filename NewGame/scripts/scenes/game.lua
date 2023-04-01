@@ -11,6 +11,7 @@ function game_init()
     level_1_sx, level_1_sy = get_sspr_x_y(sprites["level_1"])
 
     init_level(0)
+<<<<<<< HEAD
    
 end
 
@@ -22,6 +23,8 @@ function resume_game()
     camera(0,0)
     _update=game_update
     _draw=game_draw
+=======
+>>>>>>> move init levelgen call
 end
 
 function game_draw()
@@ -95,10 +98,13 @@ function init_level(l)
     
     _update=game_update
     _draw=game_draw
+<<<<<<< HEAD
     current_items={}
     enemies={}
     bullets={}
 
+=======
+>>>>>>> move init levelgen call
     init_levelgen()
 
     --TODO: make map
