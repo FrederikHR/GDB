@@ -1,7 +1,7 @@
 game_state={
     level=1
 }
-sprites={level_1=50, cloud=39}
+sprites={level_1=52, cloud=39}
 function game_init()
     --only called after starting game from menu
     --only called after starting game from menu

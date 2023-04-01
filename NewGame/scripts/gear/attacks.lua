@@ -75,11 +75,11 @@ atk2 = {
     max_aframe=10,
     range=true,
     speed=1,
-    move1="slice",
-    move2="slice",
+    move1="pierce",
+    move2="pierce",
     anims={
         idle={fr=1,-1},
-        slice={fr=2,50,51}
+        pierce={fr=5,50,51}
     }
 }
 
