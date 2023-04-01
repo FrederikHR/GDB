@@ -20,8 +20,8 @@ function game_draw()
     end
     draw_attack()
     draw_hud()
-    print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
-    print(patk1.move1,cx+10,cy+20)
+    --print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
+    --print(patk1.move1,cx+10,cy+20)
 end
 
 function game_update()

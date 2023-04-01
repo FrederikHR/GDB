@@ -81,7 +81,7 @@ end
 function collide_atk(obj,obj2)
 	--obj = table, needs x,y,w,h
 	local x=obj.x    local y=obj.y
-	local w=obj.sw*8 local h=obj.sh*8
+	local w=obj.sw local h=obj.sh
 	
 	local x1=0 local y1=0
 	local x2=0 local y2=0
