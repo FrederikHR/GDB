@@ -62,3 +62,7 @@ end
 
 --function enemy_attack(e)
 --end
+
+function kill_enemy(e)
+    if (e.health==0) del(enemies,e)
+end

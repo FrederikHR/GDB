@@ -4,6 +4,7 @@ game_state={
 sprites={level_1=50, cloud=39}
 function game_init()
     --only called after starting game from menu
+    --only called after starting game from menu
     sfx(-1)
     
     background_spr=50
@@ -29,6 +30,8 @@ function game_draw()
     end
     draw_attack()
     draw_hud()
+    print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
+    print(patk1.move1,cx+10,cy+20)
 end
 
 function game_update()
@@ -36,6 +39,7 @@ function game_update()
     scroll_camera(p,true)
     for _,e in pairs(enemies) do
         update_enemy(e)
+        kill_enemy(e)
         kill_enemy(e)
     end
 end
@@ -85,4 +89,6 @@ function init_level(l)
 
     --make enemies
     make_enemy(90,90,1)
+
+    spawn_item(70,40)
 end

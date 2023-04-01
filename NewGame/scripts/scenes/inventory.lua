@@ -108,6 +108,7 @@ function move_inv_prompt()
         inventory[pos].taken=true
         inventory[pos].slot=12
         inv_prompt=false
+        update_atk(equipment[1].type,1)
     elseif btnp(❎) then
         reset_slot(2)
         --reset_item(8)
@@ -116,6 +117,7 @@ function move_inv_prompt()
         inventory[pos].taken=true
         inventory[pos].slot=8
         inv_prompt=false
+        update_atk(equipment[2].type,2)
     end
 end
 
@@ -193,7 +195,7 @@ function reset_slot(pos)
     equipment[pos].element="none"
     equipment[pos].taken=false
     equipment[pos].slot="none"
-    equipment[pos].pos="none"
+    equipment[pos].pos=none
 end
 
 function reset_item(slot)
