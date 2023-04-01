@@ -101,6 +101,7 @@ function move_inv()
     elseif btnp(❎) and inventory[pos]!=nil then
         inv_prompt=true
     elseif btnp(🅾️) and inventory[pos]!=nil then
+        --TODO: add visual effect (smoke or something)    
         sfx(21)
         delete_item(pos)
     end
