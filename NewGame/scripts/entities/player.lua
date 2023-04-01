@@ -116,6 +116,7 @@ function player_pickup()
     for j,i in ipairs(current_items) do
         if collide_sprite(p,"center",i) then
             if #inventory<16 then 
+                sfx(17)
                 add(inventory,i)
                 add(pickedup,j)
             else

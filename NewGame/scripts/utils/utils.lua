@@ -65,6 +65,57 @@ function tblclone(org)
     return t
 end
 
+
+function get_sspr_x_y(spr_num)
+	sx, sy = (spr_num % 16) * 8, flr(spr_num \ 16) * 8
+	return sx, sy
+end
+
+
+function fade_out() 
+	dpal={0,1,1, 2,1,13,6,
+							4,4,9,3, 13,1,13,14}
+	-- palette fade
+	for i=0,40 do
+		for j=1,15 do
+			col = j
+			for k=1,((i+(j%5))/4) do
+				col=dpal[col]
+			end
+			pal(j,col,1)
+		end
+		flip() -- https://pico-8.fandom.com/wiki/Flip virke som flip e utdatert? Funksjonen funke ikke uten, derimot.
+	end
+end
+
+
+function fade_in() -- reversed for-loops. not sure if working correctly
+	dpal={0,1,1, 2,1,13,6,
+							4,4,9,3, 13,1,13,14}
+	-- palette fade
+	for i=40,0,-1 do
+		for j=15,1,-1 do
+			col = j
+			for k=1,((i+(j%5))/4) do
+				col=dpal[col]
+			end
+			pal(j,col,1)
+		end
+		flip()
+	end
+end
+
+function flash()
+    flashframe+=1
+    if flashframe>flash_speed then
+        flashframe=0
+        if (flash_color==8) then 
+            flash_color=9
+        else
+            flash_color=8
+        end
+    end
+end
 --[[
 function damage_enemy(enemy,item,hand)
 	-- Base damage lookup

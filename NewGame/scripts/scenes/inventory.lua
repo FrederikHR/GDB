@@ -79,16 +79,30 @@ function move_inv()
     local pos=inv_pos[2]*4+inv_pos[1]+1
 
     if btnp(⬅️) then
-        if (not inv_ob("left")) inv_pos[1]-=1
+        if (not inv_ob("left")) then 
+            inv_pos[1]-=1
+            sfx(19)
+        end
     elseif btnp(➡️) then
-        if (not inv_ob("right")) inv_pos[1]+=1
+        if (not inv_ob("right")) then 
+            inv_pos[1]+=1
+            sfx(19)
+        end
     elseif btnp(⬆️) then
-        if (not inv_ob("up")) inv_pos[2]-=1
+        if (not inv_ob("up")) then
+            inv_pos[2]-=1
+            sfx(19)
+        end
     elseif btnp(⬇️) then
-        if (not inv_ob("down")) inv_pos[2]+=1
-    elseif btnp(❎) and inventory[pos] != nil then
+        if (not inv_ob("down")) then
+            inv_pos[2]+=1
+            sfx(19)
+        end
+    elseif btnp(❎) and inventory[pos]!=nil then
         inv_prompt=true
-    elseif btnp(🅾️) and inventory[pos] != nil then
+    elseif btnp(🅾️) and inventory[pos]!=nil then
+        --TODO: add visual effect (smoke or something)    
+        sfx(21)
         delete_item(pos)
     end
 end

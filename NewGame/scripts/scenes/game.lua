@@ -1,15 +1,25 @@
 game_state={
     level=1
 }
-
+sprites={level_1=50, cloud=39}
 function game_init()
     --only called after starting game from menu
+    --only called after starting game from menu
     sfx(-1)
+    
+    background_spr=50
+    level_1_sx, level_1_sy = get_sspr_x_y(sprites["level_1"])
+
     init_level(0)
+   
 end
 
 function game_draw()
-    cls()
+    cls(12)
+    sspr(level_1_sx,level_1_sy,8,8,0,0,154,154)
+    print("how to play", 50,60,2)
+    print("1. press x to attack", 30,70,2)
+    print("2. survive!", 30,80,2)
     camera(cx,cy)
     --map(0,0)
     --mset(0,0,32)
@@ -30,6 +40,7 @@ function game_update()
     for _,e in pairs(enemies) do
         update_enemy(e)
         kill_enemy(e)
+        kill_enemy(e)
     end
 end
 
@@ -44,7 +55,7 @@ function draw_hud()
 
     --mana
     rectfill(cx+1,cy+4,cx+mbarx,cy+6,5)
-    rectfill(cx+1,cy+4,cx+current_player_mana()*mbarx,cy+6,12)
+    rectfill(cx+1,cy+4,cx+current_player_mana()*mbarx,cy+6,13)
 
     --weapons
     rect(wpos[1],wpos[2],wpos[3],wpos[4],5)
@@ -53,7 +64,7 @@ function draw_hud()
         draw_item(equipment[1],wpos[1]+1,wpos[2]+1)
         --spr(equipment[1].spr,wpos[1],wpos[2])
     end
-    print("🅾️",wpos[1],wpos[2]+6,12)
+    print("🅾️",wpos[1],wpos[2]+6,13)
 
     if equipment[1].spr !="none" then
         draw_item(equipment[2],wpos[1]+SZ+2,wpos[2]+1)
