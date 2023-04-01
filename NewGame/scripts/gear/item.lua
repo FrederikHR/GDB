@@ -6,7 +6,7 @@ function generate_item (type,rarity,element)
     if (not type) then
         item.type = rnd(item_types)
     else
-        item.type = item_types[type]
+        item.type = type
     end
 
     item.spr=item_sprites[item.type]
@@ -22,7 +22,7 @@ function generate_item (type,rarity,element)
     elseif (not element) then
         item.element = rnd(elements)
     else
-        item.element = elements[element]
+        item.element = element
     end
 
     item.pal=item_pal[item.type]

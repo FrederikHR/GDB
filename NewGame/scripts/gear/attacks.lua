@@ -68,7 +68,7 @@ atk2 = {
     play="idle",
     x=0,
     y=0,
-    sw=8,
+    sw=10,
     sh=8,
     dir={1,0},
     aframe=0,
@@ -79,7 +79,7 @@ atk2 = {
     move2="slice",
     anims={
         idle={fr=1,-1},
-        slice={fr=0.5,50,51}
+        slice={fr=2,50,51}
     }
 }
 

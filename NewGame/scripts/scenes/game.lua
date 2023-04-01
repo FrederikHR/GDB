@@ -79,5 +79,5 @@ function init_level(l)
     --make enemies
     make_enemy(90,90,1)
 
-    spawn_item(70,40)
+    spawn_item(70,40,"spear")
 end
