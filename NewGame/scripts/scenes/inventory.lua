@@ -193,6 +193,7 @@ function delete_item(pos)
             reset_slot(2)
         else
             --item not in slot, delete from inventory
+            update_positions(pos)
             deli(inventory,pos)
         end
     end
@@ -215,5 +216,12 @@ end
 function reset_item(slot)
     for _,i in pairs(inventory) do
         if (i.slot==slot) i.taken=false
+    end
+end
+
+function update_positions(pos)
+    --update stored equipment positions if needed
+    for i=1,2 do
+        if (equipment[i].pos != nil and equipment[i].pos > pos) equipment[i].pos -= 1
     end
 end
