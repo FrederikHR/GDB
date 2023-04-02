@@ -124,6 +124,31 @@ function flash_text()
     end
 	flash_text_bool=false
 end
+
+function fancy_draw_spr(cf,maxf)
+    local t={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+end
+--[[
+    function _init()
+	i=0
+	t={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+end
+
+function _draw()
+	cls()
+	pal(t, 0)
+	spr(1,10,10)
+	pal()
+	spr(1,20,20)
+end
+
+function _update()
+	t[i+1]=7
+	i+=1
+	if (t[i-1]==7) t[i-1]=0
+end
+--]]
+
 --[[
 function damage_enemy(enemy,item,hand)
 	-- Base damage lookup
