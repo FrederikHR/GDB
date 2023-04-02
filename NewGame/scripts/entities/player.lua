@@ -9,7 +9,7 @@ player_sfx={attack_sfx = 1}
 p={}
 patk1={}
 patk2={}
-
+flash_text_bool=false
 function make_player()
     p.spr=1
     p.x=64
@@ -35,6 +35,8 @@ function make_player()
 end
 
 function update_player()
+    if (flash_text_bool) flash_text()
+
     atk_frames()
     move_player()
     player_pickup()
@@ -46,6 +48,7 @@ function update_player()
 end
 
 function draw_player()
+    if (flash_text_bool) print("got item!", p.x-5, p.y-10, flash_color)
     spr(abs(p.spr),p.x,p.y,p.sz,p.sz,p.flp)
 end
 
@@ -117,6 +120,8 @@ function player_pickup()
         if collide_sprite(p,"center",i) then
             if #inventory<16 then 
                 sfx(17)
+                flash_text_bool=true
+                
                 add(inventory,i)
                 add(pickedup,j)
             else
