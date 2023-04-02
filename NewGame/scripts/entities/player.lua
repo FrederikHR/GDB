@@ -160,13 +160,16 @@ function player_attack()
             do_atk(2)
         end
     end
-    --atk_collide()
+    atk_collide()
 end
 
 function atk_collide()
-    if p.aframe==p.max_aframe\2 then
-        for _,e in pairs(enemies) do
-            if (collide_atk(atk,e) and atk.spr != -1) e.health-=1
+    --TODO: make hit moment dependent on item
+    for _,e in pairs(enemies) do
+        if patk1.aframe==patk1.max_aframe\2 then
+            if (collide_atk(patk1,e) and patk1.spr != -1) e.health-=1
+        elseif patk2.aframe==patk2.max_aframe\2 then
+            if (collide_atk(patk2,e) and patk2.spr != -1) e.health-=1
         end
     end
 end
@@ -177,6 +180,10 @@ function draw_attack()
 
    if (patk1.spr != -1)  sspr(sx1,sy1,8,8, patk1.x,patk1.y,patk1.sw,patk1.sh,p.flp, p.left_swipe)
    if (patk2.spr != -1)  sspr(sx2,sy2,8,8, patk2.x,patk2.y,patk2.sw,patk2.sh,p.flp, p.left_swipe)
+end
+
+function fancy_draw_attack()
+    print("asdfa")
 end
 
 function current_player_health()

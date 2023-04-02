@@ -1,7 +1,7 @@
 game_state={
     level=1
 }
-sprites={level_1=50, cloud=39}
+sprites={level_1=52, cloud=39}
 function game_init()
     --only called after starting game from menu
     --only called after starting game from menu
@@ -30,8 +30,8 @@ function game_draw()
     end
     draw_attack()
     draw_hud()
-    print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
-    print(patk1.move1,cx+10,cy+20)
+    --print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
+    --print(patk1.move1,cx+10,cy+20)
 end
 
 function game_update()
@@ -76,7 +76,8 @@ function draw_hud()
 end
 
 function init_level(l)
-    menuitem(2,"inventory",function() inv_init() end)
+    menuitem(2)
+    menuitem(2,"inventory",function(b) if (b&32 > 0) inv_init() end)
     camera(0,0)
     _update=game_update
     _draw=game_draw

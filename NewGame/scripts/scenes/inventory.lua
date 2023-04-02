@@ -22,7 +22,8 @@ function inv_init()
     camera(0,0)
     _update=inv_update
     _draw=inv_draw
-    menuitem(2,"resume game",function() game_init() end)
+    menuitem(2)
+    menuitem(2,"resume game",function(b) if (b&32 > 0) game_init() end)
 end
 
 function inv_draw()
@@ -193,6 +194,7 @@ function delete_item(pos)
             reset_slot(2)
         else
             --item not in slot, delete from inventory
+            update_positions(pos)
             deli(inventory,pos)
         end
     end
@@ -215,5 +217,12 @@ end
 function reset_item(slot)
     for _,i in pairs(inventory) do
         if (i.slot==slot) i.taken=false
+    end
+end
+
+function update_positions(pos)
+    --update stored equipment positions if needed
+    for i=1,2 do
+        if (equipment[i].pos != nil and equipment[i].pos > pos) equipment[i].pos -= 1
     end
 end

@@ -47,8 +47,8 @@ atk1 = {
     play="idle",
     x=0,
     y=0,
-    sw=8,
-    sh=8,
+    sw=16,
+    sh=16,
     dir={1,0},
     aframe=0,
     max_aframe=10,
@@ -68,18 +68,18 @@ atk2 = {
     play="idle",
     x=0,
     y=0,
-    sw=8,
+    sw=10,
     sh=8,
     dir={1,0},
     aframe=0,
     max_aframe=10,
     range=true,
     speed=1,
-    move1="slice",
-    move2="slice",
+    move1="pierce",
+    move2="pierce",
     anims={
         idle={fr=1,-1},
-        slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
+        pierce={fr=5,50,51}
     }
 }
 
