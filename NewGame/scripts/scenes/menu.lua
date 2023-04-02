@@ -1,6 +1,7 @@
 function _init() menu_init() end
 
 function menu_init()
+    music(4)
     --countdown=-1
     --fade_color=12
     intro_start_sfx = 0
@@ -35,6 +36,7 @@ end
 
 function menu_update()
     flash()
+   
   --[[   if countdown<0 then
         if (btnp(❎)) then
             countdown=60 --countdown/30 == 2 seconds
