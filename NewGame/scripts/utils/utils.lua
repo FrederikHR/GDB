@@ -105,16 +105,24 @@ function fade_in() -- reversed for-loops. not sure if working correctly
 	end
 end
 
-function flash()
-    flashframe+=1
-    if flashframe>flash_speed then
-        flashframe=0
-        if (flash_color==8) then 
-            flash_color=9
-        else
-            flash_color=8
-        end
+function flash_text()
+
+	flash_speed=5
+	flashframe=0
+	flash_color=8
+	for i=0,120 do
+		flashframe+=1
+		if flashframe>flash_speed then
+			flashframe=0
+			if (flash_color==8) then 
+				flash_color=9
+			else
+				flash_color=8
+			end 
+			
+		end   
     end
+	flash_text_bool=false
 end
 --[[
 function damage_enemy(enemy,item,hand)
