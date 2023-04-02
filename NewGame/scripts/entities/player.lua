@@ -196,8 +196,14 @@ end
 
 function update_atk(item,slot)
     if item==0 then
-        patk1=tblclone(atk0)
-        patk2=tblclone(atk0)
+        if slot == nil then
+            patk1=tblclone(atk0)
+            patk2=tblclone(atk0)
+        elseif slot==1 then
+            patk1=tblclone(atk0)
+        else
+            patk2=tblclone(atk0)
+        end
     else
         if slot==1 then
             patk1=tblclone(item_atks[item])

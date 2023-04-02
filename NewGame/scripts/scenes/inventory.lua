@@ -190,8 +190,10 @@ function delete_item(pos)
         --check if in slot, and remove from slot
         if inventory[pos].slot==12 then
             reset_slot(1)
+            update_atk(0,1)
         elseif inventory[pos].slot==8 then
             reset_slot(2)
+            update_atk(0,2)
         else
             --item not in slot, delete from inventory
             update_positions(pos)
