@@ -22,7 +22,8 @@ function inv_init()
     camera(0,0)
     _update=inv_update
     _draw=inv_draw
-    menuitem(2,"resume game",function() game_init() end)
+    menuitem(2)
+    menuitem(2,"resume game",function(b) if (b&32 > 0) game_init() end)
 end
 
 function inv_draw()
