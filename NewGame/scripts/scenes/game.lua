@@ -76,7 +76,8 @@ function draw_hud()
 end
 
 function init_level(l)
-    menuitem(2,"inventory",function() inv_init() end)
+    menuitem(2)
+    menuitem(2,"inventory",function(b) if (b&32 > 0) inv_init() end)
     camera(0,0)
     _update=game_update
     _draw=game_draw
@@ -90,5 +91,5 @@ function init_level(l)
     --make enemies
     make_enemy(90,90,1)
 
-    spawn_item(70,40,"spear")
+    spawn_item(70,40)
 end
