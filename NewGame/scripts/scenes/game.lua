@@ -14,6 +14,16 @@ function game_init()
    
 end
 
+function resume_game()
+    background_spr=50
+    level_1_sx, level_1_sy = get_sspr_x_y(sprites["level_1"])
+    menuitem(2)
+    menuitem(2,"inventory",function(b) if (b&32 > 0) inv_init() end)
+    camera(0,0)
+    _update=game_update
+    _draw=game_draw
+end
+
 function game_draw()
     cls(12)
     sspr(level_1_sx,level_1_sy,8,8,0,0,154,154)

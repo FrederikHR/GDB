@@ -23,7 +23,7 @@ function inv_init()
     _update=inv_update
     _draw=inv_draw
     menuitem(2)
-    menuitem(2,"resume game",function(b) if (b&32 > 0) game_init() end)
+    menuitem(2,"resume game",function(b) if (b&32 > 0) resume_game() end)
 end
 
 function inv_draw()
