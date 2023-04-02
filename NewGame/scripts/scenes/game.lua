@@ -6,6 +6,7 @@ function game_init()
     --only called after starting game from menu
     --only called after starting game from menu
     sfx(-1)
+    music(-1)
     
     background_spr=50
     level_1_sx, level_1_sy = get_sspr_x_y(sprites["level_1"])
