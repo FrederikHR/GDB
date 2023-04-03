@@ -43,8 +43,8 @@ function update_player()
     player_attack()
     update_attack()
     animate(p)
-    animate(patk1)
-    animate(patk2)
+    fancy_anim(patk1)
+    fancy_anim(patk2)
 end
 
 function draw_player()
@@ -174,16 +174,18 @@ function atk_collide()
     end
 end
 
-function draw_attack()
-   sx1, sy1 = (patk1.spr % 16) * 8, flr(abs(patk1.spr) \ 16) * 8
-   sx2, sy2 = (patk2.spr % 16) * 8, flr(abs(patk2.spr) \ 16) * 8
+function draw_attack(atk)
+   sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
 
-   if (patk1.spr != -1)  sspr(sx1,sy1,8,8, patk1.x,patk1.y,patk1.sw,patk1.sh,p.flp, p.left_swipe)
-   if (patk2.spr != -1)  sspr(sx2,sy2,8,8, patk2.x,patk2.y,patk2.sw,patk2.sh,p.flp, p.left_swipe)
+   if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
 end
 
-function fancy_draw_attack()
-    print("asdfa")
+function fancy_draw_attack(atk)
+    if not atk.fancy then
+        draw_attack(atk)
+    else
+        fancy_draw_spr(atk)
+    end
 end
 
 function current_player_health()
@@ -220,6 +222,7 @@ function atk_frames()
     --if attack 1 is done, reset
     if patk1.aframe==patk1.max_aframe then
         patk1.play="idle"
+        patk1.spr=0
         p.play="idle"
         patk1.aframe=0
         p.attack=false
@@ -228,6 +231,7 @@ function atk_frames()
     --if attack 2 is done, reset
     if patk2.aframe==patk2.max_aframe then
         patk2.play="idle"
+        patk1.spr=0
         p.play="idle"
         patk2.aframe=0
         p.attack2=false

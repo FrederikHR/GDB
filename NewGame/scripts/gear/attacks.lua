@@ -2,8 +2,10 @@ function do_atk(slot)
     if equipment[slot].type == "none" then
         if slot==1 then
             patk1.play="punch"
+            patk1.spr=48
         else
             patk2.play="punch"
+            patk2.spr=48
         end
     else
         if slot==1 then
@@ -35,9 +37,12 @@ atk0 = {
     range=true,
     speed=1,
     move1="punch",
+    fancy=true,
+    animindex=1,
+    maxcf=3,
     anims={
         idle={fr=1,-1},
-        punch={fr=15,48,49}
+        punch={fr=15,48}
     }
 }
 

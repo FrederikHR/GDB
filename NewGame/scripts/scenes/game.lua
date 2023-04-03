@@ -39,7 +39,8 @@ function game_draw()
     for _,e in pairs(enemies) do
         draw_enemy(e)
     end
-    draw_attack()
+    fancy_draw_attack(patk1)
+    fancy_draw_attack(patk2)
     draw_hud()
     --print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
     --print(patk1.move1,cx+10,cy+20)

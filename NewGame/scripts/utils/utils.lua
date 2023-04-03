@@ -125,15 +125,42 @@ function flash_text()
 	flash_text_bool=false
 end
 
-function fancy_draw_spr(spr,cf,maxf,x,y,sz)
+function fancy_draw_spr(atk)
     local t={}
-    for i=1,maxf do
-        add(t,0)
+    for i=1,atk.maxcf do
+        add(t,12) --because of background color in game scene
     end
-    t[cf] = 7
-    pal(t,0)
-    spr(spr,x,y)
+    t[atk.animindex] = 7
+
+    sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
+
+    pal(t)
+    log(atk.spr.." "..atk.animindex.." "..atk.x)
+    if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
     pal()
+end
+
+function fancy_anim(an)
+    --TODO: when all animations are fancy, change everything
+    if not an.fancy then
+        animate(an)
+    else
+        if an.state != an.play then
+            an.state = an.play
+            an.animindex=1
+            an.time=0
+        elseif an.maxcf > 1 then
+            an.time+=1
+            if an.time > an.anims[an.state].fr then
+                an.time=0
+                an.animindex = (an.animindex % an.maxcf) + 1
+                --if an.animindex==1 and an.anims[an.state].next then
+                --    an.play=an.anims[an.state].next
+                --    an.state=an.play
+                --end
+            end
+        end
+    end
 end
 --[[
     function _init()
