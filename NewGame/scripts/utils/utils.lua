@@ -125,8 +125,15 @@ function flash_text()
 	flash_text_bool=false
 end
 
-function fancy_draw_spr(cf,maxf)
-    local t={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+function fancy_draw_spr(spr,cf,maxf,x,y,sz)
+    local t={}
+    for i=1,maxf do
+        add(t,0)
+    end
+    t[cf] = 7
+    pal(t,0)
+    spr(spr,x,y)
+    pal()
 end
 --[[
     function _init()
