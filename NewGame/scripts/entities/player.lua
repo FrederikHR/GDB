@@ -136,14 +136,16 @@ function player_pickup()
 end
 
 function player_attack()
-    if btnp(🅾️) and patk1.aframe==0 then
-        p.attack=true
-        p.play="attack_1"
-        do_atk(1)
-    elseif btnp(❎) and patk2.aframe==0 then
-        p.attack2=true
-        p.play="attack_1"
-        do_atk(2)
+    if patk1.aframe==0 and patk2.aframe==0 then
+        if btnp(🅾️) then
+            p.attack=true
+            p.play="attack_1"
+            do_atk(1)
+        elseif btnp(❎) then
+            p.attack2=true
+            p.play="attack_1"
+            do_atk(2)
+        end
     end
     atk_collide()
 end
@@ -173,9 +175,11 @@ function atk_collide()
         for i,b in ipairs(bullets) do
             if collide_atk(b,e) then
                 e.health-=1
-                deli(bullets,i)
+                b.hit=true
             end
         end
+        --destroy bullets that hit something
+        kill_bullets()
     end
 end
 

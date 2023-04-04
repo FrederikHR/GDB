@@ -45,3 +45,9 @@ function draw_bullets()
         fancy_anim(b)
     end
 end
+
+function kill_bullets()
+    for i,b in pairs(bullets) do
+        if (b.hit) deli(i)
+    end
+end
