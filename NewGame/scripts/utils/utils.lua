@@ -162,31 +162,11 @@ function fancy_anim(an)
         end
     end
 end
---[[
-    function _init()
-	i=0
-	t={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-end
 
-function _draw()
-	cls()
-	pal(t, 0)
-	spr(1,10,10)
-	pal()
-	spr(1,20,20)
-end
 
-function _update()
-	t[i+1]=7
-	i+=1
-	if (t[i-1]==7) t[i-1]=0
-end
---]]
-
---[[
-function damage_enemy(enemy,item,hand)
+function damage_enemy(enemy,item,slot)
 	-- Base damage lookup
-	if (item.type == "wand" || item.type == "orb") then
+	if (item.type == "wand" or item.type == "orb") then
 		local phys = 0
 		local mag = item_dmg[item.type] * item.rarity
 	elseif (item.type == "shield") then
@@ -199,13 +179,13 @@ function damage_enemy(enemy,item,hand)
 
 	-- Armor and resistance
 	phys -= enemy.armor
-	if (enemy.resist != "none" && enemy.resist == item.element) then
+	if (enemy.resist != "none" and enemy.resist == item.element) then
 		mag *= 0.5
 	end
 	local damage = phys + mag
 
 	-- Conditional modifiers
-	if (hand == 2)
+	if (slot == 2) then
 		damage *= offhand_mod[item.type]
 	end
 	if (enemy.dbf == "holy") then
@@ -214,9 +194,8 @@ function damage_enemy(enemy,item,hand)
 
 	-- Damage and debuff application
 	enemy.HP -= damage
-	if (item.element != "none" && item.element != enemy.resist) then
+	if (item.element != "none" and item.element != enemy.resist) then
 		enemy.dbf = item.element
 		enemy.dbft = 0 -- Timer reset
 	end
 end
-]]

@@ -16,6 +16,9 @@ function do_atk(slot)
             patk2.spr=patk2.anims[patk2.play][1]
         end
     end
+    
+    --make bullet if wand equipped
+    make_bullet(p)
 
     sfx(player_sfx.attack_sfx)
     if p.left_swipe then
@@ -42,7 +45,7 @@ atk0 = {
     animindex=1,
     maxcf=3,
     anims={
-        idle={fr=1,fancy=false,-1},
+        idle={fr=1,-1},
         punch={fr=3,fancy=true,48}
     }
 }
@@ -86,7 +89,7 @@ atk2 = {
     move1="pierce",
     move2="pierce",
     animindex=1,
-    maxcf=3,
+    maxcf=2,
     anims={
         idle={fr=1,-1},
         pierce={fr=5,fancy=true,49}
@@ -115,6 +118,7 @@ atk3 = {
 }
 
 --TODO:wand
+--works differently from every other weapon
 atk4 = {
     spr=0,
     play="idle",
@@ -127,11 +131,13 @@ atk4 = {
     max_aframe=10,
     range=true,
     speed=1,
-    move1="slice",
-    move2="slice",
+    move1="idle",
+    move2="idle",
+    animindex=1,
+    maxcf=5,
     anims={
         idle={fr=1,-1},
-        slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
+        pew={fr=1,fancy=true,50}
     }
 }
 

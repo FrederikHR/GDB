@@ -42,6 +42,7 @@ function update_player()
     player_pickup()
     player_attack()
     update_attack()
+    update_bullets()
     animate(p)
     fancy_anim(patk1)
     fancy_anim(patk2)
@@ -135,17 +136,14 @@ function player_pickup()
 end
 
 function player_attack()
-    -- if not already attacking
-    if patk1.aframe==0 and patk2.aframe==0 then
-        if btnp(🅾️) then
-            p.attack=true
-            p.play="attack_1"
-            do_atk(1)
-        elseif btnp(❎) then
-            p.attack2=true
-            p.play="attack_1"
-            do_atk(2)
-        end
+    if btnp(🅾️) and patk1.aframe==0 then
+        p.attack=true
+        p.play="attack_1"
+        do_atk(1)
+    elseif btnp(❎) and patk2.aframe==0 then
+        p.attack2=true
+        p.play="attack_1"
+        do_atk(2)
     end
     atk_collide()
 end
@@ -170,6 +168,13 @@ function atk_collide()
             if (collide_atk(patk1,e) and patk1.spr != -1) e.health-=1
         elseif patk2.aframe==patk2.max_aframe\2 then
             if (collide_atk(patk2,e) and patk2.spr != -1) e.health-=1
+        end
+        --bullet collision
+        for i,b in ipairs(bullets) do
+            if collide_atk(b,e) then
+                e.health-=1
+                deli(bullets,i)
+            end
         end
     end
 end
