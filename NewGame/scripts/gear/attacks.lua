@@ -37,12 +37,11 @@ atk0 = {
     range=true,
     speed=1,
     move1="punch",
-    fancy=true,
     animindex=1,
     maxcf=3,
     anims={
-        idle={fr=1,-1},
-        punch={fr=15,48}
+        idle={fr=1,fancy=false,-1},
+        punch={fr=3,fancy=true,48}
     }
 }
 

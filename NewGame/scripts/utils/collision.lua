@@ -26,9 +26,6 @@ function collide_map(obj,aim,flag)
 	--pixels to tiles
 	x1\=8 y1\=8
 	x2\=8 y2\=8
-	
-    log(x1.." "..y1.." "..x2.." "..y2)
-    log(fget(mget(x1,y1),flag))
 
 	if fget(mget(x1,y1),flag)
 	or fget(mget(x1,y2),flag)

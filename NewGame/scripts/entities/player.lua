@@ -134,19 +134,6 @@ function player_pickup()
     end
 end
 
-function update_attack()
-    if p.attack then
-        --patk1.x=p.x+p.sz\2+8*cos(atan2(dir1[1],dir1[2]))
-        --patk1.y=p.y+p.sz\2+8*sin(atan2(dir1[1],dir1[2]))
-        patk1.x=p.x+p.sz\2+patk1.dir[1]*8
-        patk1.y=p.y+p.sz\2+patk1.dir[2]*8
-
-    elseif p.attack2 then
-        patk2.x=p.x+p.sz\2+patk2.dir[1]*8
-        patk2.y=p.y+p.sz\2+patk2.dir[2]*8
-    end
-end
-
 function player_attack()
     -- if not already attacking
     if patk1.aframe==0 and patk2.aframe==0 then
@@ -161,6 +148,19 @@ function player_attack()
         end
     end
     atk_collide()
+end
+
+function update_attack()
+    if p.attack then
+        --patk1.x=p.x+p.sz\2+8*cos(atan2(dir1[1],dir1[2]))
+        --patk1.y=p.y+p.sz\2+8*sin(atan2(dir1[1],dir1[2]))
+        patk1.x=p.x+p.sz\2+patk1.dir[1]*8
+        patk1.y=p.y+p.sz\2+patk1.dir[2]*8
+
+    elseif p.attack2 then
+        patk2.x=p.x+p.sz\2+patk2.dir[1]*8
+        patk2.y=p.y+p.sz\2+patk2.dir[2]*8
+    end
 end
 
 function atk_collide()
@@ -181,7 +181,7 @@ function draw_attack(atk)
 end
 
 function fancy_draw_attack(atk)
-    if not atk.fancy then
+    if not atk.anims[atk.play].fancy then
         draw_attack(atk)
     else
         fancy_draw_spr(atk)
@@ -222,7 +222,7 @@ function atk_frames()
     --if attack 1 is done, reset
     if patk1.aframe==patk1.max_aframe then
         patk1.play="idle"
-        patk1.spr=0
+        patk1.spr=-1
         p.play="idle"
         patk1.aframe=0
         p.attack=false

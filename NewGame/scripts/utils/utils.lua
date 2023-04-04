@@ -135,14 +135,14 @@ function fancy_draw_spr(atk)
     sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
 
     pal(t)
-    log(atk.spr.." "..atk.animindex.." "..atk.x)
+    log(atk.spr.." "..atk.animindex.." "..atk.x.." "..atk.y)
     if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
     pal()
 end
 
 function fancy_anim(an)
     --TODO: when all animations are fancy, change everything
-    if not an.fancy then
+    if not an.anims[an.play].fancy then
         animate(an)
     else
         if an.state != an.play then
@@ -154,10 +154,10 @@ function fancy_anim(an)
             if an.time > an.anims[an.state].fr then
                 an.time=0
                 an.animindex = (an.animindex % an.maxcf) + 1
-                --if an.animindex==1 and an.anims[an.state].next then
-                --    an.play=an.anims[an.state].next
-                --    an.state=an.play
-                --end
+                if an.animindex==1 and an.anims[an.state].next then
+                    an.play=an.anims[an.state].next
+                    an.state=an.play
+                end
             end
         end
     end
