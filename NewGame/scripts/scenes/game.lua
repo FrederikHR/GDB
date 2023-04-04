@@ -104,6 +104,5 @@ function init_level(l)
     --make enemies
     make_enemy(90,90,1)
 
-    spawn_item(70,40,"spear")
-    spawn_item(30,60,"wand")
+    spawn_item(70,40)
 end
