@@ -20,6 +20,8 @@ function make_enemy(x,y,lvl)
 
     e.health=lvl*10
     e.max_health=lvl*10
+    e.armor=lvl*5
+    e.resist="none"
 
     e.play="idle"
     e.anims=eanims

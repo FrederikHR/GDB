@@ -4,7 +4,6 @@ game_state={
 sprites={level_1=52, cloud=39}
 function game_init()
     --only called after starting game from menu
-    --only called after starting game from menu
     sfx(-1)
     music(-1)
     
@@ -94,6 +93,9 @@ function init_level(l)
     camera(0,0)
     _update=game_update
     _draw=game_draw
+    current_items={}
+    enemies={}
+    bullets={}
 
     --TODO: make map
     

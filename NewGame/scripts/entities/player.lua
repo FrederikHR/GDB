@@ -167,14 +167,14 @@ function atk_collide()
     --TODO: make hit moment dependent on item
     for _,e in pairs(enemies) do
         if patk1.aframe==patk1.max_aframe\2 then
-            if (collide_atk(patk1,e) and patk1.spr != -1) e.health-=1
+            if (collide_atk(patk1,e) and patk1.spr != -1) damage_enemy(e,equipment[1],1)
         elseif patk2.aframe==patk2.max_aframe\2 then
-            if (collide_atk(patk2,e) and patk2.spr != -1) e.health-=1
+            if (collide_atk(patk2,e) and patk2.spr != -1) damage_enemy(e,equipment[2],2)
         end
         --bullet collision
         for i,b in ipairs(bullets) do
             if collide_atk(b,e) then
-                e.health-=1
+                damage_enemy(e,equipment[b.slot],b.slot)
                 b.hit=true
             end
         end

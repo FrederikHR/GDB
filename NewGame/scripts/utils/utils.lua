@@ -135,7 +135,6 @@ function fancy_draw_spr(atk)
     sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
 
     pal(t)
-    log(atk.spr.." "..atk.animindex.." "..atk.x.." "..atk.y)
     if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
     pal()
 end
@@ -166,19 +165,21 @@ end
 
 function damage_enemy(enemy,item,slot)
 	-- Base damage lookup
+    local phys=0
+    local mag=0
 	if (item.type == "wand" or item.type == "orb") then
-		local phys = 0
-		local mag = item_dmg[item.type] * rarity_mod[item.rarity]
+		phys = 0
+		mag = item_dmg[item.type] * rarity_mod[item.rarity]
 	elseif (item.type == "shield") then
-		local phys = item_dmg[item.type] * rarity_mod[item.rarity]
-		local mag = 0
-	else
-		local phys = item_dmg[item.type] * rarity_mod[item.rarity]
-		local mag = rarity_mod[item.rarity] - 1
+		phys = item_dmg[item.type] * rarity_mod[item.rarity]
+		mag = 0
+    else
+		phys = item_dmg[item.type] * rarity_mod[item.rarity]
+		mag = rarity_mod[item.rarity] - 1
 	end
 
 	-- Armor and resistance
-	phys -= enemy.armor
+	--phys -= enemy.armor
 	if (enemy.resist != "none" and enemy.resist == item.element) then
 		mag *= 0.5
 	end
@@ -193,7 +194,7 @@ function damage_enemy(enemy,item,slot)
 	end
 
 	-- Damage and debuff application
-	enemy.HP -= damage
+	enemy.health -= damage
 	if (item.element != "none" and item.element != enemy.resist) then
 		enemy.dbf = item.element
 		enemy.dbft = 0 -- Timer reset

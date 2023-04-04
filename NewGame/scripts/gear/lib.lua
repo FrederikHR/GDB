@@ -75,6 +75,7 @@ item_atks = {
 }
 
 item_dmg = {
+    none = 0.5,
     sword = 2,
     spear = 2,
     dagger = 1,
@@ -85,6 +86,7 @@ item_dmg = {
     whip = 1
 }
 
+--[[
 item_spd = {
     sword = 2,
     spear = 2,
@@ -94,9 +96,10 @@ item_spd = {
     orb = 2,
     shield = 1,
     whip = 2
-}
+}]]
 
 offhand_mod = {
+    none = 1,
     sword = 0.5,
     spear = 0.5,
     dagger = 0.5,
@@ -108,9 +111,10 @@ offhand_mod = {
 }
 
 rarity_mod = {
-    trash = 0.5,
-    ok = 0.5,
-    fancy = 0.5,
-    good = 0.5,
-    extra = 0.5
+    none = 1,
+    trash = 1,
+    ok = 2,
+    fancy = 3,
+    good = 4,
+    extra = 5
 }

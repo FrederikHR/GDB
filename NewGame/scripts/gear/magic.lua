@@ -15,6 +15,7 @@ function make_bullet(p)
     if p.attack and equipment[1].type=="wand" then
         b.dir=tblclone(patk1.dir)
         b.spr=50
+        b.slot=1
         b.play="pew"
         b.max_aframe=90
         b.speed=1
@@ -24,6 +25,7 @@ function make_bullet(p)
         --TODO: change to different attack
         b.dir=tblclone(patk2.dir)
         b.spr=50
+        b.slot=2
         b.play="pew"
         b.max_aframe=90
         b.speed=1
@@ -33,6 +35,7 @@ function make_bullet(p)
 end
 
 function update_bullets()
+    --TODO: destroy bullet if far away(? probably not a problem)
     for _,b in pairs(bullets) do
         b.x+=b.dir[1]
         b.y+=b.dir[2]
