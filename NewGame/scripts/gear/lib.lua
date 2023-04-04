@@ -106,3 +106,11 @@ offhand_mod = {
     shield = 0.5,
     whip = 0.5
 }
+
+rarity_mod = {
+    trash = 0.5,
+    ok = 0.5,
+    fancy = 0.5,
+    good = 0.5,
+    extra = 0.5
+}

@@ -168,13 +168,13 @@ function damage_enemy(enemy,item,slot)
 	-- Base damage lookup
 	if (item.type == "wand" or item.type == "orb") then
 		local phys = 0
-		local mag = item_dmg[item.type] * item.rarity
+		local mag = item_dmg[item.type] * rarity_mod[item.rarity]
 	elseif (item.type == "shield") then
-		local phys = item_dmg[item.type] * item.rarity
+		local phys = item_dmg[item.type] * rarity_mod[item.rarity]
 		local mag = 0
 	else
-		local phys = item_dmg[item.type] * item.rarity
-		local mag = item.rarity - 1
+		local phys = item_dmg[item.type] * rarity_mod[item.rarity]
+		local mag = rarity_mod[item.rarity] - 1
 	end
 
 	-- Armor and resistance
