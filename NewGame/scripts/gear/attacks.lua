@@ -10,8 +10,10 @@ function do_atk(slot)
     else
         if slot==1 then
             patk1.play=patk1.move1
+            patk1.spr=patk1.anims[patk1.play][1]
         else
             patk2.play=patk2.move2
+            patk2.spr=patk2.anims[patk2.play][1]
         end
     end
 
@@ -60,6 +62,8 @@ atk1 = {
     speed=1,
     move1="slice",
     move2="slice",
+    animindex=1,
+    maxcf=2,
     anims={
         idle={fr=1,-1},
         slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
@@ -81,9 +85,11 @@ atk2 = {
     speed=1,
     move1="pierce",
     move2="pierce",
+    animindex=1,
+    maxcf=3,
     anims={
         idle={fr=1,-1},
-        pierce={fr=5,50,51}
+        pierce={fr=5,fancy=true,49}
     }
 }
 
