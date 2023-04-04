@@ -10,14 +10,14 @@ item_types = {
 }
 
 item_sprites = {
-    sword=210,
-    spear=214,
-    dagger=212,
-    wand=215,
-    mace=211,
-    orb=208,
-    shield=213,
-    whip=209
+    sword=194,
+    spear=198,
+    dagger=196,
+    wand=199,
+    mace=195,
+    orb=192,
+    shield=197,
+    whip=193
 }
 
 item_pal = {
