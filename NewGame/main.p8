@@ -16,6 +16,8 @@ __lua__
 #include scripts/utils/camera.lua
 #include scripts/levelgen/init.lua
 #include scripts/levelgen/perlin.lua
+#include scripts/levelgen/recursive-backtracker.lua
+
 
 
 -->8
