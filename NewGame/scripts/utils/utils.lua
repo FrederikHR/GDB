@@ -173,18 +173,14 @@ function damage_enemy(enemy,item,slot)
 
 	-- Armor and resistance
 	--phys -= enemy.armor
-	if (enemy.resist != "none" and enemy.resist == item.element) then
-		mag *= 0.5
-	end
+	if (enemy.resist != "none" and enemy.resist == item.element) mag *= 0.5
+    
 	local damage = phys + mag
 
 	-- Conditional modifiers
-	if (slot == 2) then
-		damage *= offhand_mod[item.type]
-	end
-	if (enemy.dbf == "holy") then
-		damage *= 1.1
-	end
+	if (slot == 2) damage *= offhand_mod[item.type]
+
+	if (enemy.dbf == "holy") damage *= 1.1
 
 	-- Damage and debuff application
 	enemy.health -= damage
