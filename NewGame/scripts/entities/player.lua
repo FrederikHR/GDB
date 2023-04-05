@@ -236,7 +236,7 @@ function atk_frames()
     --if attack 2 is done, reset
     if patk2.aframe==patk2.max_aframe then
         patk2.play="idle"
-        patk1.spr=0
+        patk2.spr=-1
         p.play="idle"
         patk2.aframe=0
         p.attack2=false
