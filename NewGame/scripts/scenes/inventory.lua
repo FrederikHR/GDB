@@ -49,7 +49,7 @@ function draw_inv()
         rect(x1,x2,x1+SZ+1,x2+SZ+1,6)
     end
     for i,obj in ipairs(inventory) do
-        local x,y = get_x_y(obj.spr)
+        local x,y = get_sspr_x_y(obj.spr)
         local pos_x=((i-1)%4)*(SZ+2)+OFFSET+1
         local pos_y=((i-1)\4)*(SZ+2)+1
         draw_item(obj,pos_x,pos_y,true,SZ)

@@ -33,7 +33,7 @@ function shuffle(tbl)
           end,
           getmapdata=function(self,fromx,tox, fromy,toy)
               for y=fromy,toy do
-                  if self.fmap[y] == nil then self.fmap[y] = {} end
+                  if (self.fmap[y] == nil) self.fmap[y] = {}
                   for x=fromx,tox do
                       local nx = x/16 - 0.5
                       local ny = y/16 - 0.5

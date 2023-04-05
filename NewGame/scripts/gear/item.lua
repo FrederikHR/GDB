@@ -17,7 +17,7 @@ function generate_item (type,rarity,element)
         item.rarity = rarity
     end
 
-    if (item.rarity == "trash") then
+    if (item.rarity == "ok") then
         item.element = "none"
     elseif (not element) then
         item.element = rnd(elements)
@@ -55,7 +55,7 @@ function draw_item(item,x,y,scaled,sz)
         spr(item.spr,x,y)
         pal()
     else
-        local sx,sy = get_x_y(item.spr)
+        local sx,sy = get_sspr_x_y(item.spr)
         change_pal(item)
         sspr(sx,sy,8,8,x,y,sz,sz)
         pal()

@@ -30,11 +30,7 @@ function dist(a,b)
 	return sqrt(dsq)
 end
 
-function get_x_y(sp)
-	sx, sy = (sp % 16) * 8, flr(sp \ 16) * 8 
-	return sx, sy
-end
-
+--[[
 ft={}
 function initfont()
   small="\65\66\67\68\69\70\71\72\73\74\75\76\77\78\79\80\81\82\83\84\85\86\87\88\89\90"
@@ -56,6 +52,7 @@ function tosmall(str)
   end
   return smallstr
 end
+]]
 
 function tblclone(org)
     local t={}
@@ -67,14 +64,12 @@ end
 
 
 function get_sspr_x_y(spr_num)
-	sx, sy = (spr_num % 16) * 8, flr(spr_num \ 16) * 8
-	return sx, sy
+	return (spr_num % 16) * 8, flr(spr_num \ 16) * 8
 end
 
 
 function fade_out() 
-	dpal={0,1,1, 2,1,13,6,
-							4,4,9,3, 13,1,13,14}
+	dpal={0,1,1, 2,1,13,6, 4,4,9,3, 13,1,13,14}
 	-- palette fade
 	for i=0,40 do
 		for j=1,15 do
@@ -132,7 +127,7 @@ function fancy_draw_spr(atk)
     end
     t[atk.animindex] = 7
 
-    sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
+    sx, sy = get_sspr_x_y(atk.spr)
 
     pal(t)
     if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
@@ -168,11 +163,9 @@ function damage_enemy(enemy,item,slot)
     local phys=0
     local mag=0
 	if (item.type == "wand" or item.type == "orb") then
-		phys = 0
 		mag = item_dmg[item.type] * rarity_mod[item.rarity]
 	elseif (item.type == "shield") then
 		phys = item_dmg[item.type] * rarity_mod[item.rarity]
-		mag = 0
     else
 		phys = item_dmg[item.type] * rarity_mod[item.rarity]
 		mag = rarity_mod[item.rarity] - 1

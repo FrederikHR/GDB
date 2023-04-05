@@ -180,7 +180,7 @@ function atk_collide()
 end
 
 function draw_attack(atk)
-   sx, sy = (atk.spr % 16) * 8, flr(abs(atk.spr) \ 16) * 8
+   sx, sy = get_sspr_x_y(atk.spr)
 
    if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
 end

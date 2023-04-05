@@ -48,7 +48,7 @@ function backtrack(maze, width, height)
             end
 
         else
-            if (#stack == 0) then return end
+            if (#stack == 0) return
             current = deli(stack, #stack)
         end
     end
@@ -58,11 +58,11 @@ end
 -- returns nil if all rooms have already been visited
 function unvisited_neighbour(maze, x, y, width, height)
     local unvisited = {}
-    if (x > 1 and maze[x-1][y].visited == false) then unvisited[#unvisited+1] = maze[x-1][y] end
-    if (y > 1 and maze[x][y-1].visited == false) then unvisited[#unvisited+1] = maze[x][y-1] end
-    if (x < width and maze[x+1][y].visited == false)  then unvisited[#unvisited+1] = maze[x+1][y] end
-    if (y < height and maze[x][y+1].visited == false) then unvisited[#unvisited+1] = maze[x][y+1] end
-    if (#unvisited == 0) then return nil end
+    if (x > 1 and maze[x-1][y].visited == false) unvisited[#unvisited+1] = maze[x-1][y]
+    if (y > 1 and maze[x][y-1].visited == false) unvisited[#unvisited+1] = maze[x][y-1]
+    if (x < width and maze[x+1][y].visited == false) unvisited[#unvisited+1] = maze[x+1][y]
+    if (y < height and maze[x][y+1].visited == false) unvisited[#unvisited+1] = maze[x][y+1]
+    if (#unvisited == 0) return nil
     
     return rnd(unvisited)
 end

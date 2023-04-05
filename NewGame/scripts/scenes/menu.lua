@@ -10,18 +10,14 @@ function menu_init()
     flash_speed=10
     cx,cy = 0,0
     camera(cx,cy)
-    initfont()
     _update=menu_update
     _draw=menu_draw
     make_player()
 
     -- for drawing clouds and islands
-    cloud_island_1=37
-    cloud_island_2=38
-    cloud=39
-    cloud_island_1_x, cloud_island_1_y = get_sspr_x_y(cloud_island_1)
-    cloud_island_2_x, cloud_island_2_y = get_sspr_x_y(cloud_island_2)
-    cloud_x, cloud_y = get_sspr_x_y(cloud)
+    cloud_island_1_x, cloud_island_1_y = get_sspr_x_y(37)
+    cloud_island_2_x, cloud_island_2_y = get_sspr_x_y(38)
+    cloud_x, cloud_y = get_sspr_x_y(39)
 end
 
 function menu_draw()
