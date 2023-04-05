@@ -32,7 +32,7 @@ function backtrack(maze, width, height)
     current.visited = true
     local stack = {}
     local vcount = 1
-    while any_unvisited(vcount, width, height) do
+    while (vcount < width*height) do
         next = unvisited_neighbour(maze, current.x, current.y, width, height)
         if next != nil then
             remove_separating_wall(current, next)
@@ -51,9 +51,7 @@ function backtrack(maze, width, height)
             if (#stack == 0) then return end
             current = deli(stack, #stack)
         end
-
     end
-
 end
 
 -- get a random neighbouring room that has not been visited before
@@ -67,12 +65,6 @@ function unvisited_neighbour(maze, x, y, width, height)
     if (#unvisited == 0) then return nil end
     
     return rnd(unvisited)
-end
-
--- return true if there are any unvisited rooms remaining in the maze
-function any_unvisited(visited, width, height)
-    if (visited < width*height) then return true end
-    return false
 end
 
 -- remove the two walls that separate rooms a and b
