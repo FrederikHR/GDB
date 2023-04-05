@@ -1,5 +1,4 @@
 prl = {}
-
 maze_size = 25
 
 function init_levelgen()
