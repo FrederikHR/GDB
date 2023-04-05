@@ -34,6 +34,7 @@ function game_draw()
     --map(0,0)
     --mset(0,0,32)
     draw_items_on_map()
+    draw_level()
     draw_player()
     for _,e in pairs(enemies) do
         draw_enemy(e)
@@ -91,11 +92,14 @@ function init_level(l)
     menuitem(2)
     menuitem(2,"inventory",function(b) if (b&32 > 0) inv_init() end)
     camera(0,0)
+    
     _update=game_update
     _draw=game_draw
     current_items={}
     enemies={}
     bullets={}
+
+    init_levelgen()
 
     --TODO: make map
     

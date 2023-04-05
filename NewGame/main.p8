@@ -14,6 +14,9 @@ __lua__
 #include scripts/utils/collision.lua
 #include scripts/utils/logging.lua
 #include scripts/utils/camera.lua
+#include scripts/levelgen/init.lua
+#include scripts/levelgen/perlin.lua
+#include scripts/levelgen/recursive-backtracker.lua
 
 
 
