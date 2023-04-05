@@ -116,7 +116,6 @@ function move_player()
 end
 
 function player_pickup()
-    local pickedup={}
     for j,i in ipairs(current_items) do
         if collide_sprite(p,"center",i) then
             if #inventory<16 then 
@@ -124,14 +123,11 @@ function player_pickup()
                 flash_text_bool=true
                 
                 add(inventory,i)
-                add(pickedup,j)
+                deli(current_items,j)
             else
                 p.inv_full=true
             end
         end
-    end
-    for i in all(pickedup) do
-        deli(current_items,i)
     end
 end
 

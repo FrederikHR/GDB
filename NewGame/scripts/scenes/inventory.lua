@@ -116,24 +116,25 @@ function move_inv_prompt()
     --elseif btnp(➡️) then
     --    inv_prompt_pos = (inv_prompt_pos + 1) % 2
     if btnp(🅾️) then
-        reset_slot(1)
-        --reset_item(12)
-        equipment[1]=tblclone(inventory[pos])
-        equipment[1].pos=pos
-        inventory[pos].taken=true
-        inventory[pos].slot=12
-        inv_prompt=false
-        update_atk(equipment[1].type,1)
+        add_to_slot(pos,1)
     elseif btnp(❎) then
-        reset_slot(2)
-        --reset_item(8)
-        equipment[2]=tblclone(inventory[pos])
-        equipment[2].pos=pos
-        inventory[pos].taken=true
-        inventory[pos].slot=8
-        inv_prompt=false
-        update_atk(equipment[2].type,2)
+        add_to_slot(pos,2)
     end
+end
+
+function add_to_slot(pos,slot)
+    reset_slot(slot)
+    --reset_item(12)
+    equipment[slot]=tblclone(inventory[pos])
+    equipment[slot].pos=pos
+    inventory[pos].taken=true
+    if slot==1 then
+        inventory[pos].slot=12
+    else
+        inventory[pos].slot=8
+    end
+    inv_prompt=false
+    update_atk(equipment[slot].type,slot)
 end
 
 function inv_ob(dir)

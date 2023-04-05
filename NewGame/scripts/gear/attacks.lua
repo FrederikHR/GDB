@@ -17,8 +17,11 @@ function do_atk(slot)
         end
     end
     
-    --make bullet if wand equipped
-    make_bullet(p)
+    --make bullet if wand equipped and enough mana
+    if current_player_mana() > 1 then
+        make_bullet(p)
+        p.mana -= 1
+    end
 
     sfx(player_sfx.attack_sfx)
     if p.left_swipe then
