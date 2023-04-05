@@ -10,18 +10,12 @@ function init_levelgen()
 end
 
 function draw_level()
-    local st = "values="
-    draw_rect(0,0)
-    draw_rect(1,1)
     for x = 1,maze_size,1 do 
         for y = 1,maze_size,1 do 
-            --st ..= prl.fmap[x][y]
             --draw_rect(x,y, flr(prl.fmap[x][y]))
             draw_maze_room(x,y,maze[x][y])
         end
     end
-    
-    --printh(st, "@clip")
 end
 
 function draw_rect(x,y, color)
