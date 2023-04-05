@@ -26,7 +26,7 @@ end
 
 function game_draw()
     cls(12)
-    sspr(level_1_sx,level_1_sy,8,8,0,0,154,154)
+    --sspr(level_1_sx,level_1_sy,8,8,0,0,154,154)
     print("how to play", 50,60,2)
     print("1. press x to attack", 30,70,2)
     print("2. survive!", 30,80,2)

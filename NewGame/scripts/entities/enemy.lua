@@ -22,6 +22,7 @@ function make_enemy(x,y,lvl)
     e.max_health=lvl*10
     e.armor=lvl*5
     e.resist="none"
+    e.timer=t()
 
     e.play="idle"
     e.anims=eanims
@@ -37,7 +38,7 @@ function update_enemy(e)
     if e.health < e.max_health then
         e.play = "damaged_"..e.play
     end
-    --enemy_attack(e)
+    enemy_attack(e)
     animate(e)
 end
 
@@ -62,8 +63,12 @@ function move_enemy(e)
     e.y += e.dy
 end
 
---function enemy_attack(e)
---end
+function enemy_attack(e)
+    if (collide_sprite(e,"center",p) and (t() - e.timer)>1) then
+        p.health-=1
+        e.timer=t()
+    end
+end
 
 function kill_enemy(e)
     if (e.health==0) del(enemies,e)
