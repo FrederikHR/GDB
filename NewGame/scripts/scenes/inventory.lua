@@ -150,20 +150,22 @@ function inv_ob(dir)
     return false
 end
 
+function print_item(item,x,y,col)
+    print(item.type,x,y+8,col)
+    print(item.element,x,y+16,col)
+    print(item.rarity,x,y+24,col)
+end
+
 function draw_slots()
     local area1={0,74}
     local col1=12
     local area2={41,74}
     local col2=8
     print("slot 1",area1[1],area1[2],col1)
-    print(equipment[1].type,area1[1],area1[2]+8,col1)
-    print(equipment[1].element,area1[1],area1[2]+16,col1)
-    print(equipment[1].rarity,area1[1],area1[2]+24,col1)
+    print_item(equipment[1],area1[1],area1[2],col1)
 
     print("slot 2",area2[1],area2[2],col2)
-    print(equipment[2].type,area2[1],area2[2]+8,col2)
-    print(equipment[2].element,area2[1],area2[2]+16,col2)
-    print(equipment[2].rarity,area2[1],area2[2]+24,col2)
+    print_item(equipment[2],area2[1],area2[2],col2)
 end
 
 function draw_current_item(x,y)
@@ -172,9 +174,7 @@ function draw_current_item(x,y)
     local col=6
     print("current",area[1],area[2],col)
     if inventory[pos] then
-        print(inventory[pos].type,area[1],area[2]+8,col)
-        print(inventory[pos].element,area[1],area[2]+16,col)
-        print(inventory[pos].rarity,area[1],area[2]+24,col)
+        print_item(inventory[pos],area[1],area[2],col)
     else
         print("no item",area[1],area[2]+8,col)
         print("selected",area[1],area[2]+16,col)

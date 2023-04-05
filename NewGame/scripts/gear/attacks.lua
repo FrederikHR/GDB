@@ -99,27 +99,6 @@ atk2 = {
     }
 }
 
---TODO:dagger
-atk3 = {
-    spr=0,
-    play="idle",
-    x=0,
-    y=0,
-    sw=8,
-    sh=8,
-    dir={1,0},
-    aframe=0,
-    max_aframe=10,
-    range=true,
-    speed=1,
-    move1="slice",
-    move2="slice",
-    anims={
-        idle={fr=1,-1},
-        slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
-    }
-}
-
 --TODO:wand
 --works differently from every other weapon
 atk4 = {
@@ -165,8 +144,8 @@ atk5 = {
     }
 }
 
---TODO:orb
-atk6 = {
+--TODO:shield
+atk7 = {
     spr=0,
     play="idle",
     x=0,
@@ -186,8 +165,30 @@ atk6 = {
     }
 }
 
---TODO:shield
-atk7 = {
+--[[
+--TODO:dagger
+atk3 = {
+    spr=0,
+    play="idle",
+    x=0,
+    y=0,
+    sw=8,
+    sh=8,
+    dir={1,0},
+    aframe=0,
+    max_aframe=10,
+    range=true,
+    speed=1,
+    move1="slice",
+    move2="slice",
+    anims={
+        idle={fr=1,-1},
+        slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
+    }
+}
+
+--TODO:orb
+atk6 = {
     spr=0,
     play="idle",
     x=0,
@@ -227,3 +228,5 @@ atk8 = {
         slice={fr=0.5, 21,22,23,24,25,26,27,28,29,30}
     }
 }
+
+]]
