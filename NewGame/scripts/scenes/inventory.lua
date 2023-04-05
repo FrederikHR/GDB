@@ -80,22 +80,22 @@ function move_inv()
     local pos=inv_pos[2]*4+inv_pos[1]+1
 
     if btnp(⬅️) then
-        if (not inv_ob("left")) then 
+        if (not inv_ob"left") then 
             inv_pos[1]-=1
             sfx(19)
         end
     elseif btnp(➡️) then
-        if (not inv_ob("right")) then 
+        if (not inv_ob"right") then 
             inv_pos[1]+=1
             sfx(19)
         end
     elseif btnp(⬆️) then
-        if (not inv_ob("up")) then
+        if (not inv_ob"up") then
             inv_pos[2]-=1
             sfx(19)
         end
     elseif btnp(⬇️) then
-        if (not inv_ob("down")) then
+        if (not inv_ob"down") then
             inv_pos[2]+=1
             sfx(19)
         end
