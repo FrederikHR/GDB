@@ -1,5 +1,6 @@
 game_state={
-    level=1
+    level=1,
+    map_drawn=false
 }
 sprites={level_1=52, cloud=39}
 function game_init()
@@ -33,8 +34,12 @@ function game_draw()
     camera(cx,cy)
     --map(0,0)
     --mset(0,0,32)
+    if not map_drawn then
+        draw_real_level()
+        map_drawn=true
+    end
+    map(0,0)
     draw_items_on_map()
-    draw_level()
     draw_player()
     for _,e in pairs(enemies) do
         draw_enemy(e)
