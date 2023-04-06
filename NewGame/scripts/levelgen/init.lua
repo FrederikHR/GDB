@@ -41,37 +41,43 @@ end
 
 
 function draw_real_level()
+    local scale=5
+    local ox,oy = -600,-600
     for x = 1,maze_size do 
         for y = 1,maze_size do 
-            draw_real_maze_room(x,y,maze[x][y],2)
+            if p.x > (x-1)*scale*3*8+ox and p.x < (x+3)*scale*3*8+ox and p.y > (y-1)*scale*3*8+oy and p.y < (y+3)*scale*3*8+oy then
+                draw_real_maze_room(x,y,maze[x][y],scale,ox,oy)
+            end
         end
     end
 end
 
-function draw_real_maze_room(x,y,room,scale)
+function draw_real_maze_room(x,y,room,scale,ox,oy)
     local size = 3
+    local rx=x*size*scale
+    local ry=y*size*scale
     for i=1,3 do
         for j=1,3 do
-            pix2mset(x*size*scale+i*scale-1,y*scale*size+j*scale-1,241,scale)
+            pix2mset(rx+i*scale-1,ry+j*scale-1,241,scale,ox,oy)
             --mset(x*size+i-1,y*size+j-1,241)
         end
     end
 
-    pix2mset(x*size*scale+1*scale,y*size*scale+1*scale,240,scale)
+    pix2mset(rx+1*scale,ry+1*scale,240,scale,ox,oy)
     --mset(x*size+1, y*size+1, 240)
 
     --if (room.main_path) mset(x*size+1, y*size+1, 240)
     --if (room.goal == true) rectfill(x*size+1, y*size+1, 240)
-    if (not room.left_wall) pix2mset(x*size*scale,y*size*scale+1*scale,240,scale)--mset(x*size, y*size+1, 240)
-    if (not room.right_wall) pix2mset(x*size*scale+2*scale,y*size*scale+1*scale,240,scale)--mset(x*size+2, y*size+1, 240)
-    if (not room.bottom_wall) pix2mset(x*size*scale+1*scale,y*size*scale+2*scale,240,scale)--mset(x*size+1, y*size+2, 240)
-    if (not room.top_wall) pix2mset(x*size*scale+1*scale,y*size*scale,240,scale)--mset(x*size+1, y*size, 240)
+    if (not room.left_wall) pix2mset(rx,ry+1*scale,240,scale,ox,oy)--mset(x*size, y*size+1, 240)
+    if (not room.right_wall) pix2mset(rx+2*scale,ry+1*scale,240,scale,ox,oy)--mset(x*size+2, y*size+1, 240)
+    if (not room.bottom_wall) pix2mset(rx+1*scale,ry+2*scale,240,scale,ox,oy)--mset(x*size+1, y*size+2, 240)
+    if (not room.top_wall) pix2mset(rx+1*scale,ry,240,scale,ox,oy)--mset(x*size+1, y*size, 240)
 end
 
-function pix2mset(x,y,spr,scale)
+function pix2mset(x,y,sprite,scale,ox,oy)
     for i=1,scale do
         for j=1,scale do
-            mset(x+i-1,y+j-1,spr)
+            spr(sprite,x*8+(i-1)*8+ox,y*8+(j-1)*8+oy)
         end
     end
 end

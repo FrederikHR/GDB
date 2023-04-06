@@ -34,11 +34,11 @@ function game_draw()
     camera(cx,cy)
     --map(0,0)
     --mset(0,0,32)
-    if not map_drawn then
+    --if not map_drawn then
         draw_real_level()
-        map_drawn=true
-    end
-    map(0,0)
+    --    map_drawn=true
+    --end
+    --map(0,0)
     draw_items_on_map()
     draw_player()
     for _,e in pairs(enemies) do
