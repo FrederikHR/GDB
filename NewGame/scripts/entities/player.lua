@@ -31,6 +31,7 @@ function make_player()
     p.attack2=false
     p.interact=false
     p.inv_full=false
+    p.curr_mt=nil
     update_atk(0)
 end
 
@@ -110,9 +111,65 @@ function move_player()
         patk2.dir=dir2
     end
 
+    
+
+    --map collision
+    find_map_tile(p)
+    --log("updown: "..tostr(player_collide_map(p,"updown")))
+    --log("sides: "..tostr(player_collide_map(p,"sides")))
+    if abs(p.dy)>0 and player_collide_map(p,"updown") then
+        local normdy=p.dy/abs(p.dy)
+        log("updown: "..tostr(player_collide_map(p,"updown")))
+		p.dy=0
+		p.y-=normdy * ((p.y+p.sz*8+1)%8)-1
+    end
+    if abs(p.dx)>0 and player_collide_map(p,"sides") then
+        local normdx=p.dx/abs(p.dx)
+        log("sides: "..tostr(player_collide_map(p,"sides")))
+		p.dx=0
+		p.x-=normdx * ((p.x+p.sz*8+1)%8)-1
+    end
+    
     --update position
     p.x+=p.dx
     p.y+=p.dy
+end
+
+function player_collide_map(p,dir)
+    local scale = maze[1][1].scale
+    local ox = maze[1][1].ox
+    local oy = maze[1][1].oy
+    local s = scale*3*8
+    if dir=="updown" then
+        if (p.curr_mt.top_wall and p.y<p.curr_mt.y*s+scale*8+oy) return true
+        if (p.curr_mt.bottom_wall and p.y>p.curr_mt.y*s+2*scale*8+oy-p.sz*8) return true
+        if ((p.y<p.curr_mt.y*s+scale*8+oy or p.y>p.curr_mt.y*s+2*scale*8+oy-p.sz*8) and p.x<p.curr_mt.x*s+scale*8+ox) return true
+        if ((p.y<p.curr_mt.y*s+scale*8+oy or p.y>p.curr_mt.y*s+2*scale*8+oy-p.sz*8) and p.x>p.curr_mt.x*s+2*scale*8+ox-p.sz*8) return true
+    else
+        if (p.curr_mt.left_wall and p.x<p.curr_mt.x*s+scale*8+ox) return true
+        if (p.curr_mt.right_wall and p.x>p.curr_mt.x*s+2*scale*8+ox-p.sz*8) return true
+        if ((p.x<p.curr_mt.x*s+scale*8+oy or p.x>p.curr_mt.x*s+2*scale*8+ox-p.sz*8) and p.y<p.curr_mt.y*s+scale*8+oy) return true
+        if ((p.x<p.curr_mt.x*s+scale*8+oy or p.x>p.curr_mt.x*s+2*scale*8+ox-p.sz*8) and p.y>p.curr_mt.y*s+2*scale*8+oy-p.sz*8) return true
+    end
+end
+
+function find_map_tile(p)
+    local scale = maze[1][1].scale
+    local ox = maze[1][1].ox
+    local oy = maze[1][1].oy
+    local s = scale*3*8
+    if p.curr_mt != nil then
+        if (p.curr_mt.x*s+ox <= p.x and p.x < p.curr_mt.x*s+s+ox and p.curr_mt.y*s+oy <= p.y and p.y < p.curr_mt.y*s+s+oy) return
+    end
+    for _,x in pairs(maze) do
+        for _,y in pairs(x) do
+            if y.x*s+ox <= p.x and p.x < y.x*s+s+ox and y.y*s+oy <= p.y and p.y < y.y*s+s+oy then 
+                log(y.x*s+ox.." "..p.x.." "..y.x*s+s+ox.." : "..y.y*s+oy.." "..p.y.." "..y.y*s+s+oy)
+                p.curr_mt=y
+                return
+            end
+        end
+    end
 end
 
 function player_pickup()

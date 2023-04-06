@@ -63,6 +63,12 @@ function collide_sprite(obj,aim,obj2)
     elseif aim=="atk" then
         x1=x        y1=y
         x2=x+w      y2=y+h
+	elseif aim=="updown" then
+		x1=x        y1=y-1
+		x2=x+w      y2=y+h+1
+	elseif aim=="sides" then
+        x1=x-1        y1=y
+        x2=x+w+1      y2=y+h
 	end
 
 	if not((obj2.x > x2)

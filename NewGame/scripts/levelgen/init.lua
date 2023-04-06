@@ -1,11 +1,13 @@
 prl = {}
 maze_size = 5
+current_map={}
+maze={}
 
 function init_levelgen()
     --prl = perlin()
     --prl:init()
     --prl:getmapdata(0,150,0,150)
-    maze = init_maze(maze_size,maze_size)
+    maze = init_maze(maze_size,maze_size,5,-600,-600)
     backtrack(maze,maze_size,maze_size)
 end
 
@@ -41,8 +43,8 @@ end
 
 
 function draw_real_level()
-    local scale=5
-    local ox,oy = -600,-600
+    local ox,oy = maze[1][1].ox,maze[1][1].oy
+    local scale = maze[1][1].scale
     for x = 1,maze_size do 
         for y = 1,maze_size do 
             if p.x > (x-1)*scale*3*8+ox and p.x < (x+3)*scale*3*8+ox and p.y > (y-1)*scale*3*8+oy and p.y < (y+3)*scale*3*8+oy then
@@ -58,7 +60,7 @@ function draw_real_maze_room(x,y,room,scale,ox,oy)
     local ry=y*size*scale
     for i=1,3 do
         for j=1,3 do
-            pix2mset(rx+i*scale-1,ry+j*scale-1,241,scale,ox,oy)
+            pix2mset(rx+(i-1)*scale,ry+(j-1)*scale,241,scale,ox,oy)
             --mset(x*size+i-1,y*size+j-1,241)
         end
     end
@@ -75,9 +77,13 @@ function draw_real_maze_room(x,y,room,scale,ox,oy)
 end
 
 function pix2mset(x,y,sprite,scale,ox,oy)
-    for i=1,scale do
-        for j=1,scale do
-            spr(sprite,x*8+(i-1)*8+ox,y*8+(j-1)*8+oy)
-        end
-    end
+    local sx,sy = get_sspr_x_y(sprite)
+    sspr(sx,sy,8,8,x*8+ox,y*8+oy,scale*8,scale*8)
+    --for i=1,scale do
+        --if (current_map[x*8+(i-1)*8+ox] == nil) current_map[x*8+(i-1)*8+ox] = {}
+    --    for j=1,scale do
+    --        spr(sprite,x*8+(i-1)*8+ox,y*8+(j-1)*8+oy)
+        --    current_map[x*8+(i-1)*8+ox][y*8+(j-1)*8+oy] = {spr=sprite,x=x*8+(i-1)*8+ox,y=y*8+(j-1)*8+oy,sz=scale}
+    --    end
+    --end
 end

@@ -35,7 +35,7 @@ function game_draw()
     --map(0,0)
     --mset(0,0,32)
     --if not map_drawn then
-        draw_real_level()
+    draw_real_level()
     --    map_drawn=true
     --end
     --map(0,0)
