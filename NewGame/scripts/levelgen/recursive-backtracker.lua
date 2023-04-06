@@ -11,9 +11,7 @@ function init_maze(width, height)
             maze[x][y].visited = false
             maze[x][y].main_path = false
             maze[x][y].goal = false
-            maze[x][y].top_wall = true
             maze[x][y].right_wall = true
-            maze[x][y].left_wall = true
             maze[x][y].bottom_wall = true
         end
     end
@@ -70,16 +68,12 @@ end
 -- remove the two walls that separate rooms a and b
 function remove_separating_wall(a, b)
     if a.x > b.x then
-        a.left_wall = false
         b.right_wall = false
     elseif a.x < b.x then
         a.right_wall = false
-        b.left_wall = false
     elseif a.y < b.y then
         a.bottom_wall = false
-        b.top_wall = false
     else
-        a.top_wall = false
         b.bottom_wall = false
     end
 end
