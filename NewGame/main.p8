@@ -2,7 +2,7 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 #include scripts/levelgen/init.lua
-#include scripts/levelgen/perlin.lua
+--#include scripts/levelgen/perlin.lua
 #include scripts/levelgen/recursive-backtracker.lua
 #include scripts/scenes/menu.lua
 #include scripts/scenes/game.lua

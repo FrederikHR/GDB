@@ -231,7 +231,7 @@ function atk_collide()
             if (collide_atk(patk2,e) and patk2.spr != -1) damage_enemy(e,equipment[2],2)
         end
         --bullet collision
-        for i,b in ipairs(bullets) do
+        for i,b in ipairs(game_state.bullets) do
             if collide_atk(b,e) then
                 damage_enemy(e,equipment[b.slot],b.slot)
                 b.hit=true

@@ -80,7 +80,7 @@ item_dmg = {
     spear = 2,
     wand = 1,
     mace = 3,
-    shield = 1,
+    shield = 1
     --dagger = 1,
     --orb = 2,
     --whip = 1
@@ -114,7 +114,7 @@ rarity_mod = {
     none = 1,
     ok = 2,
     fancy = 3,
-    good = 4,
+    gud = 4,
     extra = 5
     --trash = 1
 }
