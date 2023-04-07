@@ -1,6 +1,7 @@
 game_state={
     level=1,
-    map_drawn=false
+    map_drawn=false,
+    enemies={}
 }
 sprites={level_1=52, cloud=39}
 function game_init()
@@ -11,7 +12,7 @@ function game_init()
     background_spr=50
     level_1_sx, level_1_sy = get_sspr_x_y(sprites["level_1"])
 
-    init_level(0)
+    init_level(1)
    
 end
 
@@ -41,7 +42,8 @@ function game_draw()
     --map(0,0)
     draw_items_on_map()
     draw_player()
-    for _,e in pairs(enemies) do
+    log(#game_state.enemies)
+    for _,e in pairs(game_state.enemies) do
         draw_enemy(e)
     end
     fancy_draw_attack(patk1)
@@ -55,9 +57,8 @@ end
 function game_update()
     update_player()
     scroll_camera(p,true)
-    for _,e in pairs(enemies) do
+    for _,e in pairs(game_state.enemies) do
         update_enemy(e)
-        kill_enemy(e)
         kill_enemy(e)
     end
 end
@@ -97,7 +98,7 @@ function init_level(l)
     _update=game_update
     _draw=game_draw
     current_items={}
-    enemies={}
+    game_state.enemies={}
     bullets={}
 
     init_levelgen()
@@ -109,7 +110,8 @@ function init_level(l)
     p.y=64
 
     --make enemies
-    make_enemy(90,90,1)
+    enemies_for_map(l)
+    --make_enemy(90,90,1)
 
     spawn_item(70,40)
 end

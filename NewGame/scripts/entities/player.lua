@@ -115,83 +115,58 @@ function move_player()
 
     --map collision
     find_map_tile(p)
-    --log(maze[p.curr_mt.x-1][p.curr_mt.y].is_wall)
     player_collide_map(p,"left")
     player_collide_map(p,"right")
     player_collide_map(p,"up")
     player_collide_map(p,"down")
-    --[[
-    
-    local updown=player_collide_map(p,"updown")
-    if abs(p.dy)>0 and updown[1] then
-		if updown[2] then
-            if (p.dy<0) p.dy=0
-            p.y=p.curr_mt.y*p.curr_mt.scale*3*8+p.curr_mt.scale*8+p.curr_mt.oy
-        elseif updown[3] then
-            if (p.dy>0) p.dy=0
-            p.y=p.curr_mt.y*p.curr_mt.scale*3*8+2*p.curr_mt.scale*8+p.curr_mt.oy-p.sz*8
-        end
-        --p.y-=normdy * ((p.y+p.sz*8+1)%4)-1
-    end
-    local sides=player_collide_map(p,"sides")
-    if abs(p.dx)>0 and sides[1] then
-        if sides[4] then
-            if (p.dx<0) p.dx=0
-            p.x=p.curr_mt.x*p.curr_mt.scale*3*8+p.curr_mt.scale*8+p.curr_mt.ox
-        elseif sides[5] then
-            if (p.dx>0) p.dx=0
-            p.x=p.curr_mt.x*p.curr_mt.scale*3*8+2*p.curr_mt.scale*8+p.curr_mt.ox-p.sz*8
-        end
-    end]]--
     
     --update position
     p.x+=p.dx
     p.y+=p.dy
 end
 
-function player_collide_map(p,dir)
+function player_collide_map(en,dir)
     local scale = maze[1][1].scale
     local ox = maze[1][1].ox
     local oy = maze[1][1].oy
-    local checkx1=p.x-1<p.curr_mt.x*scale+ox
-    local checkx2=p.x+1>p.curr_mt.x*scale+scale+ox-p.sz*8
-    local checky1=p.y-1<p.curr_mt.y*scale+oy
-    local checky2=p.y+1>p.curr_mt.y*scale+scale+oy-p.sz*8
-    if dir=="left" and checkx1 and maze[p.curr_mt.x-1][p.curr_mt.y].is_wall then
-        if (p.dx<0) then
-            p.dx=0
-            p.x=p.curr_mt.x*scale+ox
+    local checkx1=en.x-1<en.curr_mt.x*scale+ox
+    local checkx2=en.x+1>en.curr_mt.x*scale+scale+ox-en.sz*8
+    local checky1=en.y-1<en.curr_mt.y*scale+oy
+    local checky2=en.y+1>en.curr_mt.y*scale+scale+oy-en.sz*8
+    if dir=="left" and checkx1 and maze[en.curr_mt.x-1][en.curr_mt.y].is_wall then
+        if (en.dx<0) then
+            en.dx=0
+            en.x=en.curr_mt.x*scale+ox
         end
-    elseif dir=="right" and checkx2 and maze[p.curr_mt.x+1][p.curr_mt.y].is_wall then
-        if (p.dx>0) then
-            p.dx=0
-            p.x=p.curr_mt.x*scale+scale+ox-p.sz*8
+    elseif dir=="right" and checkx2 and maze[en.curr_mt.x+1][en.curr_mt.y].is_wall then
+        if (en.dx>0) then
+            en.dx=0
+            en.x=en.curr_mt.x*scale+scale+ox-en.sz*8
         end
-    elseif dir=="up" and checky1 and maze[p.curr_mt.x][p.curr_mt.y-1].is_wall then
-        if (p.dy<0) then
-            p.dy=0
-            p.y=p.curr_mt.y*scale+oy
+    elseif dir=="up" and checky1 and maze[en.curr_mt.x][en.curr_mt.y-1].is_wall then
+        if (en.dy<0) then
+            en.dy=0
+            en.y=en.curr_mt.y*scale+oy
         end
-    elseif dir=="down" and checky2 and maze[p.curr_mt.x][p.curr_mt.y+1].is_wall then
-        if (p.dy>0) then
-            p.dy=0
-            p.y=p.curr_mt.y*scale+scale+oy-p.sz*8
+    elseif dir=="down" and checky2 and maze[en.curr_mt.x][en.curr_mt.y+1].is_wall then
+        if (en.dy>0) then
+            en.dy=0
+            en.y=en.curr_mt.y*scale+scale+oy-en.sz*8
         end
     end
 end
 
-function find_map_tile(p)
+function find_map_tile(en)
     local scale = maze[1][1].scale
     local ox = maze[1][1].ox
     local oy = maze[1][1].oy
-    if p.curr_mt != nil then
-        log("curr_mt: "..p.curr_mt.x*scale+ox.." "..p.x.." "..p.curr_mt.x*scale+scale+ox.." : "..p.curr_mt.y*scale+oy.." "..p.y.." "..p.curr_mt.y*scale+scale+oy)
-        if (p.curr_mt.x*scale+ox <= p.x and p.x+p.sz*8 < p.curr_mt.x*scale+scale+ox and p.curr_mt.y*scale+oy <= p.y and p.y+p.sz*8 < p.curr_mt.y*scale+scale+oy) return
+    if en.curr_mt != nil then
+        if (en.curr_mt.x*scale+ox < en.x and en.x+en.sz*8 < en.curr_mt.x*scale+scale+ox and en.curr_mt.y*scale+oy < en.y and en.y+en.sz*8 < en.curr_mt.y*scale+scale+oy) return
     end
     for _,x in pairs(maze) do
         for _,y in pairs(x) do
-            if y.x*scale+ox <= p.x and p.x+p.sz*8 < y.x*scale+scale+ox and y.y*scale+oy <= p.y and p.y+p.sz*8 < y.y*scale+scale+oy then 
-                p.curr_mt=y
+            if y.x*scale+ox < en.x+1 and en.x+en.sz*8-1 < y.x*scale+scale+ox and y.y*scale+oy < en.y+1 and en.y+en.sz*8-1 < y.y*scale+scale+oy then 
+                en.curr_mt=y
                 return
             end
         end
@@ -242,7 +217,7 @@ end
 
 function atk_collide()
     --TODO: make hit moment dependent on item
-    for _,e in pairs(enemies) do
+    for _,e in pairs(game_state.enemies) do
         if patk1.aframe==patk1.max_aframe\2 then
             if (collide_atk(patk1,e) and patk1.spr != -1) damage_enemy(e,equipment[1],1)
         elseif patk2.aframe==patk2.max_aframe\2 then

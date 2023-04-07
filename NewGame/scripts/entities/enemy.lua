@@ -6,8 +6,6 @@ eanims ={
     damaged_walk={fr=10,33,34,35,36}
 }
 
-enemies={}
-
 function make_enemy(x,y,lvl)
     local e={}
     e.spr=1
@@ -24,12 +22,13 @@ function make_enemy(x,y,lvl)
     e.resist="none"
     e.timer=t()
 
+    e.curr_mt=nil
     e.play="idle"
     e.anims=eanims
     e.flp=false
     e.attack=false
     e.aframe=0
-    add(enemies,e)
+    add(game_state.enemies,e)
 end
 
 function update_enemy(e)
@@ -59,6 +58,12 @@ function move_enemy(e)
         e.play="idle"
     end
 
+    --find_map_tile(e)
+    --player_collide_map(e,"left")
+    --player_collide_map(e,"right")
+    --layer_collide_map(e,"up")
+    --player_collide_map(e,"down")
+
     e.x += e.dx
     e.y += e.dy
 end
@@ -71,5 +76,16 @@ function enemy_attack(e)
 end
 
 function kill_enemy(e)
-    if (e.health==0) del(enemies,e)
+    if (e.health==0) del(game_state.enemies,e)
+end
+
+function enemies_for_map(lvl)
+    for _,x in pairs(maze) do
+        for _,y in pairs(x) do
+            srand(y.x+y.y)
+            if (not y.is_wall and not y.goal) then
+                if (rnd()>0.75) make_enemy(y.ox+y.x*y.scale+rnd(y.scale-2)+2,y.oy+y.y*y.scale+rnd(y.scale-2)+2,lvl)
+            end
+        end
+    end
 end
