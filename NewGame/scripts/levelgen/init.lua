@@ -30,15 +30,10 @@ function draw_real_maze_room(x,y,room,scale,ox,oy)
     for i=1,3 do
         for j=1,3 do
             pix2mset(rx+(i-1)*scale,ry+(j-1)*scale,241,scale,ox,oy)
-            --mset(x*size+i-1,y*size+j-1,241)
         end
     end
 
     pix2mset(rx+1*scale,ry+1*scale,240,scale,ox,oy)
-    --mset(x*size+1, y*size+1, 240)
-
-    --if (room.main_path) mset(x*size+1, y*size+1, 240)
-    --if (room.goal == true) rectfill(x*size+1, y*size+1, 240)
     if (not room.left_wall) pix2mset(rx,ry+1*scale,240,scale,ox,oy)--mset(x*size, y*size+1, 240)
     if (not room.right_wall) pix2mset(rx+2*scale,ry+1*scale,240,scale,ox,oy)--mset(x*size+2, y*size+1, 240)
     if (not room.bottom_wall) pix2mset(rx+1*scale,ry+2*scale,240,scale,ox,oy)--mset(x*size+1, y*size+2, 240)

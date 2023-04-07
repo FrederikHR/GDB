@@ -176,7 +176,6 @@ function find_map_tile(p)
     for _,x in pairs(maze) do
         for _,y in pairs(x) do
             if y.x*s+ox <= p.x and p.x < y.x*s+s+ox and y.y*s+oy <= p.y and p.y < y.y*s+s+oy then 
-                log(y.x*s+ox.." "..p.x.." "..y.x*s+s+ox.." : "..y.y*s+oy.." "..p.y.." "..y.y*s+s+oy)
                 p.curr_mt=y
                 return
             end
@@ -217,8 +216,6 @@ end
 
 function update_attack()
     if p.attack then
-        --patk1.x=p.x+p.sz\2+8*cos(atan2(dir1[1],dir1[2]))
-        --patk1.y=p.y+p.sz\2+8*sin(atan2(dir1[1],dir1[2]))
         patk1.x=p.x+p.sz\2+patk1.dir[1]*8
         patk1.y=p.y+p.sz\2+patk1.dir[2]*8
 
@@ -251,7 +248,7 @@ end
 function draw_attack(atk)
    sx, sy = get_sspr_x_y(atk.spr)
 
-   if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
+   if (atk.spr != -1) sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
 end
 
 function fancy_draw_attack(atk)

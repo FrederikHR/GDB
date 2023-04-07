@@ -2,9 +2,9 @@
 function init_maze(width, height,scale,ox,oy)
     local maze = {}
 
-    for x=0, width, 1 do
+    for x=0, width do
         maze[x] = {}
-        for y = 0, height, 1 do
+        for y = 0, height do
             maze[x][y] = {}
             maze[x][y].y = y
             maze[x][y].x = x
