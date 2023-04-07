@@ -117,20 +117,22 @@ function move_player()
     find_map_tile(p)
     local updown=player_collide_map(p,"updown")
     if abs(p.dy)>0 and updown[1] then
-		p.dy=0
 		if updown[2] then
+            if (p.dy<0) p.dy=0
             p.y=p.curr_mt.y*p.curr_mt.scale*3*8+p.curr_mt.scale*8+p.curr_mt.oy
         elseif updown[3] then
+            if (p.dy>0) p.dy=0
             p.y=p.curr_mt.y*p.curr_mt.scale*3*8+2*p.curr_mt.scale*8+p.curr_mt.oy-p.sz*8
         end
         --p.y-=normdy * ((p.y+p.sz*8+1)%4)-1
     end
     local sides=player_collide_map(p,"sides")
     if abs(p.dx)>0 and sides[1] then
-		p.dx=0
         if sides[4] then
+            if (p.dx<0) p.dx=0
             p.x=p.curr_mt.x*p.curr_mt.scale*3*8+p.curr_mt.scale*8+p.curr_mt.ox
         elseif sides[5] then
+            if (p.dx>0) p.dx=0
             p.x=p.curr_mt.x*p.curr_mt.scale*3*8+2*p.curr_mt.scale*8+p.curr_mt.ox-p.sz*8
         end
     end
@@ -145,10 +147,10 @@ function player_collide_map(p,dir)
     local ox = maze[1][1].ox
     local oy = maze[1][1].oy
     local s = scale*3*8
-    local checkx1=p.x<p.curr_mt.x*s+scale*8+ox
-    local checkx2=p.x>p.curr_mt.x*s+2*scale*8+ox-p.sz*8
-    local checky1=p.y<p.curr_mt.y*s+scale*8+oy
-    local checky2=p.y>p.curr_mt.y*s+2*scale*8+oy-p.sz*8
+    local checkx1=p.x-1<p.curr_mt.x*s+scale*8+ox
+    local checkx2=p.x+1>p.curr_mt.x*s+2*scale*8+ox-p.sz*8
+    local checky1=p.y-1<p.curr_mt.y*s+scale*8+oy
+    local checky2=p.y+1>p.curr_mt.y*s+2*scale*8+oy-p.sz*8
     if dir=="updown" then
         if (p.curr_mt.top_wall and checky1) return {true,checky1,checky2,checkx1,checkx2}
         if (p.curr_mt.bottom_wall and checky2) return {true,checky1,checky2,checkx1,checkx2}
