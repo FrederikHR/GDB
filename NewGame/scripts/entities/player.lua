@@ -114,7 +114,14 @@ function move_player()
     
 
     --map collision
-    --[[find_map_tile(p)
+    find_map_tile(p)
+    --log(maze[p.curr_mt.x-1][p.curr_mt.y].is_wall)
+    player_collide_map(p,"left")
+    player_collide_map(p,"right")
+    player_collide_map(p,"up")
+    player_collide_map(p,"down")
+    --[[
+    
     local updown=player_collide_map(p,"updown")
     if abs(p.dy)>0 and updown[1] then
 		if updown[2] then
@@ -146,36 +153,44 @@ function player_collide_map(p,dir)
     local scale = maze[1][1].scale
     local ox = maze[1][1].ox
     local oy = maze[1][1].oy
-    local s = scale*3*8
-    local checkx1=p.x-1<p.curr_mt.x*s+scale*8+ox
-    local checkx2=p.x+1>p.curr_mt.x*s+2*scale*8+ox-p.sz*8
-    local checky1=p.y-1<p.curr_mt.y*s+scale*8+oy
-    local checky2=p.y+1>p.curr_mt.y*s+2*scale*8+oy-p.sz*8
-    if dir=="updown" then
-        if (p.curr_mt.top_wall and checky1) return {true,checky1,checky2,checkx1,checkx2}
-        if (p.curr_mt.bottom_wall and checky2) return {true,checky1,checky2,checkx1,checkx2}
-        if ((checky1 or checky2) and checkx1) return {true,checky1,checky2,checkx1,checkx2}
-        if ((checky1 or checky2) and checkx2) return {true,checky1,checky2,checkx1,checkx2}
-    else
-        if (p.curr_mt.left_wall and checkx1) return {true,checky1,checky2,checkx1,checkx2}
-        if (p.curr_mt.right_wall and checkx2) return {true,checky1,checky2,checkx1,checkx2}
-        if ((checkx1 or checkx2) and checky1) return {true,checky1,checky2,checkx1,checkx2}
-        if ((checkx1 or checkx2) and checky2) return {true,checky1,checky2,checkx1,checkx2}
+    local checkx1=p.x-1<p.curr_mt.x*scale+ox
+    local checkx2=p.x+1>p.curr_mt.x*scale+scale+ox-p.sz*8
+    local checky1=p.y-1<p.curr_mt.y*scale+oy
+    local checky2=p.y+1>p.curr_mt.y*scale+scale+oy-p.sz*8
+    if dir=="left" and checkx1 and maze[p.curr_mt.x-1][p.curr_mt.y].is_wall then
+        if (p.dx<0) then
+            p.dx=0
+            p.x=p.curr_mt.x*scale+ox
+        end
+    elseif dir=="right" and checkx2 and maze[p.curr_mt.x+1][p.curr_mt.y].is_wall then
+        if (p.dx>0) then
+            p.dx=0
+            p.x=p.curr_mt.x*scale+scale+ox-p.sz*8
+        end
+    elseif dir=="up" and checky1 and maze[p.curr_mt.x][p.curr_mt.y-1].is_wall then
+        if (p.dy<0) then
+            p.dy=0
+            p.y=p.curr_mt.y*scale+oy
+        end
+    elseif dir=="down" and checky2 and maze[p.curr_mt.x][p.curr_mt.y+1].is_wall then
+        if (p.dy>0) then
+            p.dy=0
+            p.y=p.curr_mt.y*scale+scale+oy-p.sz*8
+        end
     end
-    return {false,false,false,false,false}
 end
 
 function find_map_tile(p)
     local scale = maze[1][1].scale
     local ox = maze[1][1].ox
     local oy = maze[1][1].oy
-    local s = scale*3*8
     if p.curr_mt != nil then
-        if (p.curr_mt.x*s+ox <= p.x and p.x < p.curr_mt.x*s+s+ox and p.curr_mt.y*s+oy <= p.y and p.y < p.curr_mt.y*s+s+oy) return
+        log("curr_mt: "..p.curr_mt.x*scale+ox.." "..p.x.." "..p.curr_mt.x*scale+scale+ox.." : "..p.curr_mt.y*scale+oy.." "..p.y.." "..p.curr_mt.y*scale+scale+oy)
+        if (p.curr_mt.x*scale+ox <= p.x and p.x+p.sz*8 < p.curr_mt.x*scale+scale+ox and p.curr_mt.y*scale+oy <= p.y and p.y+p.sz*8 < p.curr_mt.y*scale+scale+oy) return
     end
     for _,x in pairs(maze) do
         for _,y in pairs(x) do
-            if y.x*s+ox <= p.x and p.x < y.x*s+s+ox and y.y*s+oy <= p.y and p.y < y.y*s+s+oy then 
+            if y.x*scale+ox <= p.x and p.x+p.sz*8 < y.x*scale+scale+ox and y.y*scale+oy <= p.y and p.y+p.sz*8 < y.y*scale+scale+oy then 
                 p.curr_mt=y
                 return
             end

@@ -1,6 +1,6 @@
 -- returns a two-dimensional array of width*height size, populated with maze rooms that are completely closed
 function init_maze(width, height,scale,ox,oy)
-    local maze = {scale=scale,ox=ox,oy=oy}
+    local maze = {}
 
     for x=1, (width*2)+1 do
         maze[x] = {}
@@ -8,6 +8,10 @@ function init_maze(width, height,scale,ox,oy)
             maze[x][y] = {}
             maze[x][y].y = y
             maze[x][y].x = x
+            maze[x][y].sz = scale
+            maze[x][y].scale = scale
+            maze[x][y].ox = ox
+            maze[x][y].oy = oy
             maze[x][y].visited = false
             maze[x][y].main_path = false
             maze[x][y].goal = false
