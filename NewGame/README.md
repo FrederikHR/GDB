@@ -15,3 +15,10 @@ Startscreen (?)<br />
 
 mechanics (platforming)<br />
 <img align="middle" src="concept_art/game_mechanic_platforms_sword_faster.gif" width="400" height="400" />
+
+
+enemy types
+- light, fast
+- heavy, slow
+- flying, also light and fast
+
