@@ -110,7 +110,7 @@ function init_level(l)
     p.x=64
     p.y=64
 
-    enemies_for_map(l)
-    items_for_map()
+    --enemies_for_map(l)
+    --items_for_map()
     game_state.level += 1
 end

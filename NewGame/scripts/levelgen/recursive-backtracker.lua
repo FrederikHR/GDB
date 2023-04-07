@@ -2,9 +2,9 @@
 function init_maze(width, height,scale,ox,oy)
     local maze = {}
 
-    for x=1, (width*2)+1 do
+    for x=1, (width*3)+1 do
         maze[x] = {}
-        for y = 1, (height*2)+1 do
+        for y = 1, (height*3)+1 do
             maze[x][y] = {}
             maze[x][y].y = y
             maze[x][y].x = x
@@ -28,7 +28,7 @@ end
 -- when every room has been visited once, the remaining stack is the solution to the maze (path from first to last room)
 function backtrack(maze, width, height)
     local current = maze[2][2]
-    local finish = maze[width*2][height*2]
+    local finish = maze[width*3][height*3]
     current.goal = true
     finish.goal = true
     current.visited = true
@@ -37,7 +37,7 @@ function backtrack(maze, width, height)
     local vcount = 1
     while (vcount < width*height) do
         printh("current: "..current.x..","..current.y)
-        next = unvisited_neighbour(maze, current.x, current.y, width*2, height*2)
+        next = unvisited_neighbour(maze, current.x, current.y, width*3, height*3)
         if next != nil then
             printh("visiting: "..next.x..","..next.y)
             remove_separating_wall(current, next, maze)
@@ -64,10 +64,10 @@ end
 -- returns nil if all rooms have already been visited
 function unvisited_neighbour(maze, x, y, width, height)
     local unvisited = {}
-    if (x > 3 and maze[x-2][y].visited == false) unvisited[#unvisited+1] = maze[x-2][y]
-    if (y > 3 and maze[x][y-2].visited == false) unvisited[#unvisited+1] = maze[x][y-2]
-    if (x < width and maze[x+2][y].visited == false) unvisited[#unvisited+1] = maze[x+2][y]
-    if (y < height and maze[x][y+2].visited == false) unvisited[#unvisited+1] = maze[x][y+2]
+    if (x > 4 and maze[x-3][y].visited == false) unvisited[#unvisited+1] = maze[x-3][y]
+    if (y > 4 and maze[x][y-3].visited == false) unvisited[#unvisited+1] = maze[x][y-3]
+    if (x < width-1 and maze[x+3][y].visited == false) unvisited[#unvisited+1] = maze[x+3][y]
+    if (y < height-1 and maze[x][y+3].visited == false) unvisited[#unvisited+1] = maze[x][y+3]
     if (#unvisited == 0) return nil
     
     return rnd(unvisited)
@@ -77,11 +77,15 @@ end
 function remove_separating_wall(a, b, maze)
     if a.x > b.x then
         maze[a.x-1][a.y].is_wall = false
+        maze[a.x-2][a.y].is_wall = false
     elseif a.x < b.x then
         maze[a.x+1][a.y].is_wall = false
+        maze[a.x+2][a.y].is_wall = false
     elseif a.y < b.y then
         maze[a.x][a.y+1].is_wall = false
+        maze[a.x][a.y+2].is_wall = false
     else
         maze[a.x][a.y-1].is_wall = false
+        maze[a.x][a.y-2].is_wall = false
     end
 end

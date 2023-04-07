@@ -120,7 +120,7 @@ function move_player()
     player_collide_map(p,"up")
     player_collide_map(p,"down")
 
-    if (p.curr_mt.x==game_state.goal[1] and p.curr_mt.y==game_state.goal[2]) init_level(game_state.level)
+    --if (p.curr_mt.x==game_state.goal[1] and p.curr_mt.y==game_state.goal[2]) init_level(game_state.level)
 
     --update position
     p.x+=p.dx
@@ -128,7 +128,7 @@ function move_player()
 end
 
 function player_collide_map(en,dir)
-    local scale = maze[1][1].scale
+    --[[local scale = maze[1][1].scale
     local ox = maze[1][1].ox
     local oy = maze[1][1].oy
     local checkx1=en.x-1<en.curr_mt.x*scale+ox
@@ -155,10 +155,11 @@ function player_collide_map(en,dir)
             en.dy=0
             en.y=en.curr_mt.y*scale+scale+oy-en.sz*8
         end
-    end
+    end]]--
 end
 
 function find_map_tile(en)
+    --[[
     local scale = maze[1][1].scale
     local ox = maze[1][1].ox
     local oy = maze[1][1].oy
@@ -172,7 +173,7 @@ function find_map_tile(en)
                 return
             end
         end
-    end
+    end]]--
 end
 
 function player_pickup()
