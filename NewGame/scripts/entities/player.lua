@@ -184,6 +184,11 @@ function player_pickup()
                 
                 add(inventory,i)
                 deli(game_state.current_items,j)
+                if (equipment[1].type=="none") then
+                    add_to_slot(#inventory,1)
+                elseif (equipment[2].type=="none") then
+                    add_to_slot(#inventory,2)
+                end
             else
                 p.inv_full=true
             end
