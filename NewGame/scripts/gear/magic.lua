@@ -20,7 +20,7 @@ function make_bullet(p)
         b.max_aframe=90
         b.speed=1
         b.maxcf=5
-        add(bullets,b)
+        add(game_state.bullets,b)
     elseif p.attack2 and equipment[2].type=="wand" then
         --TODO: change to different attack
         b.dir=tblclone(patk2.dir)
@@ -30,27 +30,27 @@ function make_bullet(p)
         b.max_aframe=90
         b.speed=1
         b.maxcf=5
-        add(bullets,b)
+        add(game_state.bullets,b)
     end
 end
 
 function update_bullets()
     --TODO: destroy bullet if far away(? probably not a problem)
-    for _,b in pairs(bullets) do
+    for _,b in pairs(game_state.bullets) do
         b.x+=b.dir[1]
         b.y+=b.dir[2]
     end
 end
 
 function draw_bullets()
-    for _,b in pairs(bullets) do
+    for _,b in pairs(game_state.bullets) do
         fancy_draw_attack(b)
         fancy_anim(b)
     end
 end
 
 function kill_bullets()
-    for i,b in pairs(bullets) do
+    for i,b in pairs(game_state.bullets) do
         if (b.hit) deli(i)
     end
 end

@@ -43,7 +43,7 @@ end
 
 function draw_enemy(e)
     spr(abs(e.spr),e.x,e.y,e.sz,e.sz,e.flp)
-    print(e.health,e.x,e.y-4,7)
+    print(e.health,e.x,e.y-4,2)
 end
 
 function move_enemy(e)

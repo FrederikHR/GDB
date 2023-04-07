@@ -1,7 +1,9 @@
 game_state={
     level=1,
     map_drawn=false,
-    enemies={}
+    enemies={},
+    current_items={},
+    bullets={}
 }
 sprites={level_1=52, cloud=39}
 function game_init()
@@ -42,12 +44,12 @@ function game_draw()
     --map(0,0)
     draw_items_on_map()
     draw_player()
-    log(#game_state.enemies)
     for _,e in pairs(game_state.enemies) do
         draw_enemy(e)
     end
     fancy_draw_attack(patk1)
     fancy_draw_attack(patk2)
+    log(#game_state.bullets)
     draw_bullets()
     draw_hud()
     --print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
@@ -97,9 +99,9 @@ function init_level(l)
     
     _update=game_update
     _draw=game_draw
-    current_items={}
+    game_state.current_items={}
     game_state.enemies={}
-    bullets={}
+    game_state.bullets={}
 
     init_levelgen()
 
@@ -113,5 +115,6 @@ function init_level(l)
     enemies_for_map(l)
     --make_enemy(90,90,1)
 
-    spawn_item(70,40)
+    --spawn_item(70,40)
+    items_for_map()
 end

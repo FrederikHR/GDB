@@ -174,14 +174,14 @@ function find_map_tile(en)
 end
 
 function player_pickup()
-    for j,i in ipairs(current_items) do
+    for j,i in ipairs(game_state.current_items) do
         if collide_sprite(p,"center",i) then
             if #inventory<16 then 
                 sfx(17)
                 flash_text_bool=true
                 
                 add(inventory,i)
-                deli(current_items,j)
+                deli(game_state.current_items,j)
             else
                 p.inv_full=true
             end
@@ -250,11 +250,15 @@ function fancy_draw_attack(atk)
 end
 
 function current_player_health()
-    return p.health/p.max_health
+    local curr = p.health/p.max_health
+    if (curr>0) return curr
+    return 0
 end
 
 function current_player_mana()
-    return p.mana/p.max_mana
+    local curr=p.mana/p.max_mana
+    if (curr>0) return curr
+    return 0
 end
 
 function update_atk(item,slot)

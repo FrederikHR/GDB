@@ -1,5 +1,3 @@
-current_items={}
-
 function generate_item (type,rarity,element)
     local item = {}
 
@@ -37,11 +35,22 @@ function spawn_item(x,y,type,rarity,element)
     local item = generate_item(type,rarity,element)
     item.x=x
     item.y=y
-    add(current_items,item)
+    add(game_state.current_items,item)
+end
+
+function items_for_map()
+    for _,x in pairs(maze) do
+        for _,y in pairs(x) do
+            srand(y.x+y.y+1)
+            if (not y.is_wall and not y.goal) then
+                if (rnd()>0.20) spawn_item(y.ox+y.x*y.scale+rnd(y.scale-2)+2,y.oy+y.y*y.scale+rnd(y.scale-2)+2)
+            end
+        end
+    end
 end
 
 function draw_items_on_map()
-    for _,i in pairs(current_items) do
+    for _,i in pairs(game_state.current_items) do
         spr(32,i.x,i.y)
     end
 end
