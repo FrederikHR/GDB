@@ -7,7 +7,7 @@ function init_levelgen()
     --prl = perlin()
     --prl:init()
     --prl:getmapdata(0,150,0,150)
-    maze = init_maze(maze_size,maze_size,5,-400,-400)
+    maze = init_maze(maze_size,maze_size,5,-280,-280)
     backtrack(maze,maze_size,maze_size)
 end
 
