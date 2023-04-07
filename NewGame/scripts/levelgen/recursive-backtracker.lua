@@ -2,22 +2,17 @@
 function init_maze(width, height,scale,ox,oy)
     local maze = {}
 
-    for x=0, width do
+    for x=1, (width*2)+1 do
         maze[x] = {}
-        for y = 0, height do
+        for y = 1, (height*2)+1 do
             maze[x][y] = {}
             maze[x][y].y = y
             maze[x][y].x = x
-            maze[x][y].scale=scale
-            maze[x][y].ox=ox
-            maze[x][y].oy=oy
             maze[x][y].visited = false
             maze[x][y].main_path = false
             maze[x][y].goal = false
-            maze[x][y].top_wall = true
-            maze[x][y].right_wall = true
-            maze[x][y].left_wall = true
-            maze[x][y].bottom_wall = true
+
+            maze[x][y].is_wall = true
         end
     end
     return maze
@@ -28,18 +23,22 @@ end
 -- when no more unvisited rooms are adjacent to the current room, move back one step by popping stack
 -- when every room has been visited once, the remaining stack is the solution to the maze (path from first to last room)
 function backtrack(maze, width, height)
-    local current = maze[1][1]
-    local finish = maze[width][height]
+    local current = maze[2][2]
+    local finish = maze[width*2][height*2]
     current.goal = true
     finish.goal = true
     current.visited = true
+    current.is_wall = false
     local stack = {}
     local vcount = 1
     while (vcount < width*height) do
-        next = unvisited_neighbour(maze, current.x, current.y, width, height)
+        printh("current: "..current.x..","..current.y)
+        next = unvisited_neighbour(maze, current.x, current.y, width*2, height*2)
         if next != nil then
-            remove_separating_wall(current, next)
+            printh("visiting: "..next.x..","..next.y)
+            remove_separating_wall(current, next, maze)
             next.visited = true
+            next.is_wall = false
             vcount += 1
             stack[#stack+1] = current
             current = next
@@ -61,28 +60,24 @@ end
 -- returns nil if all rooms have already been visited
 function unvisited_neighbour(maze, x, y, width, height)
     local unvisited = {}
-    if (x > 1 and maze[x-1][y].visited == false) unvisited[#unvisited+1] = maze[x-1][y]
-    if (y > 1 and maze[x][y-1].visited == false) unvisited[#unvisited+1] = maze[x][y-1]
-    if (x < width and maze[x+1][y].visited == false) unvisited[#unvisited+1] = maze[x+1][y]
-    if (y < height and maze[x][y+1].visited == false) unvisited[#unvisited+1] = maze[x][y+1]
+    if (x > 3 and maze[x-2][y].visited == false) unvisited[#unvisited+1] = maze[x-2][y]
+    if (y > 3 and maze[x][y-2].visited == false) unvisited[#unvisited+1] = maze[x][y-2]
+    if (x < width and maze[x+2][y].visited == false) unvisited[#unvisited+1] = maze[x+2][y]
+    if (y < height and maze[x][y+2].visited == false) unvisited[#unvisited+1] = maze[x][y+2]
     if (#unvisited == 0) return nil
     
     return rnd(unvisited)
 end
 
--- remove the two walls that separate rooms a and b
-function remove_separating_wall(a, b)
+-- remove the wall that separate rooms a and b
+function remove_separating_wall(a, b, maze)
     if a.x > b.x then
-        a.left_wall = false
-        b.right_wall = false
+        maze[a.x-1][a.y].is_wall = false
     elseif a.x < b.x then
-        a.right_wall = false
-        b.left_wall = false
+        maze[a.x+1][a.y].is_wall = false
     elseif a.y < b.y then
-        a.bottom_wall = false
-        b.top_wall = false
+        maze[a.x][a.y+1].is_wall = false
     else
-        a.top_wall = false
-        b.bottom_wall = false
+        maze[a.x][a.y-1].is_wall = false
     end
 end

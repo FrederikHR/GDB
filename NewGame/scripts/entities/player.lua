@@ -114,7 +114,7 @@ function move_player()
     
 
     --map collision
-    find_map_tile(p)
+    --[[find_map_tile(p)
     local updown=player_collide_map(p,"updown")
     if abs(p.dy)>0 and updown[1] then
 		if updown[2] then
@@ -135,7 +135,7 @@ function move_player()
             if (p.dx>0) p.dx=0
             p.x=p.curr_mt.x*p.curr_mt.scale*3*8+2*p.curr_mt.scale*8+p.curr_mt.ox-p.sz*8
         end
-    end
+    end]]--
     
     --update position
     p.x+=p.dx
