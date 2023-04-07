@@ -18,7 +18,7 @@ function do_atk(slot)
     end
     
     --make bullet if wand equipped and enough mana
-    if p.mana > 1 then
+    if p.mana > 1 and equipment[slot].type=="wand" then
         make_bullet(p)
         p.mana -= 1
     end

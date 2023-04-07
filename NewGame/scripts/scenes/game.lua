@@ -102,19 +102,15 @@ function init_level(l)
     game_state.current_items={}
     game_state.enemies={}
     game_state.bullets={}
+    game_state.goal={2,2}
 
     init_levelgen()
 
-    --TODO: make map
-    
     --reset player position
     p.x=64
     p.y=64
 
-    --make enemies
     enemies_for_map(l)
-    --make_enemy(90,90,1)
-
-    --spawn_item(70,40)
     items_for_map()
+    game_state.level += 1
 end
