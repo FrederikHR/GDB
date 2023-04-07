@@ -76,7 +76,7 @@ function enemy_attack(e)
 end
 
 function kill_enemy(e)
-    if (e.health==0) del(game_state.enemies,e)
+    if (e.health<=0) del(game_state.enemies,e)
 end
 
 function enemies_for_map(lvl)
