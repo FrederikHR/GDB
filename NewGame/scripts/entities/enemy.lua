@@ -49,7 +49,7 @@ end
 function move_enemy(e)
     e.dx=0
     e.dy=0
-    if dist(e,p)*64 < 10 then
+    if dist(e,p)*64 < 40 then
         local dir = atan2(p.x-e.x,p.y-e.y)
         e.dx += cos(dir)
         e.dy += sin(dir)
@@ -58,11 +58,11 @@ function move_enemy(e)
         e.play="idle"
     end
 
-    --find_map_tile(e)
-    --player_collide_map(e,"left")
-    --player_collide_map(e,"right")
-    --layer_collide_map(e,"up")
-    --player_collide_map(e,"down")
+    find_map_tile(e)
+    player_collide_map(e,"left")
+    player_collide_map(e,"right")
+    player_collide_map(e,"up")
+    player_collide_map(e,"down")
 
     e.x += e.dx
     e.y += e.dy
