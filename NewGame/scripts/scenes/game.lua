@@ -107,8 +107,8 @@ function init_level(l)
     init_levelgen()
 
     --reset player position
-    p.x=64
-    p.y=64
+    p.x=maze[4*2][4*2].x*maze[1][1].scale+maze[1][1].ox
+    p.y=maze[4*2][4*2].y*maze[1][1].scale+maze[1][1].oy
 
     enemies_for_map(l)
     items_for_map()
