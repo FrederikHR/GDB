@@ -123,15 +123,18 @@ end
 function fancy_draw_spr(atk)
     local t={}
     for i=1,atk.maxcf do
-        add(t,12) --because of background color in game scene
+        add(t,0) --because of background color in game scene
     end
     t[atk.animindex] = 7
 
     sx, sy = get_sspr_x_y(atk.spr)
 
+	--palt(0,false)
     pal(t)
+	palt(0,true)
     if (atk.spr != -1)  sspr(sx,sy,8,8, atk.x,atk.y,atk.sw,atk.sh,p.flp, p.left_swipe)
-    pal()
+	pal()
+	palt()
 end
 
 function fancy_anim(an)

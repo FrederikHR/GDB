@@ -1,33 +1,44 @@
-function generate_item (type,rarity,element)
+function generate_item(type,rarity,element)
     local item = {}
 
-    if (not type) then
-        item.type = rnd(item_types)
+    local r=rnd()
+    if r<0.5 then
+        if r<0.25 then
+            item.val=game_state.level*10
+            item.healing=true
+            item.mana=false
+        else
+            item.val=game_state.level*10
+            item.healing=false
+            item.mana=true
+        end
     else
-        item.type = type
+        if (not type) then
+            item.type = rnd(item_types)
+        else
+            item.type = type
+        end
+
+        item.spr=item_sprites[item.type]
+
+        if (not rarity) then
+            item.rarity = rnd(rarities)
+        else
+            item.rarity = rarity
+        end
+
+        if (item.rarity == "ok") then
+            item.element = "none"
+        elseif (not element) then
+            item.element = rnd(elements)
+        else
+            item.element = element
+        end
     end
-
-    item.spr=item_sprites[item.type]
-
-    if (not rarity) then
-        item.rarity = rnd(rarities)
-    else
-        item.rarity = rarity
-    end
-
-    if (item.rarity == "ok") then
-        item.element = "none"
-    elseif (not element) then
-        item.element = rnd(elements)
-    else
-        item.element = element
-    end
-
     item.pal=item_pal[item.type]
     item.sz=1
     item.taken=false
     item.slot="none"
-
     return item
 end
 
@@ -51,7 +62,15 @@ end
 
 function draw_items_on_map()
     for _,i in pairs(game_state.current_items) do
-        spr(32,i.x,i.y)
+        if i.healing then
+            spr(16,i.x,i.y)
+        elseif i.mana then
+            pal({[8]=12,[9]=1})
+            spr(16,i.x,i.y)
+            pal()
+        else
+            spr(32,i.x,i.y)
+        end
     end
 end
 

@@ -185,7 +185,13 @@ end
 function player_pickup()
     for j,i in ipairs(game_state.current_items) do
         if collide_sprite(p,"center",i) then
-            if #inventory<16 then 
+            if i.healing then
+                p.health=min(i.val+p.health,p.max_health)
+                deli(game_state.current_items,j)
+            elseif i.mana then
+                p.mana=min(i.val+p.mana,p.max_mana)
+                deli(game_state.current_items,j)
+            elseif #inventory<16 then 
                 sfx(17)
                 flash_text_bool=true
                 
