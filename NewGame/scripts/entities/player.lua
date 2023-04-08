@@ -331,5 +331,6 @@ function atk_frames()
 end
 
 function player_death()
-    print("TODO")
+    fade_out()
+    game_state.dead=true
 end

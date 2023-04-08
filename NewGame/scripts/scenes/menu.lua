@@ -12,6 +12,9 @@ function menu_init()
     camera(cx,cy)
     _update=menu_update
     _draw=menu_draw
+    p={}
+    patk1={}
+    patk2={}
     make_player()
 
     -- for drawing clouds and islands

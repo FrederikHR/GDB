@@ -42,38 +42,53 @@ function resume_game()
 end
 
 function game_draw()
-    cls(12)
-    --sspr(level_1_sx,level_1_sy,8,8,0,0,154,154)
-    print("how to play", 50,60,2)
-    print("1. press x to attack", 30,70,2)
-    print("2. survive!", 30,80,2)
-    camera(cx,cy)
-    --map(0,0)
-    --mset(0,0,32)
-    --if not map_drawn then
-    draw_level()
-    --    map_drawn=true
-    --end
-    --map(0,0)
-    draw_items_on_map()
-    draw_player()
-    for _,e in pairs(game_state.enemies) do
-        draw_enemy(e)
+    if not game_state.dead then
+        cls(12)
+        --sspr(level_1_sx,level_1_sy,8,8,0,0,154,154)
+        print("how to play", 50,60,2)
+        print("1. press x to attack", 30,70,2)
+        print("2. survive!", 30,80,2)
+        camera(cx,cy)
+        --map(0,0)
+        --mset(0,0,32)
+        --if not map_drawn then
+        draw_level()
+        --    map_drawn=true
+        --end
+        --map(0,0)
+        draw_items_on_map()
+        draw_player()
+        for _,e in pairs(game_state.enemies) do
+            draw_enemy(e)
+        end
+        fancy_draw_attack(patk1)
+        fancy_draw_attack(patk2)
+        draw_bullets()
+        draw_hud()
+        --print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
+        --print(patk1.move1,cx+10,cy+20)
+    else
+        pal()
+        rectfill(cx,cy,cx+128,cy+128,0)
+        print("you died.",cx,cy,8)
+        print("press ❎ to restart",cx,cy+10,8)
     end
-    fancy_draw_attack(patk1)
-    fancy_draw_attack(patk2)
-    draw_bullets()
-    draw_hud()
-    --print(atan2(patk1.dir[1],patk1.dir[2]).." "..patk1.dir[1].." "..patk1.dir[2],cx+10,cy+10)
-    --print(patk1.move1,cx+10,cy+20)
 end
 
 function game_update()
-    update_player()
-    scroll_camera(p,true)
-    for _,e in pairs(game_state.enemies) do
-        update_enemy(e)
-        kill_enemy(e)
+    if not game_state.dead then
+        update_player()
+        scroll_camera(p,true)
+        for _,e in pairs(game_state.enemies) do
+            update_enemy(e)
+            kill_enemy(e)
+        end
+    else
+        if (btnp(❎)) then
+            sfx(intro_start_sfx)
+            game_state.dead=false
+            menu_init()
+        end
     end
 end
 
