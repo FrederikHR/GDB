@@ -1,6 +1,3 @@
-
-bullets={}
-
 function make_bullet(p)
     local b={}
     b.x=p.x
@@ -12,7 +9,7 @@ function make_bullet(p)
     b.anims={
         pew={fr=1,fancy=true,50}
     }
-    if p.attack and equipment[1].type=="wand" then
+    if p.attack and game_state.equipment[1].type=="wand" then
         b.dir=tblclone(patk1.dir)
         b.spr=50
         b.slot=1
@@ -21,7 +18,7 @@ function make_bullet(p)
         b.speed=1
         b.maxcf=5
         add(game_state.bullets,b)
-    elseif p.attack2 and equipment[2].type=="wand" then
+    elseif p.attack2 and game_state.equipment[2].type=="wand" then
         --TODO: change to different attack
         b.dir=tblclone(patk2.dir)
         b.spr=50

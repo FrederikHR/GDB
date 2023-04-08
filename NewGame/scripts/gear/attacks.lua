@@ -1,5 +1,5 @@
 function do_atk(slot)
-    if equipment[slot].type == "none" then
+    if game_state.equipment[slot].type == "none" then
         if slot==1 then
             patk1.play="punch"
             patk1.spr=48
@@ -18,7 +18,7 @@ function do_atk(slot)
     end
     
     --make bullet if wand equipped and enough mana
-    if p.mana > 1 and equipment[slot].type=="wand" then
+    if p.mana > 1 and game_state.equipment[slot].type=="wand" then
         make_bullet(p)
         p.mana -= 1
     end

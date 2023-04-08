@@ -1,18 +1,3 @@
-inventory = {}
-
-equipment={
-    {
-        type="none",
-        rarity="none",
-        element="none"
-    },
-    {
-        type="none",
-        rarity="none",
-        element="none"
-    }
-}
-
 inv_pos={0,0}
 inv_prompt_pos=0
 inv_prompt=false
@@ -48,7 +33,7 @@ function draw_inv()
         local x2=((i-1)\4)*(SZ+2)
         rect(x1,x2,x1+SZ+1,x2+SZ+1,6)
     end
-    for i,obj in ipairs(inventory) do
+    for i,obj in ipairs(game_state.inventory) do
         local x,y = get_sspr_x_y(obj.spr)
         local pos_x=((i-1)%4)*(SZ+2)+OFFSET+1
         local pos_y=((i-1)\4)*(SZ+2)+1
@@ -99,9 +84,9 @@ function move_inv()
             inv_pos[2]+=1
             sfx(19)
         end
-    elseif btnp(❎) and inventory[pos]!=nil then
+    elseif btnp(❎) and game_state.inventory[pos]!=nil then
         inv_prompt=true
-    elseif btnp(🅾️) and inventory[pos]!=nil then
+    elseif btnp(🅾️) and game_state.inventory[pos]!=nil then
         --TODO: add visual effect (smoke or something)    
         sfx(21)
         delete_item(pos)
@@ -125,16 +110,16 @@ end
 function add_to_slot(pos,slot)
     reset_slot(slot)
     --reset_item(12)
-    equipment[slot]=tblclone(inventory[pos])
-    equipment[slot].pos=pos
-    inventory[pos].taken=true
+    game_state.equipment[slot]=tblclone(game_state.inventory[pos])
+    game_state.equipment[slot].pos=pos
+    game_state.inventory[pos].taken=true
     if slot==1 then
-        inventory[pos].slot=12
+        game_state.inventory[pos].slot=12
     else
-        inventory[pos].slot=8
+        game_state.inventory[pos].slot=8
     end
     inv_prompt=false
-    update_atk(equipment[slot].type,slot)
+    update_atk(game_state.equipment[slot].type,slot)
 end
 
 function inv_ob(dir)
@@ -162,10 +147,10 @@ function draw_slots()
     local area2={41,74}
     local col2=8
     print("slot 1",area1[1],area1[2],col1)
-    print_item(equipment[1],area1[1],area1[2],col1)
+    print_item(game_state.equipment[1],area1[1],area1[2],col1)
 
     print("slot 2",area2[1],area2[2],col2)
-    print_item(equipment[2],area2[1],area2[2],col2)
+    print_item(game_state.equipment[2],area2[1],area2[2],col2)
 end
 
 function draw_current_item(x,y)
@@ -173,8 +158,8 @@ function draw_current_item(x,y)
     local area={82,74}
     local col=6
     print("current",area[1],area[2],col)
-    if inventory[pos] then
-        print_item(inventory[pos],area[1],area[2],col)
+    if game_state.inventory[pos] then
+        print_item(game_state.inventory[pos],area[1],area[2],col)
     else
         print("no item",area[1],area[2]+8,col)
         print("selected",area[1],area[2]+16,col)
@@ -187,38 +172,38 @@ function draw_inv_prompt()
 end
 
 function delete_item(pos)
-    if inventory[pos] != nil then
+    if game_state.inventory[pos] != nil then
         --check if in slot, and remove from slot
-        if inventory[pos].slot==12 then
+        if game_state.inventory[pos].slot==12 then
             reset_slot(1)
             update_atk(0,1)
-        elseif inventory[pos].slot==8 then
+        elseif game_state.inventory[pos].slot==8 then
             reset_slot(2)
             update_atk(0,2)
         else
             --item not in slot, delete from inventory
             update_positions(pos)
-            deli(inventory,pos)
+            deli(game_state.inventory,pos)
         end
     end
 end
 
 function reset_slot(pos)
-    if equipment[pos].pos != none then
-        inventory[equipment[pos].pos].slot="none"
-        inventory[equipment[pos].pos].taken=false
+    if game_state.equipment[pos].pos != none then
+        game_state.inventory[game_state.equipment[pos].pos].slot="none"
+        game_state.inventory[game_state.equipment[pos].pos].taken=false
     end
-    equipment[pos].spr=0
-    equipment[pos].type="none"
-    equipment[pos].rarity="none"
-    equipment[pos].element="none"
-    equipment[pos].taken=false
-    equipment[pos].slot="none"
-    equipment[pos].pos=none
+    game_state.equipment[pos].spr=0
+    game_state.equipment[pos].type="none"
+    game_state.equipment[pos].rarity="none"
+    game_state.equipment[pos].element="none"
+    game_state.equipment[pos].taken=false
+    game_state.equipment[pos].slot="none"
+    game_state.equipment[pos].pos=none
 end
 
 function reset_item(slot)
-    for _,i in pairs(inventory) do
+    for _,i in pairs(game_state.inventory) do
         if (i.slot==slot) i.taken=false
     end
 end
@@ -226,6 +211,6 @@ end
 function update_positions(pos)
     --update stored equipment positions if needed
     for i=1,2 do
-        if (equipment[i].pos != nil and equipment[i].pos > pos) equipment[i].pos -= 1
+        if (game_state.equipment[i].pos != nil and game_state.equipment[i].pos > pos) game_state.equipment[i].pos -= 1
     end
 end

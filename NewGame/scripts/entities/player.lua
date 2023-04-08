@@ -52,6 +52,7 @@ function update_player()
     animate(p)
     fancy_anim(patk1)
     fancy_anim(patk2)
+    if (p.health<=0) player_death()
 end
 
 function draw_player()
@@ -191,16 +192,16 @@ function player_pickup()
             elseif i.mana then
                 p.mana=min(i.val+p.mana,p.max_mana)
                 deli(game_state.current_items,j)
-            elseif #inventory<16 then 
+            elseif #game_state.inventory<16 then 
                 sfx(17)
                 flash_text_bool=true
                 
-                add(inventory,i)
+                add(game_state.inventory,i)
                 deli(game_state.current_items,j)
-                if (equipment[1].type=="none") then
-                    add_to_slot(#inventory,1)
-                elseif (equipment[2].type=="none") then
-                    add_to_slot(#inventory,2)
+                if (game_state.equipment[1].type=="none") then
+                    add_to_slot(#game_state.inventory,1)
+                elseif (game_state.equipment[2].type=="none") then
+                    add_to_slot(#game_state.inventory,2)
                 end
             else
                 p.inv_full=true
@@ -239,14 +240,14 @@ function atk_collide()
     --TODO: make hit moment dependent on item
     for _,e in pairs(game_state.enemies) do
         if patk1.aframe==patk1.max_aframe\2 then
-            if (collide_atk(patk1,e) and patk1.spr != -1) damage_enemy(e,equipment[1],1)
+            if (collide_atk(patk1,e) and patk1.spr != -1) damage_enemy(e,game_state.equipment[1],1)
         elseif patk2.aframe==patk2.max_aframe\2 then
-            if (collide_atk(patk2,e) and patk2.spr != -1) damage_enemy(e,equipment[2],2)
+            if (collide_atk(patk2,e) and patk2.spr != -1) damage_enemy(e,game_state.equipment[2],2)
         end
         --bullet collision
         for i,b in ipairs(game_state.bullets) do
             if collide_atk(b,e) then
-                damage_enemy(e,equipment[b.slot],b.slot)
+                damage_enemy(e,game_state.equipment[b.slot],b.slot)
                 b.hit=true
             end
         end
@@ -321,4 +322,8 @@ function atk_frames()
         patk2.aframe=0
         p.attack2=false
     end
+end
+
+function player_death()
+
 end
