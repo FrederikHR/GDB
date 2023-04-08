@@ -19,6 +19,7 @@ function make_enemy(x,y,lvl)
     e.health=lvl*10
     e.max_health=lvl*10
     e.armor=lvl*5
+    e.xp=lvl*2
     e.resist="none"
     e.timer=t()
 
@@ -76,7 +77,15 @@ function enemy_attack(e)
 end
 
 function kill_enemy(e)
-    if (e.health<=0) del(game_state.enemies,e)
+    if (e.health<=0) then
+        p.curr_exp+=e.xp
+        if p.curr_exp>p.level_up then
+            p.curr_exp=p.curr_exp%p.level_up
+            p.level+=1
+            p.level_up=p.level*10
+        end
+        del(game_state.enemies,e)
+    end
 end
 
 function enemies_for_map(lvl)

@@ -51,6 +51,6 @@ end
 
 function kill_bullets()
     for i,b in pairs(game_state.bullets) do
-        if (b.hit) deli(i)
+        if (b.hit) del(game_state.bullets,b)
     end
 end

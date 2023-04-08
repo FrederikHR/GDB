@@ -21,10 +21,15 @@ function make_player()
     p.dir={1,0}
     p.play="idle"
     p.anims=panims
+
+    p.level=1
+    p.curr_exp=0
+    p.level_up=p.level*10
     p.health=10
     p.max_health=10
     p.mana=10
     p.max_mana=10
+
     p.pressarrow=false
     p.left_swipe=false
     p.attack=false
