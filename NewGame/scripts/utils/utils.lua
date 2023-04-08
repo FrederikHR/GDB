@@ -101,7 +101,6 @@ function fade_in() -- reversed for-loops. not sure if working correctly
 end
 
 function flash_text()
-
 	flash_speed=5
 	flashframe=0
 	flash_color=8
@@ -113,11 +112,14 @@ function flash_text()
 				flash_color=9
 			else
 				flash_color=8
-			end 
-			
-		end   
+			end
+		end  
     end
 	flash_text_bool=false
+end
+
+function float_text(x,y,col)
+	print("TODO")
 end
 
 function fancy_draw_spr(atk)

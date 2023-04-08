@@ -54,7 +54,7 @@ function items_for_map()
         for _,y in pairs(x) do
             srand(y.x+y.y+1)
             if (not y.is_wall and not y.goal) then
-                if (rnd()>0.20) spawn_item(y.ox+y.x*y.scale+rnd(y.scale-2)+2,y.oy+y.y*y.scale+rnd(y.scale-2)+2)
+                if (rnd()>0.20) spawn_item(y.ox+y.x*y.scale+rnd(y.scale-2*8)+8,y.oy+y.y*y.scale+rnd(y.scale-2*8)+8)
             end
         end
     end

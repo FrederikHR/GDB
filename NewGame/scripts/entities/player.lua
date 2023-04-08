@@ -21,6 +21,7 @@ function make_player()
     p.dir={1,0}
     p.play="idle"
     p.anims=panims
+    p.alive=true
 
     p.level=1
     p.curr_exp=0
@@ -43,16 +44,21 @@ end
 function update_player()
     if (flash_text_bool) flash_text()
 
-    atk_frames()
-    move_player()
-    player_pickup()
-    player_attack()
-    update_attack()
-    update_bullets()
-    animate(p)
-    fancy_anim(patk1)
-    fancy_anim(patk2)
-    if (p.health<=0) player_death()
+    if p.alive then
+        atk_frames()
+        move_player()
+        player_pickup()
+        player_attack()
+        update_attack()
+        update_bullets()
+        animate(p)
+        fancy_anim(patk1)
+        fancy_anim(patk2)
+        if (p.health<=0) player_death()
+    else
+        --death animation etc
+        print("TODO")
+    end
 end
 
 function draw_player()
@@ -325,5 +331,5 @@ function atk_frames()
 end
 
 function player_death()
-
+    print("TODO")
 end

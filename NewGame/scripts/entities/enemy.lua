@@ -93,7 +93,7 @@ function enemies_for_map(lvl)
         for _,y in pairs(x) do
             srand(y.x+y.y)
             if (not y.is_wall and not y.goal) then
-                if (rnd()>0.75) make_enemy(y.ox+y.x*y.scale+rnd(y.scale-2)+2,y.oy+y.y*y.scale+rnd(y.scale-2)+2,lvl)
+                if (rnd()>0.75) make_enemy(y.x*y.scale+y.ox+rnd(y.scale-2*8)+8,y.y*y.scale+y.oy+rnd(y.scale-2*8)+8,lvl)
             end
         end
     end
