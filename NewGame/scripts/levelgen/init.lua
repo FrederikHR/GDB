@@ -4,7 +4,7 @@ current_map={}
 maze={}
 
 function init_levelgen()
-    maze = init_maze(maze_size,maze_size,64,-400,-400)
+    maze = init_maze(maze_size,maze_size,48,-400,-400)
     backtrack(maze,maze_size,maze_size)
 end
 
@@ -39,8 +39,8 @@ function draw_tile(type,x,y,scale,ox,oy)
     local walls={}
     local floors={112,113,114}
     srand(x+y+scale)
-    for i=0,scale\8 do
-        for j=0,scale\8 do
+    for i=0,scale\8-1 do
+        for j=0,scale\8-1 do
             if (type=="floor") spr(rnd(floors),x*scale+ox+i*8,y*scale+oy+j*8)
         end
     end
