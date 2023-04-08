@@ -22,12 +22,13 @@ end
 function draw_maze_room(x,y,room,scale,ox,oy)
 
     --rectfill(x*scale+ox, y*scale+oy, x*scale+scale+ox, y*scale+scale+oy, 7)
-    draw_tile("floor",x,y,scale,ox,oy)
+    if (not room.is_wall) draw_tile("floor",x,y,scale,ox,oy)
     if room.goal then
         rectfill(x*scale+ox, y*scale+oy, x*scale+scale+ox, y*scale+scale+oy, 11)
     end
     if room.is_wall then
-        rectfill(x*scale+ox, y*scale+oy, x*scale+scale+ox, y*scale+scale+oy, 1)
+        --rectfill(x*scale+ox, y*scale+oy, x*scale+scale+ox, y*scale+scale+oy, 1)
+        draw_tile("wall",x,y,scale,ox,oy)
         if room.goal then
             rectfill(x*scale+ox, y*scale+oy, x*scale+scale+ox, y*scale+scale+oy, 9)
         end
@@ -42,6 +43,13 @@ function draw_tile(type,x,y,scale,ox,oy)
     for i=0,scale\8-1 do
         for j=0,scale\8-1 do
             if (type=="floor") spr(rnd(floors),x*scale+ox+i*8,y*scale+oy+j*8)
+            if (type=="wall") then
+                if y==#maze[1] and j==0 then
+                    spr(96,x*scale+ox+i*8,y*scale+oy+j*8)
+                elseif y!=#maze[1] then
+                    spr(97,x*scale+ox+i*8,y*scale+oy+j*8)
+                end
+            end
         end
     end
 end
