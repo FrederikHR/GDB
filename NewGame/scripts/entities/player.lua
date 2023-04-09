@@ -193,9 +193,11 @@ function player_pickup()
     for j,i in ipairs(game_state.current_items) do
         if collide_sprite(p,"center",i) then
             if i.healing then
+                if (p.health==p.max_health) return
                 p.health=min(i.val+p.health,p.max_health)
                 deli(game_state.current_items,j)
             elseif i.mana then
+                if (p.mana==p.max_mana) return
                 p.mana=min(i.val+p.mana,p.max_mana)
                 deli(game_state.current_items,j)
             elseif #game_state.inventory<16 then 
