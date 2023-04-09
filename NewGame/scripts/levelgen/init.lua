@@ -1,11 +1,14 @@
 prl = {}
-maze_size = 4
+maze_size = 10
 current_map={}
 maze={}
 
 function init_levelgen()
-    maze = init_maze(maze_size,maze_size,48,-400,-400)
-    backtrack(maze,maze_size,maze_size)
+    maze = init_maze(maze_size,maze_size,24,-400,-400)
+    maze[2][2].goal = true
+    maze[maze_size*2][maze_size*2].goal = true
+    backtrack(maze,maze_size,maze_size,maze[2][2],maze[maze_size*2][maze_size*2])
+    backtrack(maze,maze_size,maze_size,maze[maze_size*2][2],maze[2][maze_size*2])
 end
 
 function draw_level()
