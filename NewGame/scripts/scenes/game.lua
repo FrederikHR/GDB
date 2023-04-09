@@ -1,23 +1,3 @@
-game_state={
-    level=1,
-    map_drawn=false,
-    enemies={},
-    current_items={},
-    bullets={},
-    inventory={},
-    equipment={
-        {
-            type="none",
-            rarity="none",
-            element="none"
-        },
-        {
-            type="none",
-            rarity="none",
-            element="none"
-        }
-    }
-}
 sprites={level_1=52, cloud=39}
 function game_init()
     --only called after starting game from menu
@@ -126,6 +106,7 @@ function init_level(l)
     
     _update=game_update
     _draw=game_draw
+
     game_state.current_items={}
     game_state.enemies={}
     game_state.bullets={}

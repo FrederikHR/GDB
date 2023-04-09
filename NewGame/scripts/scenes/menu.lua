@@ -4,6 +4,26 @@ function menu_init()
     music(4)
     --countdown=-1
     --fade_color=12
+    game_state={
+        level=1,
+        map_drawn=false,
+        enemies={},
+        current_items={},
+        bullets={},
+        inventory={},
+        equipment={
+            {
+                type="none",
+                rarity="none",
+                element="none"
+            },
+            {
+                type="none",
+                rarity="none",
+                element="none"
+            }
+        }
+    }
     intro_start_sfx = 0
     flashframe=0
     flash_color=8
