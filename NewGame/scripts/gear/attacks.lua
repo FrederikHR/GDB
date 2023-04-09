@@ -1,12 +1,11 @@
 function do_atk(slot)
-    if game_state.equipment[slot].type == "none" then
-        if slot==1 then
-            patk1.play=patk1.move1
-            patk1.spr=patk1.anims[patk1.play][1]
-        else
-            patk2.play=patk2.move2
-            patk2.spr=patk2.anims[patk2.play][1]
-        end
+    if slot==1 then
+        patk1.play=patk1.move1
+        patk1.spr=patk1.anims[patk1.play][1]
+    else
+        patk2.play=patk2.move2
+        patk2.spr=patk2.anims[patk2.play][1]
+        log(patk2.spr)
     end
     
     --make bullet if wand equipped and enough mana
