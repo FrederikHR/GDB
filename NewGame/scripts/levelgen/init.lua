@@ -41,9 +41,6 @@ function draw_maze_room(x,y,room,scale,ox,oy)
     if room.is_wall then
         --rectfill(x*scale+ox, y*scale+oy, x*scale+scale+ox, y*scale+scale+oy, 1)
         draw_tile("wall",x,y,scale,ox,oy)
-        if room.goal then
-            rectfill(x*scale+ox, y*scale+oy, x*scale+scale+ox, y*scale+scale+oy, 9)
-        end
     end
 
 end
