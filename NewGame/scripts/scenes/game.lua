@@ -112,11 +112,11 @@ function init_level(l)
     game_state.bullets={}
     game_state.goal={2,2}
 
-    init_levelgen()
+    local maze_size = init_levelgen(l)
 
     --reset player position
-    p.x=maze[4*2][4*2].x*maze[1][1].scale+maze[1][1].ox+maze[1][1].scale\2
-    p.y=maze[4*2][4*2].y*maze[1][1].scale+maze[1][1].oy+maze[1][1].scale\2
+    p.x=maze[maze_size*2][maze_size*2].x*maze[1][1].scale+maze[1][1].ox+maze[1][1].scale\2
+    p.y=maze[maze_size*2][maze_size*2].y*maze[1][1].scale+maze[1][1].oy+maze[1][1].scale\2
 
     enemies_for_map(l)
     items_for_map()

@@ -38,10 +38,8 @@ function backtrack(maze, width, height, current, finish)
     local stack = {}
     local vcount = 1
     while (vcount < width*height) do
-        printh("current: "..current.x..","..current.y)
         next = unvisited_neighbour(maze, current.x, current.y, width*2, height*2)
         if next != nil then
-            printh("visiting: "..next.x..","..next.y)
             remove_separating_wall(current, next, maze)
             next.visited = true
             next.is_wall = false
