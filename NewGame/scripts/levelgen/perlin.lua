@@ -1,4 +1,4 @@
-function shuffle(tbl)
+--[[function shuffle(tbl)
     for i = 0,#tbl do
       local j = flr(rnd(i))
       tbl[i], tbl[j] = tbl[j], tbl[i]
@@ -88,4 +88,4 @@ function shuffle(tbl)
       local u = h < 8 and x or y
       local v = h < 4 and y or ((h == 12 or h == 14) and x or z)
       return ((h % 2) == 0 and u or -u) + ((h % 3) == 0 and v or -v)
-  end
+  end]]--
