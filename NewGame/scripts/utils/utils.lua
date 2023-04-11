@@ -1,4 +1,3 @@
---test
 
 function animate(an)
 	if an.state != an.play then
@@ -29,30 +28,6 @@ function dist(a,b)
 	
 	return sqrt(dsq)
 end
-
---[[
-ft={}
-function initfont()
-  small="\65\66\67\68\69\70\71\72\73\74\75\76\77\78\79\80\81\82\83\84\85\86\87\88\89\90"
-  big="abcdefghijklmnopqrstuvwxyz"
-  for i=1,26 do
-    ft[sub(big,i,i)]=sub(small,i,i)
-  end
-end
-
-function tosmall(str)
-  smallstr=""
-  for i=1,#str do
-    c=sub(str,i,i)
-    if c>="a" and c<="z" then
-      smallstr=smallstr..ft[c]
-    else
-      smallstr=smallstr..c
-    end
-  end
-  return smallstr
-end
-]]
 
 function tblclone(org)
     local t={}

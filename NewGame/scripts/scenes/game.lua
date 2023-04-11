@@ -85,6 +85,9 @@ function draw_hud()
     rectfill(cx+1,cy+4,cx+mbarx,cy+6,5)
     rectfill(cx+1,cy+4,cx+current_player_mana()*mbarx,cy+6,13)
 
+    --level
+    print("level "..p.level,cx+1,cy+8,7)
+
     --weapons
     rect(wpos[1],wpos[2],wpos[3],wpos[4],5)
     line(wpos[1]+SZ+1,wpos[2],wpos[1]+SZ+1,wpos[4])
