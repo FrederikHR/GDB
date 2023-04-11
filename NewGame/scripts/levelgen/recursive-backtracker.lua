@@ -26,20 +26,20 @@ end
 -- when the algorithm moves from one room to another, the previous room is added to a stack
 -- when no more unvisited rooms are adjacent to the current room, move back one step by popping stack
 -- when every room has been visited once, the remaining stack is the solution to the maze (path from first to last room)
-function backtrack(maze, width, height)
-    local current = maze[2][2]
-    local finish = maze[width*2][height*2]
-    current.goal = true
-    finish.goal = true
+function backtrack(maze, width, height, current, finish)
+    for x=1, (width*2)+1 do
+        for y = 1, (height*2)+1 do
+            maze[x][y].visited = false
+        end
+    end
+    
     current.visited = true
     current.is_wall = false
     local stack = {}
     local vcount = 1
     while (vcount < width*height) do
-        printh("current: "..current.x..","..current.y)
         next = unvisited_neighbour(maze, current.x, current.y, width*2, height*2)
         if next != nil then
-            printh("visiting: "..next.x..","..next.y)
             remove_separating_wall(current, next, maze)
             next.visited = true
             next.is_wall = false
