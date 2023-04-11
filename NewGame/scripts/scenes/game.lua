@@ -25,17 +25,13 @@ function game_draw()
     if not game_state.dead then
         cls(12)
         --sspr(level_1_sx,level_1_sy,8,8,0,0,154,154)
-        print("how to play", 50,60,2)
-        print("1. press x to attack", 30,70,2)
-        print("2. survive!", 30,80,2)
-        camera(cx,cy)
-        --map(0,0)
-        --mset(0,0,32)
-        --if not map_drawn then
+        --print("how to play", 50,60,2)
+        --print("1. press x to attack", 30,70,2)
+        --print("2. survive!", 30,80,2)
+        local dcx, dcy = camera(cx,cy)
+
+        draw_background(flr(cx)-dcx, flr(cy)-dcy)
         draw_level()
-        --    map_drawn=true
-        --end
-        --map(0,0)
         draw_items_on_map()
         draw_player()
         for _,e in pairs(game_state.enemies) do
@@ -58,7 +54,7 @@ end
 function game_update()
     if not game_state.dead then
         update_player()
-        scroll_camera(p,true)
+        scroll_camera(p)
         for _,e in pairs(game_state.enemies) do
             update_enemy(e)
             kill_enemy(e)
@@ -121,7 +117,31 @@ function init_level(l)
     p.x=maze[maze_size*2][maze_size*2].x*maze[1][1].scale+maze[1][1].ox+maze[1][1].scale\2
     p.y=maze[maze_size*2][maze_size*2].y*maze[1][1].scale+maze[1][1].oy+maze[1][1].scale\2
 
+    init_background()
+
     enemies_for_map(l)
     items_for_map()
     game_state.level += 1
+end
+
+function init_background()
+    background_clouds = {}
+    for i=0,30,1 do
+        local c = {}
+        c.f = rnd(4) + 1.2
+        c.w = 15 * c.f
+        c.h = 15 * c.f
+        c.x = -320 + rnd(566)
+        c.y = -320 + rnd(566)
+        background_clouds[#background_clouds+1] = c
+    end
+end
+
+function draw_background(dx, dy)
+    for _,c in pairs(background_clouds) do
+        c.x += dx/c.f
+        c.y += dy/c.f
+        if (c.f > 4.4) c.x += c.f*0.01
+        sspr(cloud_x,cloud_y, 8,8,c.x,c.y,c.w,c.h)
+    end
 end
