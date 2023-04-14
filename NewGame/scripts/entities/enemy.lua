@@ -1,13 +1,19 @@
 eanims ={
-    idle={fr=15,17,18},
-    walk={fr=10,17,18,19,20},
-    attack_1={fr=10,7,8,9,10},
-    damaged_idle={fr=10,33,34},
-    damaged_walk={fr=10,33,34,35,36}
+    idle1={fr=15,128},
+    walk1={fr=10,129,130},
+    idle2={fr=15,144},
+    walk2={fr=10,145,146},
+    idle3={fr=15,160},
+    walk3={fr=10,161,162},
+    idle4={fr=15,176},
+    walk4={fr=10,177,178},
+    idle5={fr=15,131},
+    walk5={fr=10,132,133}
 }
 
 function make_enemy(x,y,lvl)
     local e={}
+    e.type=rnd({1,2,3,4,5})
     e.spr=1
     e.x=x
     e.y=y
@@ -24,7 +30,7 @@ function make_enemy(x,y,lvl)
     e.timer=t()
 
     e.curr_mt=nil
-    e.play="idle"
+    e.play="idle"..tostr(e.type)
     e.anims=eanims
     e.flp=false
     e.attack=false
@@ -35,9 +41,6 @@ end
 function update_enemy(e)
     if (e.attack) e.aframe+=1
     move_enemy(e)
-    if e.health < e.max_health then
-        e.play = "damaged_"..e.play
-    end
     enemy_attack(e)
     animate(e)
 end
@@ -54,9 +57,9 @@ function move_enemy(e)
         local dir = atan2(p.x-e.x,p.y-e.y)
         e.dx += cos(dir)
         e.dy += sin(dir)
-        e.play="walk"
+        e.play="walk"..tostr(e.type)
     else
-        e.play="idle"
+        e.play="idle"..tostr(e.type)
     end
 
     find_map_tile(e)
