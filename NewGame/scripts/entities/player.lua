@@ -134,8 +134,10 @@ function move_player()
     player_collide_map(p,"down")
     
 
-    if (p.curr_mt.x==game_state.goal[1] and p.curr_mt.y==game_state.goal[2]) init_level(game_state.level)
-
+    if (p.curr_mt.x==game_state.goal[1] and p.curr_mt.y==game_state.goal[2]) then
+        fade_out()
+        init_level(game_state.level)
+    end
     --update position
     p.x+=p.dx
     p.y+=p.dy
