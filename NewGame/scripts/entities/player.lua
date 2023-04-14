@@ -136,6 +136,7 @@ function move_player()
 
     if (p.curr_mt.x==game_state.goal[1] and p.curr_mt.y==game_state.goal[2]) then
         music(6)
+        fade_out()
         init_level(game_state.level)
     end
     --update position
