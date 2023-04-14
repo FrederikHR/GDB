@@ -1,7 +1,7 @@
 panims ={
     idle={fr=15,5,6},
-    walk={fr=10,1,2,3,4},
-    attack_1={fr=10,7,8,9,10},
+    walk={fr=10,1,2,3},
+    attack_1={fr=10,7,8,9},
 }
 
 player_sfx={attack_sfx = 1}
