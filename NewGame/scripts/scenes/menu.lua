@@ -40,16 +40,23 @@ function menu_init()
     -- for drawing clouds and islands
     cloud_island_1_x, cloud_island_1_y = get_sspr_x_y(37)
     cloud_island_2_x, cloud_island_2_y = get_sspr_x_y(38)
+    title1_x, title1_y = get_sspr_x_y(68) -- C
+    title2_x, title2_y = get_sspr_x_y(84) -- E 
     cloud_x, cloud_y = get_sspr_x_y(39)
 end
 
 function menu_draw()
     cls(12)
+    
     sspr(cloud_island_1_x,cloud_island_1_y, 8,8,60,20,16,16)
     sspr(cloud_island_2_x,cloud_island_2_y, 8,8,80,80,26,26)
     sspr(cloud_x,cloud_y, 8,8,50,0,100,32)
     sspr(cloud_x,cloud_y, 8,8,10,110,100,32)
-    print("press x to start!",30,64,flash_color)
+
+    sspr(title1_x,title1_y, 40,8,30,40,40,16)
+    sspr(title2_x,title2_y, 48,8,50,60,48,16)
+    print("press x to start",30,110,flash_color)
+    
     
 end
 
