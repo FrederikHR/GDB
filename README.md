@@ -10,9 +10,9 @@ GDB lager spill
 
 https://frederikhr.github.io/GDB/OW/index.html
 
-![Start screen](startScreen.gif)
+![Start screen](OW/startScreen.gif)
 
-|![Gameplay in space](spaceGameplay.gif)     |     |     |
+|![Gameplay in space](OW/spaceGameplay.gif)     |     |     |
 | --- | --- | --- |
 |     |     |     |
 |     |     |     |
