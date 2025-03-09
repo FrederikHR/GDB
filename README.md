@@ -1,18 +1,7 @@
-# pico-8
-GDB lager spill
+# pico-8 games made by GDB 
 
-## Currently Working on
- - Codename: Elemental
+| [Honey chaser] https://frederikhr.github.io/GDB/OW/honeychaser.html |
+|![Start screen](OW/startScreen.gif)|  ![Gameplay in space](OW/spaceGameplay.gif)|
+| [Cloud Escape] https://frederikhr.github.io/GDB/NewGame/cloudescape.html |
+|![Start screen](NewGame/startScreen.gif) | ![Gameplay in space](NewGame/gameplay.gif)|   
 
-## Previous
- - Honey Chaser
- - Lift (on-hold)
-
-https://frederikhr.github.io/GDB/OW/index.html
-
-
-
-|![Start screen](OW/startScreen.gif) https://frederikhr.github.io/GDB/OW/honeychaser.html|  ![Gameplay in space](OW/spaceGameplay.gif)    |     |
-| --- | --- | --- |
-|![Start screen](NewGame/startScreen.gif)  https://frederikhr.github.io/GDB/NewGame/cloudescape.html| ![Gameplay in space](NewGame/gameplay.gif)     |     |
-|     |     |     |
