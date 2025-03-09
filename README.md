@@ -9,4 +9,10 @@ GDB lager spill
  - Lift (on-hold)
 
 https://frederikhr.github.io/GDB/OW/index.html
-![alt text](OW/start_screen.png)
+
+![Start screen](startScreen.gif)
+
+|![Gameplay in space](spaceGameplay.gif)     |     |     |
+| --- | --- | --- |
+|     |     |     |
+|     |     |     |
